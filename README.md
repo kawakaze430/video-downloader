@@ -32,6 +32,12 @@ python3 -m tools.fixtures.http_fixture --port 8765
 The fixture is a local synthetic download target, not the complete product.
 See its [documentation](sources/downloader-blueprint/tools/fixtures/README.md).
 
+The original tested cloud onboarding helper is preserved at
+[`tools/onboarding/setup.sh`](tools/onboarding/setup.sh). It reproduces the
+initial fixture extraction into `/workspace/onboarding-sources/Downloader--main`
+and runs its tests. Normal development can use the tracked `sources/` path
+above directly.
+
 ## Languages
 
 One product can contain several languages. A desktop app, browser extension,
