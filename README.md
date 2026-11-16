@@ -1,58 +1,66 @@
 # video-downloader
 
-One repository for the intended download-manager project. The five supplied
-archives are now extracted under `sources/` with their original contents and
-licenses preserved. The ZIP files remain at the root as source backups.
+One repository for a planned download and media workspace across Android,
+web, browser extensions, Windows, macOS, and Linux. The supplied code is
+organized for evaluation; these applications are not yet integrated.
 
-| Directory | Supplied source | Languages / tools |
+Start with the detailed [project idea](PROJECT_IDEA.txt),
+[repository audit](docs/REPOSITORY_AUDIT.txt), and [working agreement](AGENTS.md).
+
+## Repository map
+
+| Path | Purpose | Current status |
 | --- | --- | --- |
-| `sources/downloader-blueprint/` | Downloader planning documents and deterministic download fixture | Python 3.10+, OpenSSL for HTTPS tests |
-| `sources/ab-download-manager/` | Desktop download manager candidate | Kotlin, Gradle, JVM |
-| `sources/ab-browser-integration/` | AB browser extension candidate | TypeScript, React, npm, Vite |
-| `sources/mediagrabber/` | MediaGrabber browser extension and native companion | TypeScript, Node.js, npm |
-| `sources/reclip/` | ReClip web downloader reference | Python, Flask, HTML/CSS/JavaScript |
+| `sources/ab-download-manager/` | Kotlin desktop and Android foundation candidate | Supplied source; no integrated release validated |
+| `sources/ab-browser-integration/` | Matching TypeScript browser companion candidate | Supplied source; build/security validation needed |
+| `sources/downloader-blueprint/` | Previous planning, research, and Python fixture | Preserve prior work; 14 fixture tests verified |
+| `AnalyseFuture/reference-projects/` | Intact MediaGrabber and ReClip references | Retained for later evaluation |
+| `AnalyseFuture/prior-versions/` | Originals of documents/helpers revised here | Exact preservation copies |
+| `archives/` | Original five ZIP files | Kept unchanged |
+| `docs/` | Audit, full path inventory, and preservation evidence | Review scope and checks documented |
+| `tools/` | Repository verification and local fixture setup | Standard-library checks; no platform downloads |
 
-This change organizes source snapshots. It does not connect the applications,
-combine their features, select a product license, or migrate languages. Each
-component keeps its own build files and documentation. Archive hashes and file
-counts are recorded in [sources/archives.json](sources/archives.json).
+`AnalyseFuture` preserves material for later review. Nothing was classified as
+attacker-added solely because it is a reference or uses another language.
 
-Extraction verification: all 1,438 files match the supplied archives byte for
-byte. The 14 fixture tests pass from the new directory. The desktop, browser,
-MediaGrabber, and ReClip application builds have not been run for this change.
+## Verify and use the local fixture
 
-## Verified fixture workflow
+From the repository root, with Python 3.10+ and OpenSSL installed:
 
 ```sh
+python3 tools/verify_repository.py
+bash tools/onboarding/setup.sh
 cd sources/downloader-blueprint
-python3 -m unittest discover -s tests -v
 python3 -m tools.fixtures.http_fixture --port 8765
 ```
 
-The fixture is a local synthetic download target, not the complete product.
-See its [documentation](sources/downloader-blueprint/tools/fixtures/README.md).
+The fixture binds to loopback and provides a deterministic download target;
+it is not a downloader application. See its
+[guide](sources/downloader-blueprint/tools/fixtures/README.md).
+No package installation, private credentials, or live platform access is
+required for these checks. The first command verifies preserved content and
+archive extraction; it does not certify third-party code as safe.
 
-The original tested cloud onboarding helper is preserved at
-[`tools/onboarding/setup.sh`](tools/onboarding/setup.sh). It reproduces the
-initial fixture extraction into `/workspace/onboarding-sources/Downloader--main`
-and runs its tests. Normal development can use the tracked `sources/` path
-above directly.
+## Direction and boundaries
 
-## Languages
+The project idea prioritizes YouTube as the first named source research track
+while retaining a reliable direct-file foundation. Facebook, Instagram, MP4,
+HLS/DASH, and other workflows each need their own supported capability record.
+Universal video access is not guaranteed. Platform permissions, DRM, server
+behavior, browser/mobile restrictions, and formats impose real limits.
 
-One product can contain several languages. A desktop app, browser extension,
-and companion process can exchange structured messages while retaining their
-existing implementations. A shared protocol would need to be designed and
-tested in a separately approved integration task.
+One product can retain Kotlin for desktop/Android, TypeScript for extensions,
+and supporting tools without rewriting everything into one language. Foundation
+adoption, integration, language migration, public releases, and hosted services
+require separately authorized work.
 
-A single-language approach is also possible, but converting the Kotlin desktop
-or Python applications to TypeScript would require substantial rewriting.
-Browser extension code still needs JavaScript output, and FFmpeg remains an
-external media-processing tool. No language migration has been selected or
-started. Wait for the owner's direction before integration or migration.
+## Preservation and licenses
 
-## Source licenses
+All 1,449 files tracked at `0b2a1ad` are mapped to preserved copies in
+[`docs/preservation-manifest.json`](docs/preservation-manifest.json).
+All 1,438 archive payload files remain available unchanged. ZIP paths and
+source locations are indexed in [`sources/archives.json`](sources/archives.json).
 
-AB Download Manager and its browser integration include Apache-2.0 licenses.
-MediaGrabber and ReClip include MIT licenses. The Downloader blueprint supplies
-no root LICENSE; none has been invented here. Keep component notices intact.
+AB desktop/browser supply Apache-2.0 licenses; MediaGrabber/ReClip supply MIT
+licenses. The blueprint supplies no root license. Preserve notices and review
+transitive/binary licensing before distribution. No product license was chosen.
