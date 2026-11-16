@@ -1,0 +1,1410 @@
+// MediaGrabber Service Worker (Background Script)
+// Manifest V3 — webRequest, media detection, download orchestration.
+
+import { NativeClient } from './lib/native-client';
+import { VideoInfo } from './lib/types';
+import { M3U8ParserWrapper } from './lib/m3u8-parser';
+import { DashParserWrapper } from './lib/dash-parser';
+import { loadSettings, Settings } from './lib/settings';
+
+interface PageMetadata {
+  title?: string;
+  thumbnail?: string;
+  duration?: number;
+  pageUrl?: string;
+  generation?: number;
+}
+
+const nativeClient = new NativeClient();
+
+// Media storage by tabId
+const mediaByTab = new Map<number, VideoInfo[]>();
+const interceptedMediaByTab = new Map<number, Set<string>>();
+const pageMetadataByTab = new Map<number, PageMetadata>();
+const ytdlpFormatUrlByTab = new Map<number, string>();
+const pageGenerationByTab = new Map<number, number>();
+const navigationGenerationByTab = new Map<number, number>();
+const currentPageUrlByTab = new Map<number, string | null>();
+const relayMappingsByTab = new Map<number, Map<string, string>>();
+const relayCodecsByTab = new Map<number, Map<string, RelayCodec>>();
+
+interface RelayCodec {
+  hour: number;
+  prefix: string;
+  relayOrigin: string;
+  mapping: Record<string, string>;
+}
+
+const relayAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+function getPageGeneration(tabId: number): number {
+  return pageGenerationByTab.get(tabId) || 0;
+}
+
+function resetTabState(tabId: number): void {
+  pageGenerationByTab.set(tabId, getPageGeneration(tabId) + 1);
+  mediaByTab.delete(tabId);
+  interceptedMediaByTab.delete(tabId);
+  pageMetadataByTab.delete(tabId);
+  ytdlpFormatUrlByTab.delete(tabId);
+  relayMappingsByTab.delete(tabId);
+  relayCodecsByTab.delete(tabId);
+  chrome.action.setBadgeText({ tabId, text: '' }, () => { void chrome.runtime.lastError; });
+}
+
+function learnRelayCodec(tabId: number, originalUrl: string, relayUrl: string): void {
+  let original: URL;
+  let relay: URL;
+  try {
+    original = new URL(originalUrl);
+    relay = new URL(relayUrl);
+  } catch {
+    return;
+  }
+  if (!/^https?:$/.test(original.protocol) || !/^https?:$/.test(relay.protocol)) return;
+
+  const separator = relay.pathname.lastIndexOf('/');
+  const token = separator >= 0 ? relay.pathname.slice(separator + 1) : '';
+  if (!token) return;
+
+  const candidateHours = new Set<number>();
+  const currentHour = Math.round(Date.now() / 1000 / 60 / 60);
+  for (let offset = -48; offset <= 48; offset += 1) candidateHours.add(currentHour + offset);
+  const queryTime = Number(original.searchParams.get('t'));
+  if (Number.isFinite(queryTime) && queryTime > 0) {
+    const queryHour = Math.round(queryTime / 1000 / 60 / 60);
+    for (let offset = -2; offset <= 2; offset += 1) candidateHours.add(queryHour + offset);
+  }
+
+  let best: { hour: number; mapping: Record<string, string>; mapped: number } | undefined;
+  for (const hour of candidateHours) {
+    let encoded: string;
+    try {
+      encoded = btoa(`${hour}/${original.pathname}${original.search}`);
+    } catch {
+      continue;
+    }
+    if (encoded.length !== token.length) continue;
+
+    const mapping: Record<string, string> = {};
+    let valid = true;
+    for (let i = 0; i < encoded.length; i += 1) {
+      const source = encoded[i];
+      const target = token[i];
+      if (relayAlphabet.includes(source)) {
+        if (mapping[source] && mapping[source] !== target) {
+          valid = false;
+          break;
+        }
+        mapping[source] = target;
+      } else if (source !== target) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid && (!best || Object.keys(mapping).length > best.mapped)) {
+      best = { hour, mapping, mapped: Object.keys(mapping).length };
+    }
+  }
+  if (!best) return;
+
+  const mappings = relayMappingsByTab.get(tabId) || new Map<string, string>();
+  mappings.set(original.href, relay.href);
+  relayMappingsByTab.set(tabId, mappings);
+
+  const codecs = relayCodecsByTab.get(tabId) || new Map<string, RelayCodec>();
+  const existing = codecs.get(original.origin);
+  if (existing && (existing.hour !== best.hour || existing.prefix !== relay.pathname.slice(0, separator + 1))) return;
+
+  const mapping = existing?.mapping || {};
+  for (const [source, target] of Object.entries(best.mapping)) {
+    if (!mapping[source]) mapping[source] = target;
+  }
+  codecs.set(original.origin, {
+    hour: best.hour,
+    prefix: relay.pathname.slice(0, separator + 1),
+    relayOrigin: relay.origin,
+    mapping
+  });
+  relayCodecsByTab.set(tabId, codecs);
+}
+
+function getRelayUrl(tabId: number, originalUrl: string): string | undefined {
+  const mappings = relayMappingsByTab.get(tabId);
+  if (mappings?.has(originalUrl)) return mappings.get(originalUrl);
+
+  let original: URL;
+  try { original = new URL(originalUrl); } catch { return undefined; }
+  const codec = relayCodecsByTab.get(tabId)?.get(original.origin);
+  if (!codec) return undefined;
+
+  let encoded: string;
+  try {
+    encoded = btoa(`${codec.hour}/${original.pathname}${original.search}`);
+  } catch {
+    return undefined;
+  }
+  if ([...encoded].some((char) => relayAlphabet.includes(char) && !codec.mapping[char])) return undefined;
+  const token = [...encoded].map((char) => relayAlphabet.includes(char) ? codec.mapping[char] : char).join('');
+  return `${codec.relayOrigin}${codec.prefix}${token}`;
+}
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.url !== undefined) {
+    currentPageUrlByTab.set(tabId, changeInfo.url);
+  }
+  if (changeInfo.status === 'loading' || changeInfo.url !== undefined) {
+    navigationGenerationByTab.delete(tabId);
+    resetTabState(tabId);
+  }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  currentPageUrlByTab.set(tabId, null);
+  navigationGenerationByTab.delete(tabId);
+  resetTabState(tabId);
+});
+
+// Active downloads: key = downloadKey, value = tracking info
+const activeDownloads = new Map<string, {
+  pid?: number;
+  downloadId?: number;
+  type: 'convert' | 'direct' | 'ytdlp';
+  video?: VideoInfo;
+  directory: string;
+  filename: string;
+  tabId?: number;
+  lastProgress?: { percent: number; speed?: string; bytesReceived?: number; totalBytes?: number; eta?: number };
+}>();
+
+// Popup connections
+const popupPorts = new Set<chrome.runtime.Port>();
+
+// Default download directory (sent by CoApp or fallback)
+let defaultDownloadDir = '';
+let coappPlatform = '';
+let cachedSettings: Settings | null = null;
+
+async function getSettings(): Promise<Settings> {
+  if (!cachedSettings) {
+    cachedSettings = await loadSettings();
+  }
+  return cachedSettings;
+}
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes.settings) {
+    cachedSettings = changes.settings.newValue || null;
+  }
+});
+
+function notify(title: string, message: string): void {
+  getSettings().then(settings => {
+    if (settings.showNotifications) {
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: chrome.runtime.getURL('public/icons/icon-128.png'),
+        title: `MediaGrabber — ${title}`,
+        message
+      });
+    }
+  });
+}
+
+// Register handlers for CoApp → extension calls (push progress)
+nativeClient.listen({
+  // FFmpeg progress push: (progressTime, currentSeconds, info)
+  convertOutput: (progressTime: number, currentSeconds: number, info: any) => {
+    for (const [key, dl] of activeDownloads) {
+      if (!dl.video) continue;
+      if (dl.type !== 'convert' && dl.type !== 'ytdlp') continue;
+      const duration = dl.video.duration || 0;
+      const percent = info?.percent != null
+        ? Math.min(100, info.percent)
+        : duration > 0 ? Math.min(100, (currentSeconds / duration) * 100) : 0;
+      dl.lastProgress = { percent, speed: info?.speed || '', eta: info?.eta };
+      popupPorts.forEach(port => {
+        port.postMessage({
+          type: 'DOWNLOAD_PROGRESS',
+          downloadId: key,
+          progress: { percent, currentSeconds, speed: info?.speed || '', eta: info?.eta, bitrate: info?.bitrate || '' }
+        });
+      });
+    }
+  },
+
+  // CoApp tells us the ffmpeg PID for a convert operation
+  convertStartNotification: (startHandler: any, pid: number) => {
+    const keyedDownload = activeDownloads.get(String(startHandler));
+    if (keyedDownload && keyedDownload.type === 'convert') {
+      keyedDownload.pid = pid;
+      return;
+    }
+
+    // Fallback for older CoApp calls without startHandler.
+    for (const dl of activeDownloads.values()) {
+      if (dl.type === 'convert' && dl.pid === undefined) {
+        dl.pid = pid;
+        break;
+      }
+    }
+  },
+
+  // Direct download complete (pushed by CoApp)
+  downloadComplete: (downloadId: number, outputPath: string) => {
+    const key = `direct_${downloadId}`;
+    const dl = activeDownloads.get(key);
+    if (dl) {
+      popupPorts.forEach(port => {
+        port.postMessage({ type: 'DOWNLOAD_COMPLETE', downloadId: key, outputPath });
+      });
+      activeDownloads.delete(key);
+    }
+  },
+
+  // Direct download error (pushed by CoApp)
+  downloadError: (downloadId: number, error: string) => {
+    const key = `direct_${downloadId}`;
+    popupPorts.forEach(port => {
+      port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: key, error });
+    });
+    activeDownloads.delete(key);
+  }
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('[MediaGrabber] Extension installed');
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  console.log('[MediaGrabber] Service worker starting');
+});
+
+// --- Media detection via webRequest (works in MV3 service worker) ---
+
+chrome.webRequest.onBeforeRequest.addListener(
+  (details) => {
+    if (details.tabId < 0) return;
+
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(details.url);
+    } catch {
+      return;
+    }
+
+    if (!isMediaUrl(parsedUrl)) return;
+
+    void handleInterceptedMedia(details.tabId, details.url, undefined, getRequestReferer(details.initiator));
+  },
+  { urls: ['<all_urls>'] }
+);
+
+chrome.webRequest.onHeadersReceived.addListener(
+  (details) => {
+    if (details.tabId < 0) return;
+    if (details.statusCode < 200 || details.statusCode >= 300) return;
+
+    const type = getMediaTypeFromContentType(getContentType(details.responseHeaders));
+    if (type) {
+      void handleInterceptedMedia(details.tabId, details.url, type, getRequestReferer(details.initiator));
+    }
+  },
+  { urls: ['<all_urls>'] },
+  ['responseHeaders']
+);
+
+function getContentType(headers?: chrome.webRequest.HttpHeader[]): string {
+  const header = headers?.find((item) => item.name.toLowerCase() === 'content-type');
+  return (header?.value || '').split(';', 1)[0].trim().toLowerCase();
+}
+
+function getMediaTypeFromContentType(contentType: string): VideoInfo['type'] | undefined {
+  if (
+    contentType === 'application/vnd.apple.mpegurl' ||
+    contentType === 'application/x-mpegurl' ||
+    contentType === 'audio/mpegurl' ||
+    contentType === 'audio/x-mpegurl'
+  ) {
+    return 'hls';
+  }
+
+  if (contentType === 'application/dash+xml') return 'dash';
+  return undefined;
+}
+
+function getRequestReferer(initiator?: string): string | undefined {
+  if (!initiator || initiator === 'null') return undefined;
+  try {
+    const url = new URL(initiator);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return undefined;
+    return `${url.origin}/`;
+  } catch {
+    return undefined;
+  }
+}
+
+function getFfmpegHttpArgs(referer?: string): string[] {
+  if (!referer) return [];
+  try {
+    return ['-referer', referer, '-headers', `Origin: ${new URL(referer).origin}\r\n`];
+  } catch {
+    return ['-referer', referer];
+  }
+}
+
+function isMediaUrl(url: URL): boolean {
+  // Only http(s) — exclude blob:, data:, chrome-extension:, ws:, etc.
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return false;
+
+  const path = url.pathname.toLowerCase();
+
+  // HLS
+  if (path.endsWith('.m3u8') || path.includes('.m3u8')) return true;
+  // DASH
+  if (path.endsWith('.mpd') || path.includes('.mpd')) return true;
+  // Direct video files
+  if (path.endsWith('.mp4')) return true;
+  if (path.endsWith('.webm')) return true;
+
+  // Do NOT match .ts (TypeScript files) or /manifest (web app manifests)
+  return false;
+}
+
+function getMediaType(url: string): VideoInfo['type'] {
+  const path = new URL(url).pathname.toLowerCase();
+  if (path.includes('.m3u8')) return 'hls';
+  if (path.includes('.mpd')) return 'dash';
+  if (path.endsWith('.mp4')) return 'mp4';
+  if (path.endsWith('.webm')) return 'webm';
+  return 'direct';
+}
+
+function isYouTubeUrl(url: string): boolean {
+  try {
+    const u = new URL(url);
+    const h = u.hostname;
+    return h === 'youtube.com' || h === 'www.youtube.com' ||
+           h === 'm.youtube.com' || h === 'youtu.be' ||
+           h === 'youtube-nocookie.com' || h === 'www.youtube-nocookie.com';
+  } catch {
+    return false;
+  }
+}
+
+function fallbackYtdlpQualities(url: string): VideoInfo['qualities'] {
+  return [
+    { label: 'Best', height: 0, url, bitrate: 0, formatArgs: ['-f', 'bv*+ba/b'] },
+    { label: 'Audio MP3', height: 0, url, bitrate: 0, formatArgs: ['-f', 'ba', '-x', '--audio-format', 'mp3', '--audio-quality', '0'] }
+  ];
+}
+
+function generateVideoId(url: string): string {
+  // Safe base64 for non-ASCII URLs
+  try {
+    return `video_${btoa(encodeURIComponent(url)).substring(0, 20)}_${Date.now()}`;
+  } catch {
+    return `video_${Date.now()}_${Math.random().toString(36).substring(2, 12)}`;
+  }
+}
+
+function mergeQualities(a: VideoInfo['qualities'] = [], b: VideoInfo['qualities'] = []): VideoInfo['qualities'] {
+  const merged = new Map<string, VideoInfo['qualities'][number]>();
+  [...a, ...b].forEach((quality) => {
+    if (quality?.url && !merged.has(quality.url)) {
+      merged.set(quality.url, quality);
+    }
+  });
+  return Array.from(merged.values());
+}
+
+function mergeChildUrls(a?: string[], b?: string[]): string[] | undefined {
+  const merged = Array.from(new Set([...(a || []), ...(b || [])]));
+  return merged.length > 0 ? merged : undefined;
+}
+
+function commitVideos(tabId: number, videos: VideoInfo[]): void {
+  mediaByTab.set(tabId, videos);
+  const visibleCount = getVisibleVideosForTab(tabId).length;
+  chrome.action.setBadgeText({ tabId, text: visibleCount > 0 ? String(visibleCount) : '' });
+  if (visibleCount > 0) {
+    chrome.action.setBadgeBackgroundColor({ tabId, color: '#4CAF50' });
+  }
+  notifyPopups(tabId);
+}
+
+function getVisibleVideosForTab(tabId: number): VideoInfo[] {
+  const videos = mediaByTab.get(tabId) || [];
+  const metadata = pageMetadataByTab.get(tabId);
+  if (metadata?.pageUrl && isYouTubeUrl(metadata.pageUrl)) {
+    return videos.filter(video => video.type === 'ytdlp');
+  }
+  const timedVideos = videos.filter(video =>
+    typeof video.duration === 'number' && isFinite(video.duration) && video.duration > 0
+  );
+  return timedVideos.length > 0 ? timedVideos : videos;
+}
+
+function upsertVideo(tabId: number, video: VideoInfo): void {
+  let videos = mediaByTab.get(tabId) || [];
+
+  if (video.type === 'hls') {
+    const childUrls = new Set([
+      ...(video.qualities || []).map((q) => q.url),
+      ...(video.childUrls || [])
+    ]);
+
+    // Variant playlists are implementation details of a master HLS playlist.
+    // Keep only the master entry that owns the quality list.
+    const belongsToExistingMaster = videos.some((existing) =>
+      existing.type === 'hls' &&
+      existing.url !== video.url &&
+      (
+        existing.qualities?.some((quality) => quality.url === video.url) ||
+        existing.childUrls?.includes(video.url)
+      )
+    );
+
+    if (belongsToExistingMaster) {
+      return;
+    }
+
+    if (childUrls.size > 0) {
+      videos = videos.filter((existing) =>
+        !(existing.type === 'hls' && existing.url !== video.url && childUrls.has(existing.url))
+      );
+    }
+
+  }
+
+  const existingIndex = videos.findIndex((v) => v.url === video.url);
+
+  if (existingIndex >= 0) {
+    const existing = videos[existingIndex];
+    videos[existingIndex] = {
+      ...existing,
+      ...video,
+      title: video.title || existing.title,
+      qualities: video.qualities?.length ? video.qualities : videos[existingIndex].qualities,
+      childUrls: video.childUrls?.length ? video.childUrls : videos[existingIndex].childUrls,
+      thumbnail: video.thumbnail || existing.thumbnail,
+      duration: video.duration || existing.duration,
+      fileSize: video.fileSize || existing.fileSize
+    };
+  } else {
+    videos.push(video);
+  }
+
+  commitVideos(tabId, videos);
+}
+
+async function getTabTitle(tabId: number): Promise<string> {
+  return new Promise((resolve) => {
+    chrome.tabs.get(tabId, (tab) => {
+      resolve(tab?.title || 'Detected media');
+    });
+  });
+}
+
+async function handleInterceptedMedia(
+  tabId: number,
+  url: string,
+  forcedType?: VideoInfo['type'],
+  requestReferer?: string
+): Promise<void> {
+  const generation = getPageGeneration(tabId);
+  const seen = interceptedMediaByTab.get(tabId) || new Set<string>();
+  if (seen.has(url)) return;
+  seen.add(url);
+  interceptedMediaByTab.set(tabId, seen);
+
+  const metadata = pageMetadataByTab.get(tabId);
+  const title = metadata?.title || await getTabTitle(tabId);
+  if (generation !== getPageGeneration(tabId)) return;
+  const type = forcedType || getMediaType(url);
+  const referer = requestReferer || metadata?.pageUrl;
+
+  // Deduplicate HLS/DASH manifests from redirect chains (same path, different CDN host)
+  if (type === 'hls' || type === 'dash') {
+    let urlPath: string;
+    try { urlPath = new URL(url).pathname; } catch { urlPath = url; }
+    const existing = (mediaByTab.get(tabId) || []).find(v =>
+      v.type === type && (() => { try { return new URL(v.url).pathname === urlPath; } catch { return false; } })()
+    );
+    if (existing) return;
+  }
+
+  let qualities: VideoInfo['qualities'] = [];
+  let childUrls: string[] | undefined;
+  let duration: number | undefined;
+  let fileSize: number | undefined;
+
+  if (type === 'hls') {
+    try {
+      const parsed = await M3U8ParserWrapper.fetchAndParse(url, referer);
+      duration = parsed.duration;
+      childUrls = parsed.childUrls;
+
+      const audioRenditions = (parsed.mediaRenditions || [])
+        .filter((r) => r.type.toUpperCase() === 'AUDIO');
+      const activeAudioGroups = new Set(
+        parsed.variants.map((variant) => variant.audioGroupId).filter(Boolean)
+      );
+
+      for (const variant of parsed.variants) {
+        const matchingAudio = audioRenditions
+          .filter((r) => r.groupId === variant.audioGroupId && r.uri)
+          .sort((a, b) => Number(Boolean(b.default)) - Number(Boolean(a.default)) ||
+            Number(Boolean(b.autoselect)) - Number(Boolean(a.autoselect)));
+
+        if (matchingAudio.length === 0) {
+          qualities.push({
+            height: variant.height || 0,
+            width: variant.width,
+            bitrate: variant.bandwidth,
+            url: variant.url,
+            label: variant.name,
+            kind: 'video' as const
+          });
+        } else {
+          for (const audio of matchingAudio) {
+            const audioLabel = audio.name || audio.language || 'Audio';
+            qualities.push({
+              height: variant.height || 0,
+              width: variant.width,
+              bitrate: variant.bandwidth,
+              url: variant.url,
+              label: `${variant.name} - ${audioLabel}`,
+              kind: 'video' as const,
+              language: audio.language,
+              formatArgs: [
+                ...getFfmpegHttpArgs(referer),
+                '-i', variant.url,
+                ...getFfmpegHttpArgs(referer),
+                '-i', audio.uri!,
+                '-map', '0:v:0',
+                '-map', '1:a:0',
+                '-c', 'copy'
+              ]
+            });
+          }
+        }
+      }
+
+      for (const r of parsed.mediaRenditions || []) {
+        if (!r.uri || r.type === 'CLOSED-CAPTIONS') continue;
+        if (r.groupId && !activeAudioGroups.has(r.groupId)) continue;
+        const kind = r.type === 'AUDIO' ? 'audio' as const : r.type === 'SUBTITLES' ? 'subtitle' as const : undefined;
+        if (!kind) continue;
+        const labelParts: string[] = [];
+        if (r.type === 'AUDIO') labelParts.push('Audio');
+        else if (r.type === 'SUBTITLES') labelParts.push('Subtitles');
+        if (r.name) labelParts.push(r.name);
+        else if (r.language) labelParts.push(r.language);
+        qualities.push({
+          height: 0,
+          url: r.uri,
+          bitrate: 0,
+          label: labelParts.join(' — ') || 'Alternate track',
+          kind,
+          language: r.language
+        });
+      }
+
+      // Fallback: fetch media playlist for duration if master had none
+      if (!duration && parsed.variants.length > 0) {
+        try {
+          const mediaPlaylist = await M3U8ParserWrapper.fetchAndParse(parsed.variants[0].url, referer);
+          duration = mediaPlaylist.duration;
+        } catch {
+          // ignore
+        }
+      }
+    } catch (error) {
+      console.warn('[MediaGrabber] Failed to parse HLS manifest:', error);
+      seen.delete(url);
+      return;
+    }
+  }
+
+  if (type === 'dash') {
+    try {
+      const parsed = await DashParserWrapper.fetchAndParse(url, referer);
+      duration = parsed.duration;
+      childUrls = parsed.childUrls;
+      qualities = parsed.variants.map((variant) => ({
+        height: variant.height || 0,
+        width: variant.width,
+        bitrate: variant.bandwidth,
+        url: variant.url,
+        label: variant.name
+      }));
+
+      for (const s of parsed.subtitleTracks || []) {
+        const labelParts = ['Subtitles'];
+        if (s.lang) labelParts.push(s.lang);
+        qualities.push({
+          height: 0,
+          url: s.url,
+          bitrate: 0,
+          label: labelParts.join(' — '),
+          kind: 'subtitle' as const,
+          language: s.lang
+        });
+      }
+    } catch (error) {
+      console.warn('[MediaGrabber] Failed to parse DASH manifest:', error);
+    }
+  }
+
+  if (type === 'mp4' || type === 'webm') {
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      const contentLength = response.headers.get('content-length');
+      if (contentLength) fileSize = parseInt(contentLength, 10);
+    } catch {
+      // ignore — some servers don't support HEAD
+    }
+
+    try {
+      await ensureCoAppConnected();
+      const probe = await nativeClient.probe(url, true);
+      const vStream = probe?.streams?.find((s: any) => s.codec_type === 'video');
+      if (vStream) {
+        const height = parseInt(vStream.height, 10) || 0;
+        const width = parseInt(vStream.width, 10) || 0;
+        qualities = [{
+          height,
+          width: width || undefined,
+          bitrate: 0,
+          url,
+          label: M3U8ParserWrapper.getQualityName(height)
+        }];
+      }
+      if (probe?.format?.duration) {
+        duration = parseFloat(probe.format.duration);
+      }
+      if (probe?.format?.size && !fileSize) {
+        fileSize = parseInt(probe.format.size, 10);
+      }
+    } catch {
+      // ffprobe unavailable or URL unreachable — keep HEAD-only result
+    }
+  }
+
+  if (generation !== getPageGeneration(tabId)) return;
+  upsertVideo(tabId, {
+    id: generateVideoId(url),
+    title,
+    url,
+    type,
+    qualities,
+    childUrls,
+    referer,
+    duration: duration || metadata?.duration,
+    thumbnail: metadata?.thumbnail,
+    fileSize
+  });
+
+  console.log('[MediaGrabber] Intercepted media:', url, type);
+}
+
+// --- Popup communication ---
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === 'popup') {
+    popupPorts.add(port);
+
+    port.onMessage.addListener((msg) => {
+      handlePopupMessage(port, msg);
+    });
+
+    port.onDisconnect.addListener(() => {
+      popupPorts.delete(port);
+    });
+  }
+});
+
+function handlePopupMessage(port: chrome.runtime.Port, msg: any): void {
+  switch (msg.type) {
+    case 'GET_MEDIA':
+      if (typeof msg.tabId === 'number') {
+        const videos = getVisibleVideosForTab(msg.tabId);
+        port.postMessage({ type: 'MEDIA_LIST', videos });
+      } else {
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+          const videos = tabs[0]?.id ? getVisibleVideosForTab(tabs[0].id) : [];
+          port.postMessage({ type: 'MEDIA_LIST', videos });
+        });
+      }
+      break;
+
+    case 'DOWNLOAD':
+      startDownload(msg.video, msg.filename, msg.tabId)
+        .then(result => port.postMessage({ type: 'DOWNLOAD_STARTED', ...result }))
+        .catch(err => port.postMessage({ type: 'ERROR', message: err.message }));
+      break;
+
+    case 'CANCEL_DOWNLOAD':
+      handleCancelDownload(msg.downloadId)
+        .then(result => port.postMessage({ type: 'DOWNLOAD_CANCELLED', ...result }))
+        .catch(err => port.postMessage({ type: 'ERROR', message: err.message }));
+      break;
+
+    case 'GET_ACTIVE_DOWNLOAD': {
+      const tabId = msg.tabId;
+      const entry = [...activeDownloads.entries()].find(([, dl]) => dl.tabId === tabId);
+      if (entry) {
+        const [key, dl] = entry;
+        port.postMessage({
+          type: 'ACTIVE_DOWNLOAD',
+          downloadId: key,
+          video: dl.video,
+          filename: dl.filename,
+          progress: dl.lastProgress || { percent: 0 }
+        });
+      } else {
+        port.postMessage({ type: 'NO_ACTIVE_DOWNLOAD' });
+      }
+      break;
+    }
+  }
+}
+
+function notifyPopups(tabId: number): void {
+  const videos = getVisibleVideosForTab(tabId);
+  if (videos) {
+    popupPorts.forEach(port => {
+      port.postMessage({ type: 'MEDIA_LIST', videos });
+    });
+  }
+}
+
+// --- Download orchestration ---
+
+async function ensureCoAppConnected(): Promise<void> {
+  if (!nativeClient.connected) {
+    await nativeClient.connect();
+  }
+
+  if (!defaultDownloadDir) {
+    try {
+      const info = await nativeClient.info();
+      defaultDownloadDir = info?.downloadDir || '';
+      coappPlatform = info?.platform || '';
+    } catch (error) {
+      console.warn('[MediaGrabber] Failed to read CoApp info:', error);
+    }
+  }
+}
+
+function sanitizeFilename(name: string): string {
+  const sanitized = name.replace(/[<>:"/\\|?*\x00-\x1f]/g, '_').trim();
+  return sanitized || `video_${Date.now()}`;
+}
+
+function ensureFilenameExtension(filename: string, extension: string): string {
+  const baseName = filename.replace(/\.(mp4|webm|mkv|mov|m4v|avi|ts|m3u8|mp3|m4a|aac|opus|wav|flac|vtt|srt|ttml)$/i, '');
+  return `${baseName}.${extension.replace(/^\./, '')}`;
+}
+
+function getDefaultExtension(video: VideoInfo, type: VideoInfo['type']): string {
+  if (video.qualities[0]?.kind === 'subtitle') return video.qualities[0]?.ext || 'vtt';
+  if (video.qualities[0]?.kind === 'audio') return video.qualities[0]?.ext || 'm4a';
+  if (type === 'webm') return 'webm';
+  if (video.qualities[0]?.ext === 'mp3') return 'mp3';
+  return 'mp4';
+}
+
+function formatFfmpegError(exitCode: number | null, stderr: string): string {
+  const details = stderr.trim();
+  if (/HTTP error (401|403|410)|Server returned 4XX/i.test(details)) {
+    return 'Ссылка на поток недоступна или устарела. Запустите плеер заново и повторите загрузку.';
+  }
+  if (/Invalid data found|Error opening input/i.test(details)) {
+    return 'FFmpeg не смог открыть поток. Запустите плеер на несколько секунд и повторите загрузку.';
+  }
+  return `FFmpeg exit code ${exitCode}: ${details.slice(-1000)}`;
+}
+
+interface ManifestFile {
+  placeholder: string;
+  content: string;
+}
+
+async function rewriteHlsInput(tabId: number, inputUrl: string, referer: string | undefined, manifestFiles: ManifestFile[]): Promise<string> {
+  let origin: string;
+  try { origin = new URL(inputUrl).origin; } catch { return inputUrl; }
+  if (!relayCodecsByTab.get(tabId)?.has(origin)) return inputUrl;
+
+  const parsed = await M3U8ParserWrapper.fetchAndParse(inputUrl, referer);
+  if (parsed.type !== 'media' || !parsed.manifest) return inputUrl;
+
+  const manifestUrl = parsed.manifestUrl || inputUrl;
+  let rewrittenCount = 0;
+  let unresolvedUri = false;
+  const rewriteUri = (value: string): string => {
+    const absolute = M3U8ParserWrapper.resolveUrl(value, manifestUrl);
+    const relayUrl = getRelayUrl(tabId, absolute);
+    if (!relayUrl) {
+      unresolvedUri = true;
+      return value;
+    }
+    rewrittenCount += 1;
+    return relayUrl;
+  };
+
+  const lines = parsed.manifest.split(/\r?\n/).map((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return line;
+    if (trimmed.startsWith('#')) {
+      return line.replace(/URI="([^"]+)"/g, (_match, uri: string) => `URI="${rewriteUri(uri)}"`);
+    }
+    return line.replace(trimmed, rewriteUri(trimmed));
+  });
+
+  if (rewrittenCount === 0 || unresolvedUri) {
+    throw new Error('Browser relay mapping is incomplete. Start playback for a few seconds and retry the download.');
+  }
+  const placeholder = `__MEDIA_GRABBER_HLS_MANIFEST_${manifestFiles.length}__`;
+  manifestFiles.push({ placeholder, content: lines.join('\n') });
+  return placeholder;
+}
+
+async function prepareHlsArguments(tabId: number, args: string[], referer?: string): Promise<{ args: string[]; manifestFiles: ManifestFile[] }> {
+  const prepared = [...args];
+  const manifestFiles: ManifestFile[] = [];
+  for (let i = 0; i < prepared.length - 1; i += 1) {
+    if (prepared[i] !== '-i' || !/^https?:\/\//i.test(prepared[i + 1])) continue;
+    const originalInput = prepared[i + 1];
+    const rewrittenInput = await rewriteHlsInput(tabId, originalInput, referer, manifestFiles);
+    prepared[i + 1] = rewrittenInput;
+    if (rewrittenInput !== originalInput) {
+      prepared.splice(i, 0,
+        '-protocol_whitelist', 'file,http,https,tcp,tls,crypto,data',
+        '-extension_picky', '0'
+      );
+    }
+  }
+  return { args: prepared, manifestFiles };
+}
+
+function joinOutputPath(directory: string, filename: string): string {
+  if (!directory) return filename;
+  const separator = coappPlatform === 'win32' ? '\\' : '/';
+  return `${directory.replace(/[\\/]$/, '')}${separator}${filename}`;
+}
+
+async function startDownload(video: VideoInfo, filename?: string, tabId?: number): Promise<any> {
+  await ensureCoAppConnected();
+
+  const type = video.type === 'm3u8' ? 'hls' : video.type === 'mpd' ? 'dash' : video.type;
+  const outFilename = ensureFilenameExtension(
+    sanitizeFilename(filename || `${video.title || 'video'}`),
+    getDefaultExtension(video, type)
+  );
+  const directory = defaultDownloadDir;
+
+  if (type === 'hls' || type === 'dash') {
+    // FFmpeg convert path
+    const isSubtitle = video.qualities[0]?.kind === 'subtitle';
+    const codecArg = isSubtitle ? ['-c:s', 'copy'] : ['-c', 'copy'];
+    const formatArgs = video.qualities[0]?.formatArgs;
+    const downloadKey = `convert_${Date.now()}`;
+    const outputPath = joinOutputPath(directory, outFilename);
+
+    const inputArgs = [...getFfmpegHttpArgs(video.referer), '-i', video.url];
+    const baseArgs = formatArgs && formatArgs.length > 0
+      ? [...formatArgs, '-y', outputPath]
+      : [...inputArgs, ...codecArg, '-y', outputPath];
+    const prepared = type === 'hls'
+      ? await prepareHlsArguments(tabId ?? -1, baseArgs, video.referer)
+      : { args: baseArgs, manifestFiles: [] };
+
+    activeDownloads.set(downloadKey, {
+      type: 'convert',
+      video,
+      directory,
+      filename: outFilename,
+      tabId
+    });
+
+    // Start ffmpeg asynchronously — progress comes via convertOutput push
+    nativeClient.convert(
+      prepared.args,
+      { progressTime: 1000, startHandler: downloadKey, manifestFiles: prepared.manifestFiles }
+    ).then(result => {
+      if (result.exitCode === 0) {
+        notify('Download complete', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_COMPLETE', downloadId: downloadKey, outputPath });
+        });
+      } else {
+        notify('Download failed', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: formatFfmpegError(result.exitCode, result.stderr) });
+        });
+      }
+      activeDownloads.delete(downloadKey);
+    }).catch(err => {
+      notify('Download failed', err.message);
+      popupPorts.forEach(port => {
+        port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: err.message });
+      });
+      activeDownloads.delete(downloadKey);
+    });
+
+    return { success: true, downloadId: downloadKey };
+  } else if (video.type === 'mse') {
+    // MSE stream — use FFmpeg with captured segment URLs if available
+    const downloadKey = `convert_${Date.now()}`;
+    const outputPath = joinOutputPath(directory, outFilename);
+    const formatArgs = video.qualities[0]?.formatArgs;
+
+    activeDownloads.set(downloadKey, {
+      type: 'convert',
+      video,
+      directory,
+      filename: outFilename,
+      tabId
+    });
+
+    const ffmpegArgs = formatArgs && formatArgs.length > 0
+      ? [...formatArgs, '-y', outputPath]
+      : ['-i', video.url, '-c', 'copy', '-y', outputPath];
+
+    nativeClient.convert(
+      ffmpegArgs,
+      { progressTime: 1000, startHandler: downloadKey }
+    ).then(result => {
+      if (result.exitCode === 0) {
+        notify('Download complete', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_COMPLETE', downloadId: downloadKey, outputPath });
+        });
+      } else {
+        notify('Download failed', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: formatFfmpegError(result.exitCode, result.stderr) });
+        });
+      }
+      activeDownloads.delete(downloadKey);
+    }).catch(err => {
+      notify('Download failed', err.message);
+      popupPorts.forEach(port => {
+        port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: err.message });
+      });
+      activeDownloads.delete(downloadKey);
+    });
+
+    return { success: true, downloadId: downloadKey };
+  } else if (video.type === 'ytdlp') {
+    // yt-dlp path (YouTube etc.)
+    const downloadKey = `ytdlp_${Date.now()}`;
+    const formatArgs = video.qualities[0]?.formatArgs || fallbackYtdlpQualities(video.url)[0].formatArgs;
+
+    activeDownloads.set(downloadKey, {
+      type: 'ytdlp',
+      video,
+      directory,
+      filename: outFilename,
+      tabId
+    });
+
+    nativeClient.ytdlp(
+      video.url,
+      formatArgs,
+      { progressTime: 1000, startHandler: downloadKey, outputDir: directory || undefined, filename: outFilename.replace(/\.[^.]+$/, '.%(ext)s') }
+    ).then(result => {
+      if (result.exitCode === 0) {
+        notify('Download complete', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_COMPLETE', downloadId: downloadKey });
+        });
+      } else {
+        notify('Download failed', outFilename);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: `yt-dlp exit code ${result.exitCode}: ${result.stderr}` });
+        });
+      }
+      activeDownloads.delete(downloadKey);
+    }).catch(err => {
+      notify('Download failed', err.message);
+      popupPorts.forEach(port => {
+        port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: err.message });
+      });
+      activeDownloads.delete(downloadKey);
+    });
+
+    return { success: true, downloadId: downloadKey };
+  } else {
+    // Direct download path
+    const downloadId = await nativeClient.downloadFile({
+      url: video.url,
+      directory: directory || undefined,
+      filename: outFilename
+    });
+
+    const downloadKey = `direct_${downloadId}`;
+    activeDownloads.set(downloadKey, {
+      type: 'direct',
+      downloadId,
+      video,
+      directory,
+      filename: outFilename,
+      tabId
+    });
+
+    // Poll for direct download progress (CoApp pushes complete/error, but we poll for bytes)
+    startDirectProgressPolling(downloadKey, downloadId, video.duration);
+
+    return { success: true, downloadId: downloadKey };
+  }
+}
+
+function startDirectProgressPolling(downloadKey: string, downloadId: number, duration?: number): void {
+  const timer = setInterval(async () => {
+    try {
+      const results = await nativeClient.searchDownloads(downloadId);
+      if (!results || results.length === 0) {
+        clearInterval(timer);
+        return;
+      }
+
+      const dl = results[0];
+      const percent = dl.totalBytes > 0 ? (dl.bytesReceived / dl.totalBytes) * 100 : 0;
+
+      const activeDl = activeDownloads.get(downloadKey);
+      if (activeDl) {
+        activeDl.lastProgress = { percent, bytesReceived: dl.bytesReceived, totalBytes: dl.totalBytes };
+      }
+
+      popupPorts.forEach(port => {
+        port.postMessage({
+          type: 'DOWNLOAD_PROGRESS',
+          downloadId: downloadKey,
+          progress: { percent, bytesReceived: dl.bytesReceived, totalBytes: dl.totalBytes }
+        });
+      });
+
+      if (dl.state === 'complete') {
+        clearInterval(timer);
+        activeDownloads.delete(downloadKey);
+      } else if (dl.state === 'interrupted') {
+        clearInterval(timer);
+        popupPorts.forEach(port => {
+          port.postMessage({ type: 'DOWNLOAD_ERROR', downloadId: downloadKey, error: dl.error || 'Download interrupted' });
+        });
+        activeDownloads.delete(downloadKey);
+      }
+    } catch {
+      // Single poll failure — don't abort, just skip this tick
+    }
+  }, 2000);
+}
+
+async function handleCancelDownload(downloadId: string): Promise<any> {
+  const dl = activeDownloads.get(downloadId);
+  if (!dl) {
+    return { success: false, error: 'Download not found' };
+  }
+
+  if (dl.type === 'convert' && dl.pid !== undefined) {
+    await nativeClient.abortConvert(dl.pid);
+  } else if (dl.type === 'ytdlp' && dl.pid !== undefined) {
+    await nativeClient.abortYtdlp(dl.pid);
+  } else if (dl.type === 'direct' && dl.downloadId !== undefined) {
+    await nativeClient.cancelDownload(dl.downloadId);
+  }
+
+  activeDownloads.delete(downloadId);
+  return { success: true };
+}
+
+// Handle messages from content script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  handleMessage(message, sender)
+    .then(sendResponse)
+    .catch((err) => sendResponse({ error: err.message }));
+  return true;
+});
+
+async function handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<any> {
+  switch (message.type) {
+    case 'VIDEO_DETECTED':
+      return handleVideoDetected(sender.tab?.id, message.video, sender.frameId, sender.url, sender.tab?.url);
+
+    case 'MEDIA_URL_MAP':
+      return handleMediaUrlMap(sender.tab?.id, message, sender.frameId, sender.url, sender.tab?.url);
+
+    case 'PAGE_METADATA':
+      return handlePageMetadata(sender.tab?.id, message.metadata, sender.frameId, sender.url, sender.tab?.url);
+
+    case 'PAGE_NAVIGATION':
+      return handlePageNavigation(sender.tab?.id, message.pageUrl, message.generation, sender.frameId, sender.url, sender.tab?.url);
+
+    case 'GET_VIDEOS':
+      return getVideosForTab(message.tabId);
+
+    case 'PING': {
+      let connected = false;
+      let version: string | undefined;
+      try {
+        connected = nativeClient.connected;
+        if (connected) {
+          const info = await nativeClient.info();
+          version = info?.version || 'unknown';
+        }
+      } catch { /* ignore */ }
+      return { success: true, timestamp: Date.now(), connected, version };
+    }
+
+    default:
+      return { error: `Unknown message type: ${message.type}` };
+  }
+}
+
+function currentTopPageUrl(tabId: number, senderTabUrl?: string): string | undefined {
+  const trackedUrl = currentPageUrlByTab.get(tabId);
+  if (trackedUrl === null) return undefined;
+  if (trackedUrl && senderTabUrl && trackedUrl !== senderTabUrl) return undefined;
+  if (trackedUrl) return trackedUrl;
+  if (senderTabUrl) {
+    currentPageUrlByTab.set(tabId, senderTabUrl);
+    return senderTabUrl;
+  }
+  return undefined;
+}
+
+function isCurrentContentGeneration(tabId: number, generation: unknown, isTopFrame: boolean): boolean {
+  if (typeof generation !== 'number' || !Number.isInteger(generation)) return false;
+
+  const knownGeneration = navigationGenerationByTab.get(tabId);
+  if (knownGeneration === undefined) {
+    if (!isTopFrame) return false;
+    navigationGenerationByTab.set(tabId, generation);
+    return true;
+  }
+
+  return generation === knownGeneration;
+}
+
+function handleVideoDetected(tabId: number | undefined, video: VideoInfo, frameId?: number, frameUrl?: string, senderTabUrl?: string): any {
+  if (tabId === undefined) return { error: 'No tabId' };
+  const detectedPageUrl = (video as VideoInfo & { pageUrl?: string; generation?: number }).pageUrl;
+  const generation = (video as VideoInfo & { pageUrl?: string; generation?: number }).generation;
+  const currentUrl = currentTopPageUrl(tabId, senderTabUrl);
+  if (!detectedPageUrl || !frameUrl || detectedPageUrl !== frameUrl || !currentUrl) {
+    return { success: true, stale: true };
+  }
+  if (frameId === 0 && detectedPageUrl !== currentUrl) {
+    return { success: true, stale: true };
+  }
+  if (!isCurrentContentGeneration(tabId, generation, frameId === 0)) {
+    return { success: true, stale: true };
+  }
+  upsertVideo(tabId, video);
+  console.log(`[MediaGrabber] Detected video on tab ${tabId}:`, video.title);
+  return { success: true, count: (mediaByTab.get(tabId) || []).length };
+}
+
+function handleMediaUrlMap(tabId: number | undefined, mapping: any, frameId?: number, frameUrl?: string, senderTabUrl?: string): any {
+  if (tabId === undefined) return { error: 'No tabId' };
+  const currentUrl = currentTopPageUrl(tabId, senderTabUrl);
+  if (!mapping.pageUrl || !frameUrl || mapping.pageUrl !== frameUrl || !currentUrl) {
+    return { success: true, stale: true };
+  }
+  if (frameId === 0 && mapping.pageUrl !== currentUrl) {
+    return { success: true, stale: true };
+  }
+  if (!isCurrentContentGeneration(tabId, mapping.generation, frameId === 0)) {
+    return { success: true, stale: true };
+  }
+  if (typeof mapping.originalUrl !== 'string' || typeof mapping.relayUrl !== 'string') {
+    return { success: true };
+  }
+
+  learnRelayCodec(tabId, mapping.originalUrl, mapping.relayUrl);
+  return { success: true };
+}
+
+function handlePageNavigation(tabId: number | undefined, pageUrl: string, generation: number, frameId?: number, frameUrl?: string, senderTabUrl?: string): any {
+  if (tabId === undefined) return { error: 'No tabId' };
+  const currentUrl = currentTopPageUrl(tabId, senderTabUrl);
+  if (frameId !== 0 || !pageUrl || !frameUrl || pageUrl !== frameUrl || pageUrl !== senderTabUrl || pageUrl !== currentUrl) {
+    return { success: true, stale: true };
+  }
+
+  const previousGeneration = navigationGenerationByTab.get(tabId);
+  if (typeof generation !== 'number' || !Number.isInteger(generation) || (previousGeneration !== undefined && generation <= previousGeneration)) {
+    return { success: true, stale: true };
+  }
+
+  navigationGenerationByTab.set(tabId, generation);
+  resetTabState(tabId);
+  return { success: true };
+}
+
+function normalizeYtdlpQualities(url: string, qualities: any[]): VideoInfo['qualities'] {
+  return (qualities || [])
+    .filter(q => Array.isArray(q?.formatArgs) && q.formatArgs.length > 0)
+    .map(q => ({
+      height: Number(q.height) || 0,
+      width: Number(q.width) || undefined,
+      bitrate: Number(q.bitrate) || 0,
+      url,
+      label: q.label,
+      formatArgs: q.formatArgs,
+      formatId: q.formatId,
+      ext: q.ext,
+      fps: Number(q.fps) || undefined,
+      fileSize: Number(q.fileSize) || undefined,
+      kind: q.kind,
+      language: q.language
+    }));
+}
+
+async function loadYouTubeFormats(tabId: number, url: string, videoId: string, metadata: PageMetadata, generation: number): Promise<void> {
+  try {
+    await ensureCoAppConnected();
+    const info = await nativeClient.ytdlpFormats(url);
+    const currentMetadata = pageMetadataByTab.get(tabId) || metadata;
+    if (generation !== getPageGeneration(tabId) || currentMetadata.pageUrl !== url) return;
+
+    const qualities = normalizeYtdlpQualities(url, info.qualities);
+    upsertVideo(tabId, {
+      id: videoId,
+      title: info.title || currentMetadata.title || 'YouTube Video',
+      url,
+      type: 'ytdlp',
+      qualities: qualities.length ? qualities : fallbackYtdlpQualities(url),
+      thumbnail: info.thumbnail || currentMetadata.thumbnail,
+      duration: info.duration || currentMetadata.duration
+    });
+  } catch (error) {
+    console.warn('[MediaGrabber] Failed to load yt-dlp formats:', error);
+    const currentMetadata = pageMetadataByTab.get(tabId) || metadata;
+    if (generation !== getPageGeneration(tabId) || currentMetadata.pageUrl !== url) return;
+    upsertVideo(tabId, {
+      id: videoId,
+      title: currentMetadata.title || 'YouTube Video',
+      url,
+      type: 'ytdlp',
+      qualities: fallbackYtdlpQualities(url),
+      thumbnail: currentMetadata.thumbnail,
+      duration: currentMetadata.duration
+    });
+  }
+}
+
+function addYouTubeVideo(tabId: number, metadata: PageMetadata): void {
+  const url = metadata.pageUrl!;
+  const videoId = `ytdlp_${tabId}`;
+
+  const existing = (mediaByTab.get(tabId) || []).find(v => v.id === videoId);
+  if (existing) {
+    const urlChanged = existing.url !== url;
+    const videos = (mediaByTab.get(tabId) || []).map(v =>
+      v.id === videoId
+        ? {
+            ...v,
+            title: metadata.title || v.title,
+            thumbnail: metadata.thumbnail || v.thumbnail,
+            duration: metadata.duration || v.duration,
+            url,
+            qualities: urlChanged ? [] : v.qualities
+          }
+        : v
+    );
+    commitVideos(tabId, videos);
+  }
+
+  if (ytdlpFormatUrlByTab.get(tabId) === url) return;
+  ytdlpFormatUrlByTab.set(tabId, url);
+  void loadYouTubeFormats(tabId, url, videoId, metadata, getPageGeneration(tabId));
+}
+
+function handlePageMetadata(tabId: number | undefined, metadata: PageMetadata, frameId?: number, frameUrl?: string, senderTabUrl?: string): any {
+  if (tabId === undefined) return { error: 'No tabId' };
+
+  const isTopFrame = frameId === 0;
+  if (!metadata.pageUrl || !frameUrl || metadata.pageUrl !== frameUrl) {
+    return { success: true, stale: true };
+  }
+
+  if (isTopFrame) {
+    if (!senderTabUrl || metadata.pageUrl !== senderTabUrl) {
+      return { success: true, stale: true };
+    }
+
+    const trackedUrl = currentPageUrlByTab.get(tabId);
+    if (trackedUrl === null) {
+      return { success: true, stale: true };
+    }
+    currentPageUrlByTab.set(tabId, metadata.pageUrl);
+    if (trackedUrl && trackedUrl !== metadata.pageUrl) {
+      navigationGenerationByTab.delete(tabId);
+      resetTabState(tabId);
+    }
+
+    if (typeof metadata.generation !== 'number' || !Number.isInteger(metadata.generation)) {
+      return { success: true, stale: true };
+    }
+    if (!isCurrentContentGeneration(tabId, metadata.generation, true)) {
+      return { success: true, stale: true };
+    }
+  } else if (!currentTopPageUrl(tabId, senderTabUrl)) {
+    return { success: true, stale: true };
+  }
+
+  if (!isTopFrame && !isCurrentContentGeneration(tabId, metadata.generation, false)) {
+    return { success: true, stale: true };
+  }
+
+  let previous = pageMetadataByTab.get(tabId) || {};
+  if (!isTopFrame && !previous.pageUrl) {
+    return { success: true, stale: true };
+  }
+  if (isTopFrame && previous.pageUrl && metadata.pageUrl && previous.pageUrl !== metadata.pageUrl) {
+    resetTabState(tabId);
+    previous = {};
+  }
+
+  const merged: PageMetadata = {
+    pageUrl: isTopFrame ? (metadata.pageUrl || previous.pageUrl) : previous.pageUrl,
+    title: isTopFrame ? (metadata.title || previous.title) : (previous.title || metadata.title),
+    thumbnail: isTopFrame ? (metadata.thumbnail || previous.thumbnail) : (previous.thumbnail || metadata.thumbnail),
+    duration: metadata.duration || previous.duration,
+    generation: isTopFrame ? metadata.generation : previous.generation
+  };
+
+  pageMetadataByTab.set(tabId, merged);
+
+  if (merged.pageUrl && isYouTubeUrl(merged.pageUrl)) {
+    addYouTubeVideo(tabId, merged);
+  }
+
+  const videos = mediaByTab.get(tabId);
+  if (videos?.length) {
+    let changed = false;
+    const updated = videos.map((video) => {
+      const next = {
+        ...video,
+        thumbnail: video.thumbnail || merged.thumbnail,
+        duration: video.duration || merged.duration
+      };
+      changed = changed || next.thumbnail !== video.thumbnail || next.duration !== video.duration;
+      return next;
+    });
+
+    if (changed) {
+      commitVideos(tabId, updated);
+    }
+  }
+
+  return { success: true };
+}
+
+function getVideosForTab(tabId: number): any {
+  return { videos: mediaByTab.get(tabId) || [] };
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "archive": "Downloader--main.zip",
+    "sha256": "7e3b7f3213c0151803a7e5a3bc4ddaf81082a6d1925827d325d96e41d99adb6d",
+    "directory": "sources/downloader-blueprint",
+    "files": 40
+  },
+  {
+    "archive": "ab-download-manager-master.zip",
+    "sha256": "f3688b9c6cc03a864b3b08316466c2d6d3fe47c5effb0dcab02e670722f06f72",
+    "directory": "sources/ab-download-manager",
+    "files": 1207
+  },
+  {
+    "archive": "ab-download-manager-browser-integration-master.zip",
+    "sha256": "8f76be3d3955745664d0edc6d19a76049f981b391c0723a486ee65b496d5b2d4",
+    "directory": "sources/ab-browser-integration",
+    "files": 106
+  },
+  {
+    "archive": "MediaGrabber-main.zip",
+    "sha256": "c8f7682dc38d0039d6e1d9dbd8dbfe88aafecd9228eec564a01df11496271a15",
+    "directory": "sources/mediagrabber",
+    "files": 71
+  },
+  {
+    "archive": "reclip-main.zip",
+    "sha256": "fe81ceab0ffe4ace895ee241721de9016117afb50db28f30812cbcd8df6d48f0",
+    "directory": "sources/reclip",
+    "files": 14
+  }
+]

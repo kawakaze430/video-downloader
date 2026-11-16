@@ -1,0 +1,183 @@
+import { Settings, DEFAULT_SETTINGS, loadSettings, saveSettings, resetSettings, checkCoAppStatus, ThemeMode } from '../lib/settings';
+import { applyTheme, initTheme } from '../lib/theme';
+
+let currentSettings: Settings = { ...DEFAULT_SETTINGS };
+let selectedTheme: ThemeMode = 'system';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await initTheme();
+  await initializeSettings();
+  setupEventListeners();
+  setupThemeSelector();
+  checkCoAppConnection();
+});
+
+async function initializeSettings(): Promise<void> {
+  try {
+    currentSettings = await loadSettings();
+    selectedTheme = currentSettings.theme;
+
+    const defaultQuality = document.getElementById('default-quality') as HTMLSelectElement;
+    const showNotifications = document.getElementById('show-notifications') as HTMLInputElement;
+
+    if (defaultQuality) defaultQuality.value = currentSettings.defaultQuality;
+    if (showNotifications) showNotifications.checked = currentSettings.showNotifications;
+  } catch (error) {
+    console.error('[Settings] Failed to load settings:', error);
+  }
+}
+
+function setupThemeSelector(): void {
+  const selector = document.getElementById('theme-selector');
+  if (!selector) return;
+
+  updateThemeButtons(selectedTheme);
+
+  const buttons = Array.from(selector.querySelectorAll<HTMLButtonElement>('.theme-option'));
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = (btn as HTMLElement).dataset.theme as ThemeMode;
+      if (!theme) return;
+      selectedTheme = theme;
+      applyTheme(theme);
+      updateThemeButtons(theme);
+    });
+
+    btn.addEventListener('keydown', event => {
+      const currentIndex = buttons.indexOf(btn);
+      let nextIndex = currentIndex;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        nextIndex = (currentIndex + 1) % buttons.length;
+      } else if (event.key === 'Home') {
+        nextIndex = 0;
+      } else if (event.key === 'End') {
+        nextIndex = buttons.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      buttons[nextIndex].click();
+      buttons[nextIndex].focus();
+    });
+  });
+}
+
+function updateThemeButtons(theme: ThemeMode): void {
+  document.querySelectorAll('.theme-option').forEach(btn => {
+    const el = btn as HTMLElement;
+    const isSelected = el.dataset.theme === theme;
+    el.classList.toggle('active', isSelected);
+    el.setAttribute('aria-checked', String(isSelected));
+    el.tabIndex = isSelected ? 0 : -1;
+  });
+}
+
+function setupEventListeners(): void {
+  document.getElementById('save-btn')?.addEventListener('click', async () => {
+    await saveCurrentSettings();
+  });
+
+  document.getElementById('reset-btn')?.addEventListener('click', async () => {
+    await handleResetSettings();
+  });
+}
+
+async function saveCurrentSettings(): Promise<void> {
+  const saveButton = document.getElementById('save-btn') as HTMLButtonElement | null;
+  if (!saveButton || saveButton.disabled) return;
+
+  const defaultQuality = document.getElementById('default-quality') as HTMLSelectElement;
+  const showNotifications = document.getElementById('show-notifications') as HTMLInputElement;
+
+  const settings: Settings = {
+    defaultQuality: (defaultQuality?.value as Settings['defaultQuality']) || 'ask',
+    showNotifications: showNotifications?.checked ?? true,
+    theme: selectedTheme
+  };
+
+  saveButton.disabled = true;
+  saveButton.setAttribute('aria-busy', 'true');
+  saveButton.textContent = 'Saving\u2026';
+
+  try {
+    await saveSettings(settings);
+    currentSettings = settings;
+    showNotification('Settings saved');
+  } catch (error) {
+    showNotification('Failed to save settings', 'error');
+  } finally {
+    saveButton.disabled = false;
+    saveButton.removeAttribute('aria-busy');
+    saveButton.textContent = 'Save Settings';
+  }
+}
+
+async function handleResetSettings(): Promise<void> {
+  if (!confirm('Reset all settings to defaults?')) {
+    return;
+  }
+
+  try {
+    currentSettings = await resetSettings();
+    selectedTheme = currentSettings.theme;
+
+    const defaultQuality = document.getElementById('default-quality') as HTMLSelectElement;
+    const showNotifications = document.getElementById('show-notifications') as HTMLInputElement;
+
+    if (defaultQuality) defaultQuality.value = 'ask';
+    if (showNotifications) showNotifications.checked = true;
+
+    applyTheme(selectedTheme);
+    updateThemeButtons(selectedTheme);
+
+    showNotification('Settings reset to defaults');
+  } catch (error) {
+    showNotification('Failed to reset settings', 'error');
+  }
+}
+
+async function checkCoAppConnection(): Promise<void> {
+  const statusEl = document.getElementById('coapp-status');
+  const versionEl = document.getElementById('coapp-version');
+
+  if (!statusEl) return;
+
+  statusEl.textContent = 'Checking\u2026';
+  statusEl.className = 'status-indicator checking';
+
+  const status = await checkCoAppStatus();
+
+  if (status.connected) {
+    statusEl.textContent = 'Connected';
+    statusEl.className = 'status-indicator connected';
+    if (versionEl && status.version) {
+      versionEl.textContent = `v${status.version}`;
+    }
+  } else {
+    statusEl.textContent = 'Disconnected';
+    statusEl.className = 'status-indicator disconnected';
+    if (versionEl) {
+      versionEl.textContent = 'CoApp not running';
+    }
+  }
+}
+
+function showNotification(message: string, type: 'success' | 'error' = 'success'): void {
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
+
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  notification.setAttribute('role', 'status');
+  notification.setAttribute('aria-live', 'polite');
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 2000);
+}

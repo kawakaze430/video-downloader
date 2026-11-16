@@ -1,0 +1,16 @@
+# Local Python fixture/test artifacts; not application build products.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# Temporary certificates and keys must never be committed.
+*.key
+*.pem
+*.crt
+
+# Untracked build results once approved upstream code is integrated.
+dist/
+build/
+node_modules/

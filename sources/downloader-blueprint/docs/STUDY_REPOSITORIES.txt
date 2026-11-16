@@ -1,0 +1,209 @@
+DOWNLOADER PROJECT - COMPLETE OPEN-SOURCE STUDY REPOSITORY LIST
+================================================================
+Research inventory originally prepared: 13 November 2026
+List compiled for contributors: 15 November 2026
+Project: https://github.com/rejoansardar620-lang/Downloader-
+Source of this list: docs/REFERENCE_REPOSITORIES.md and docs/M0_AUDIT.md
+
+PURPOSE
+-------
+Build our independently branded download manager with:
+(1) Desktop app, (2) Chrome/Firefox extension, (3) website,
+(4) authorized media tools, (5) optional advanced automation.
+Study and reuse existing code only when verified and license-compatible.
+This is a STUDY LIST, not a list of projects already imported or approved.
+Root licenses below are historical/reported and MUST be rechecked, along
+with all transitive dependencies and bundled binaries, before code reuse.
+
+CATEGORY A - PRIMARY REUSE / INTEGRATION CANDIDATES (8)
+-------------------------------------------------------
+
+01. AB Download Manager
+    URL: https://github.com/amir1376/ab-download-manager
+    Reported license: Apache-2.0
+    Role: PRIMARY DESKTOP FOUNDATION (provisional).
+    Study: Kotlin/Compose app; direct downloads; queues, retries,
+      scheduling, persistence, pause/resume, download engine, UI.
+    Evidence: Source checked at commit
+      68f0ea6e8ba5cbeb02c92342cd3bf7475378ae68.
+    Status: Partial M0 audit; desktop Gradle bootstrap blocked by
+      environment network access (see GitHub issue #4).
+    Do not rewrite: Existing transfer engine until tested and proven missing.
+
+02. AB Download Manager Browser Integration
+    URL: https://github.com/amir1376/ab-download-manager-browser-integration
+    Reported license: Apache-2.0
+    Role: PRIMARY BROWSER EXTENSION FOUNDATION (provisional).
+    Study: Chrome MV3, Firefox, native messaging, desktop localhost
+      handoff, context menus, download capture, HLS detection.
+    Evidence: Source checked at commit
+      bf6811dd8a3ee2b47b94d70e13c2c7e70be7be05.
+    Status: Chrome and Firefox bundler builds PASS; standalone TypeScript
+      check FAIL. See issue #5. Security hardening needed (issue #6).
+
+03. ReClip
+    URL: https://github.com/averygan/reclip
+    Reported license: MIT
+    Role: Possible lightweight website/UI starting point.
+    Study: Flask/JavaScript interface, format/quality options, batches,
+      user experience, safe server architecture.
+    Status: Candidate only; source/dependency/security audit pending.
+
+04. MediaGrabber
+    URL: https://github.com/miroshArtem/MediaGrabber
+    Reported license: MIT
+    Role: Selective extension media-discovery reference.
+    Study: Manifest V3, media link discovery, helper communication.
+    Status: Audit pending. Existing AB extension already detects HLS;
+      do not duplicate its logic without a verified gap.
+
+05. HLS Downloader
+    URL: https://github.com/puemos/hls-downloader
+    Reported license: MIT
+    Role: Selective authorized non-DRM HLS processing reference.
+    Study: Stream manifests, local processing, ffmpeg.wasm tradeoffs.
+    Status: Audit pending. Do not bypass access controls or DRM.
+
+06. Parabolic
+    URL: https://github.com/NickvisionApps/Parabolic
+    Reported license: MIT in original inventory (reverify).
+    Role: Alternative desktop video/audio workflow candidate.
+    Study: Quality/format selection, UX, batch operations,
+      Linux/Windows support and dependency costs.
+    Status: Compare against AB before selecting a second desktop base.
+
+07. FFmpeg
+    URL: https://github.com/FFmpeg/FFmpeg
+    Reported license: LGPL or GPL depending on build/configuration.
+    Role: Media conversion/remuxing/probing backend.
+    Study: MP4/MKV/WebM, audio extraction, subtitles, metadata,
+      output validation, resource limits, binary packaging.
+    Status: Proposed dependency; specific build flags and licenses unverified.
+
+08. yt-dlp
+    URL: https://github.com/yt-dlp/yt-dlp
+    Reported license: Core Unlicense; bundled components vary.
+    Role: OPTIONAL connector for sources where downloading is permitted.
+    Study: Extractor interfaces, metadata, format reporting, update strategy.
+    Status: Restricted research candidate, not default public-site support.
+
+CATEGORY B - STUDY FOR DESIGN / FEATURES, NOT AUTOMATIC CODE IMPORT (9)
+----------------------------------------------------------------------
+
+09. Gopeed
+    URL: https://github.com/GopeedLab/gopeed
+    Reported license: GPL-3.0
+    Study: Cross-platform engine, modular downloader, extensions,
+      API/CLI, automation, design tradeoffs.
+    Restriction: GPL license review before any reuse.
+
+10. Motrix
+    URL: https://github.com/agalwood/Motrix
+    Reported license: Main source MIT; bundled aria2 GPL-licensed.
+    Study: Desktop UI, task management, install/update experience,
+      aria2 integration, notification and permissions.
+    Restriction: Audit entire distribution, not just top-level MIT license.
+
+11. aria2
+    URL: https://github.com/aria2/aria2
+    Reported license: GPL-2.0
+    Study: Segmented downloading, resume, HTTP/FTP/BitTorrent support,
+      JSON-RPC, concurrency and error handling.
+    Restriction: GPL compatibility required if distributing linked/bundled code.
+
+12. Cobalt
+    URL: https://github.com/imputnet/cobalt
+    Reported license: AGPL-3.0
+    Study: Clean web media UX, API/backend separation, privacy,
+      responsive error messages.
+    Restriction: Reference only until AGPL/network obligations reviewed.
+
+13. MeTube
+    URL: https://github.com/alexta69/metube
+    Reported license: AGPL-3.0
+    Study: Queue, self-hosted downloads, format choices,
+      playlist/channel workflows, task progress.
+    Restriction: Reference only until AGPL obligations reviewed.
+
+14. Pinchflat
+    URL: https://github.com/kieraneglin/pinchflat
+    Reported license: AGPL-3.0
+    Study: Recurring scheduled tasks, library names,
+      presets, configuration and automation.
+    Restriction: Reference only until AGPL obligations reviewed.
+
+15. Tube Archivist
+    URL: https://github.com/tubearchivist/tubearchivist
+    Reported license: GPL-3.0
+    Study: Media library, search, tagging, organization, indexing,
+      long-running worker/service design.
+    Restriction: GPL compatibility review before any reuse.
+
+16. YoutubeDL-Material
+    URL: https://github.com/Tzahi12345/YoutubeDL-Material
+    Reported license: MIT
+    Study: Full-stack web UI, download queues, user settings,
+      multi-user service patterns.
+    Restriction: Check maintenance, dependencies and security carefully.
+
+17. yt-dlp-web-ui
+    URL: https://github.com/marcopiovanello/yt-dlp-web-ui
+    Reported license: GPL-3.0; recorded as archived October 2026.
+    Study: RPC and web/worker communication patterns.
+    Restriction: Not recommended as primary maintained foundation;
+      verify archived status and GPL before any reuse.
+
+COMPETITOR PRODUCTS TO BENCHMARK (NOT REUSABLE SOURCE REPOS)
+-----------------------------------------------------------
+A. 4K Video Downloader Plus - https://www.4kdownload.com/
+   Study: Video workflows, format selection, playlists, subtitles.
+B. Internet Download Manager (IDM) - https://www.internetdownloadmanager.com/
+   Study: Reliability, browser capture, resume, speed and scheduling.
+C. Video DownloadHelper - https://www.downloadhelper.net/
+   Study: Extension UX, discoverability, companion architecture,
+     browser-store requirements. Notably Chrome store limits YouTube support.
+D. JDownloader 2 - https://jdownloader.org/
+   Study: LinkGrabber, batch workflows, filters, automation.
+E. Cobalt - see #12 above.
+   Study: Minimal web interface and API UX.
+
+RECOMMENDED STUDY ORDER
+-----------------------
+PHASE 1  Read docs/M0_AUDIT.md and docs/IMPLEMENTATION_CHECKLIST.md.
+PHASE 2  Complete AB desktop build/tests (01) and extension audits (02).
+PHASE 3  Compare the AB stack with Parabolic (06); do NOT merge two
+         complete desktop applications without a measured reason.
+PHASE 4  Audit media choices (07, 08, 04, 05), security and licenses.
+PHASE 5  Evaluate website UI candidate ReClip (03) and related examples
+         (12, 13, 16, 17) for feature patterns.
+PHASE 6  Review downloader engine approaches (09, 10, 11) and
+         media-library/automation patterns (14, 15).
+PHASE 7  Make a feature-by-feature BUILD vs REUSE vs ADAPT vs DEFER matrix.
+PHASE 8  Obtain owner signoff for brand, license, first platform and
+         source policy before importing upstream implementations.
+
+SECURITY, RIGHTS AND LICENSE RULES
+----------------------------------
+- Do not import all 17 repositories into one codebase.
+- Prefer one verified core and one compatible extension.
+- Preserve copyright, LICENSE and NOTICE requirements.
+- GPL/AGPL code is not silently compatible with a proprietary product.
+- FFmpeg licensing depends on actual binaries, codecs and build flags.
+- Never copy logos, names, trademarks, proprietary assets or credentials.
+- Do not bypass DRM, login, paywalls or site terms.
+- Test only with user-owned or explicitly permitted download sources.
+- Protect localhost APIs against unauthorized webpages and commands.
+- No unsupported promises of universal or YouTube downloading.
+
+CURRENT EVIDENCE / HANDOFF
+--------------------------
+M0 audit: https://github.com/rejoansardar620-lang/Downloader-/blob/main/docs/M0_AUDIT.md
+Checklist: https://github.com/rejoansardar620-lang/Downloader-/blob/main/docs/IMPLEMENTATION_CHECKLIST.md
+Original reference matrix:
+  https://github.com/rejoansardar620-lang/Downloader-/blob/main/docs/REFERENCE_REPOSITORIES.md
+Gradle blocker: https://github.com/rejoansardar620-lang/Downloader-/issues/4
+TypeScript blocker: https://github.com/rejoansardar620-lang/Downloader-/issues/5
+Security pairing: https://github.com/rejoansardar620-lang/Downloader-/issues/6
+
+Last inventory check: 15 November 2026.
+This file documents PRIOR SUGGESTIONS, not a new independent license audit.
