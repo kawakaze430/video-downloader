@@ -1,8 +1,8 @@
-PROJECT IDEA: ONE DOWNLOAD AND MEDIA WORKSPACE
+PROJECT IDEA: ONE CROSS-PLATFORM DOWNLOAD AND MEDIA WORKSPACE
 Detailed product proposal, existing-work inventory, limits, and future roadmap
-Prepared: 17 November 2026
+Prepared and expanded: 17 November 2026
 Working repository: kawakaze430/video-downloader
-Status: planning document for owner review; no new implementation authorized
+Status: expanded proposal after repository review; no integrated app release
 
 ==========================================================================
 01. THE CENTRAL IDEA
@@ -12,9 +12,9 @@ Build a trusted desktop application that helps people collect downloadable
 files and permitted videos, recover interrupted transfers, choose available
 media quality, process their own media, and keep everything organized.
 
-The user should experience one product: a desktop app, a small browser
-companion, a local media-processing engine, and later an optional website or
-remote companion. Several programming languages can serve that one product.
+The user should experience one product across Android, Windows PC, macOS,
+Linux, a website, and browser extensions: shared concepts, recognizable design,
+and consistent jobs, with platform-specific implementations and release gates. Several programming languages can serve that one product.
 We do not need to force every component into one language to make it unified.
 
 The long-term ambition is broad coverage: YouTube, Facebook, Instagram, other
@@ -46,11 +46,13 @@ There are three different kinds of progress. Keep them separate.
 
 A. Work verified in this repository/session history
 
-  - Five supplied ZIP archives have been extracted under sources/.
+  - Five supplied ZIP archives were extracted; current locations are indexed
+    in sources/archives.json. ZIP originals now live under archives/.
   - All 1,438 extracted files were checked against their ZIP contents.
   - Original archives, component licenses, and internal source paths remain.
   - Extraction and organization were committed and pushed directly to main.
-    Organization checkpoint reviewed for this proposal: ada84f1.
+    Preservation baseline for the new review: 0b2a1ad. All 1,449 baseline
+    files have hash-mapped retained copies, including revised documents.
   - The deterministic Python fixture's 14 HTTP/HTTPS tests passed from its
     new sources/downloader-blueprint location.
   - During environment setup, a running fixture passed health, full-file
@@ -77,7 +79,8 @@ B. Earlier research already supplied in the Downloader blueprint
 C. Source code available for evaluation and adaptation
 
   sources/ab-download-manager/
-    Desktop foundation candidate: Kotlin/Compose/Gradle. Earlier source review
+    Desktop and Android foundation candidate: Kotlin/Compose/Gradle. The
+    supplied settings include android:app and desktop:app. Earlier source review
     identifies queues, part/download persistence, retry/concurrency controls,
     speed controls, and browser handoff infrastructure worth validating.
     These are reusable candidates, not certified features of our product.
@@ -87,12 +90,12 @@ C. Source code available for evaluation and adaptation
     context-menu, download handoff, and browser integration code is supplied.
     Build, type, permission, and bridge-security work still needs validation.
 
-  sources/mediagrabber/
+  AnalyseFuture/reference-projects/mediagrabber/
     TypeScript browser extension plus Node.js native companion. Potential
     reference for media discovery, quality selection, manifests, and native
     messaging. It is not already connected to the AB desktop foundation.
 
-  sources/reclip/
+  AnalyseFuture/reference-projects/reclip/
     Python/Flask application with a simple link-to-download interface.
     Useful UX reference. Do not assume its current backend is safe for an
     unrestricted public download website or production multi-user hosting.
@@ -386,7 +389,9 @@ Website:
 
 Recommended proposal, not an approved architecture change:
 
-  Kotlin desktop foundation:
+  Kotlin desktop and Android foundation:
+    Audit the existing Android module rather than assuming mobile starts from
+    zero. Reuse shared code only where supported by the source and tests.
     Keep the existing queue, transfer state, persistence, and desktop UI
     where they pass tests. This preserves the largest reusable investment.
 
@@ -430,8 +435,10 @@ Possible future integrated layout, only after owner approval:
   tests/             fixtures and integration checks
   docs/              decisions, capability records, releases
 
-This is an illustration. The current sources/ snapshot layout is not being
-restructured again by this document.
+This is an illustration for possible application integration. The current
+review keeps primary candidates under sources/, ZIP backups under archives/,
+and secondary references under AnalyseFuture/. It does not create an
+integrated apps/ architecture or migrate component code.
 
 ==========================================================================
 11. SHOULD WE MOVE TO ONE LANGUAGE?
@@ -674,6 +681,9 @@ Stage 2: by around November 2027, the one-year horizon
     tools, accessible UI, and documented update/release procedures.
     Add signed distribution, redacted diagnostics, and regression monitoring.
     Trial basic opt-in AI assistance only if it produces a measured benefit.
+    Audit the supplied Android source and build a limited prototype if resources
+    permit. Publish an information website and validate narrowly allowed
+    YouTube workflows as the first named platform research track.
 
   Exit evidence:
     Supported-source matrix, complete core test results, clean-machine release
@@ -686,7 +696,8 @@ Stage 3: by around November 2028, the two-year horizon
     Sustainable expansion rather than an uncontrolled feature list.
 
   Candidates:
-    Additional OS/browser targets where maintainable; more approved connectors;
+    Independently gated Android release and additional desktop/browser targets
+    where maintainable; more approved connectors;
     a personal media library with opt-in transcription and semantic search;
     a stable CLI or authenticated automation API; and a limited private
     self-hosted dashboard if demand justifies its cost and security work.
@@ -700,7 +711,8 @@ Stage 3: by around November 2028, the two-year horizon
 Stage 4: 2029 onward, three years and beyond
 
   Research candidates, not commitments:
-    A mobile companion, trusted-device sync, team workflows, a curated plugin
+    More advanced mobile capabilities, optional iOS feasibility, trusted-device
+    sync, team workflows, a curated plugin
     SDK, better local multimodal search, advanced media enhancement, and
     constrained personal automation across approved devices and sources.
 
@@ -728,6 +740,16 @@ Owner/product lead:
 Desktop engineer:
   Owns transfer reliability, persisted jobs, filesystem safety, OS behavior,
   resource use, and the main application's integration with the chosen engine.
+
+Android/mobile engineer and device QA:
+  Owns mobile reuse decisions, share intents, scoped storage, background/service
+  behavior, battery/resource tests, device coverage, and store/distribution
+  requirements. Desktop-native binaries do not automatically work on Android.
+
+Web/service owner:
+  Owns the information site and any separately approved dashboard or hosted
+  processing service, including authentication, costs, quotas, privacy, and
+  operational monitoring. This role is needed only for the scope we actually run.
 
 Browser engineer:
   Owns extension UX, host permissions, packaging, pairing/native messaging,
@@ -912,7 +934,8 @@ Risk: workspace or AI conversation loss loses progress.
 21. OWNER CONTROL AND WHAT THIS DOCUMENT DOES NOT AUTHORIZE
 ==========================================================================
 
-The owner asked for a detailed project idea. This delivery is documentation.
+The owner authorized a structure review, preservation, and an expanded idea.
+This delivery reorganizes files and documents the proposed product.
 It does not authorize new feature implementation, migration, deployment,
 spending, platform-account access, public distribution, or automatic merging
 of all sources into a running product.
@@ -957,6 +980,10 @@ Do not discard previous planning or spend the first milestone rewriting it.
 ==========================================================================
 
 Repository overview:
+  docs/REPOSITORY_AUDIT.txt
+  docs/preservation-manifest.json
+  AnalyseFuture/README.md
+  archives/README.md
   README.md
   AGENTS.md
   sources/archives.json
@@ -998,7 +1025,243 @@ These links are reference starting points, not a fresh policy/legal audit.
 Policies, export options, licenses, and store rules can change.
 
 ==========================================================================
-24. THE PRODUCT WE SHOULD AIM TO EARN
+24. DEVICE-BY-DEVICE PRODUCT DESIGN AND REAL LIMITS
+==========================================================================
+
+One brand and job vocabulary can span all devices without claiming identical
+technical capabilities. Each surface should state where a job runs, where files
+are stored, which device must remain online, and what happens on interruption.
+
+WINDOWS PC APPLICATION
+
+Role:
+  Full local download manager, queue/history, browser pairing, owned-media
+  processing, and optional personal library. Strong first delivery candidate.
+
+Reuse:
+  Evaluate the supplied Kotlin desktop foundation and its matching extension.
+  Keep its storage/transfer infrastructure if it passes integration tests.
+
+Release gate:
+  Clean-machine install/uninstall, file permissions and naming, interruption
+  recovery, signed distribution/update verification, and paired-browser tests.
+  Do not treat a successful Linux compilation as proof of a Windows release.
+
+ANDROID APPLICATION
+
+Role:
+  Share a permitted URL into the app, preview available options, select a save
+  destination, manage a queue, and receive honest progress/completion notices.
+  Later add supported local conversion and an optional paired-desktop target.
+  Explain whether a job will run on the phone or on the paired computer.
+
+Existing opportunity:
+  AB's supplied settings include android:app, shared modules, and desktop:app.
+  Its Android source declares min SDK 26 and compile/target SDK values from
+  version 37. These are source declarations, not tested device compatibility.
+  The source is a real reuse candidate; no product Android build or release
+  has been verified in this work.
+
+Required work:
+  Audit SDK/toolchain readiness and the broad existing manifest permissions.
+  Prefer scoped storage and user-selected destinations; review sharing intents,
+  file-provider access, foreground services, notification consent, background
+  execution, battery handling, mobile data controls, and restart behavior.
+  Test on real devices and supported Android versions, including low-storage
+  and constrained-memory cases. Audit permissions before store submission.
+
+Limits:
+  Android does not allow unlimited unrestricted background execution. Battery,
+  thermals, storage, codecs, network changes, and OS services affect jobs.
+  Desktop native-messaging hosts and FFmpeg executables cannot simply be copied
+  to a phone. Mobile processing requires an appropriate binary/interface and
+  license/performance review. A web page or mobile extension is not a substitute
+  for a properly implemented Android app.
+
+MAC APPLICATION
+
+Role:
+  The same local download/media workflow where the foundation supports it,
+  with native-feeling file access, notifications, and browser pairing.
+
+Required work:
+  Decide supported macOS versions and Intel/Apple Silicon architectures.
+  Test packaging, signing/notarization, filesystem permissions, helper setup,
+  updates, uninstall, and media binaries on actual supported machines.
+  Existing upstream macOS documentation is not proof of this product's release.
+
+LINUX APPLICATION
+
+Role:
+  Full local workflow for explicitly supported distributions/architectures.
+  Useful for developers, creators, and later optional private automation.
+
+Required work:
+  Choose supported package formats and distribution baselines. Test desktop
+  integration, browser-host registration, dependencies, permissions, updates,
+  and media binaries. Do not promise every distribution from one successful
+  container/cloud run.
+
+BROWSER EXTENSION
+
+Role:
+  A small user-controlled capture/discovery surface and companion controller.
+  Show available media/workflows, send explicit paired requests, and display
+  progress from the device actually executing the job.
+
+Required work:
+  Validate Chrome first if approved; independently test Edge/Firefox packaging
+  and browser differences. Keep permissions minimal and reviewed. Prevent a
+  random webpage from creating privileged desktop jobs. Maintain protocol
+  version compatibility with the installed app.
+
+Limits:
+  An extension has restricted filesystem/process access and depends on browser
+  policies and lifecycle. A desktop native-messaging design does not imply
+  support on Android browsers or Safari. Chrome Web Store eligibility for
+  source-specific workflows needs its own review; sideloading is not approval.
+
+WEBSITE / WEB APP
+
+There are three different products hidden in the word "web":
+
+  A. Public information site:
+     Explain the product, list tested capabilities, publish downloads, provide
+     docs/support, and show release status. A sensible early web deliverable.
+
+  B. Optional paired dashboard:
+     Show and control jobs on an explicitly paired device. The device runs
+     the job and stores the file unless the user selects another design.
+     This needs secure identity, routing, authorization, device availability,
+     and a carefully scoped service or local connection. It is not built yet.
+
+  C. Optional hosted acquisition/conversion:
+     A server processes approved jobs and provides bounded outputs. This is a
+     separate service with bills, authentication, quotas, SSRF defenses, worker
+     isolation, retention/deletion, and abuse/support obligations. It requires
+     an explicit budget and deployment decision.
+
+A normal website cannot fetch every source because of CORS, authentication,
+browser storage/file APIs, network visibility, and page lifecycle limits.
+Saving a page as a PWA does not remove these constraints. A paired companion
+or backend changes the architecture and operating responsibilities; it does
+not grant missing source permissions or defeat DRM.
+
+OPTIONAL IOS/IPADOS RESEARCH
+
+The owner's current priority names Android, web, extension, PC, and Mac.
+iPhone/iPad support can be researched later if requested. No integrated iOS
+implementation or tested release is established here. Background execution,
+sandbox/file access, distribution, and media libraries need a separate design.
+
+SHARED EXPERIENCE WITHOUT FORCED FEATURE PARITY
+
+Use consistent terms such as queued, resolving, downloading, verifying,
+processing, complete, failed, paused, and cancelled. Keep each job's device,
+destination, and supported recovery behavior visible. Generate clients/types
+from a small reviewed contract where useful; do not force every UI into the
+same runtime or add accounts solely to make the product look connected.
+
+For later sync: define device trust, encrypted transport, conflict handling,
+offline behavior, deletion semantics, and whether media or only metadata moves.
+An account login alone does not implement secure synchronization.
+
+==========================================================================
+25. YOUTUBE-FIRST RESEARCH WITH BROAD VIDEO AMBITION
+==========================================================================
+
+The owner's first named platform is YouTube. Make that priority explicit in
+product research and validation while keeping direct-file reliability as the
+engineering base. This does not mean claiming every YouTube video is supported.
+
+Track Y1: define the allowed use case.
+  Identify an official creator export, platform-provided download route, or
+  another specifically authorized workflow. Record what the user receives:
+  an export archive, original file, platform offline copy, metadata, or another
+  result. Do not label an offline platform feature as an ordinary MP4 export.
+
+Track Y2: prove the workflow on the intended surface.
+  Validate Windows/browser, Android, or web separately. Record access method,
+  output type, available quality, subtitles/audio, batch limits, adapter version,
+  and restrictions. Platform APIs or third-party extractors do not automatically
+  authorize raw media downloads or qualify for a browser/app store.
+
+Track Y3: publish a precise capability entry.
+  Describe the exact supported use and last verified result. Explain unsupported
+  cases and whether another official route is available. A future connector must
+  have an owner, maintenance plan, consent/privacy controls, and regression tests.
+
+Then expand one approved workflow at a time:
+  Facebook owner exports/permitted videos, Instagram owner exports/permitted
+  Reels and other supported types, direct MP4/WebM/MOV/MKV files, and permitted
+  non-DRM HLS/DASH streams. Treat other websites as candidates until validated.
+
+Distinguish source coverage from device coverage. A permitted direct MP4 link
+may work on several devices before a complex platform workflow works on any.
+A desktop connector may not be suitable for mobile distribution or a hosted
+service. There is no single "supports YouTube" checkbox covering all of these.
+
+AI can help maintain adapters, explain failures, and organize legitimate media.
+It cannot guarantee universal source access, resurrect unavailable originals,
+create missing rights, or turn source-upscaled output into authentic 8K.
+After one year, two years, or longer, those limits still shape honest claims.
+
+Suggested release order, subject to measured progress:
+  - First: one reliable desktop/browser pair and the information website.
+  - In parallel when staffed: Android source audit and small device prototype;
+    YouTube as the first named approved-workflow research track.
+  - After core gates: independently tested Android release, macOS/Linux and
+    browser expansion, and a carefully maintained source catalogue.
+  - Later: paired dashboard, local AI library tools, optional hosted processing,
+    and advanced cross-device workflows only if demand/resources justify them.
+
+Do not commit every device or website to the same date. Each needs tests,
+ownership, release capacity, and useful behavior that survives source changes.
+
+==========================================================================
+26. REPOSITORY RECOVERY, PRESERVATION, AND NEXT-SESSION CONTINUITY
+==========================================================================
+
+The owner reported a repository compromise/disrupted layout. The fetched main
+branch available for this review matched saved checkpoint 0b2a1ad. No new
+attacker-added files or commits were demonstrated in that visible state.
+This does not resolve account security or describe unseen branches/repositories.
+
+The review therefore preserves rather than destroys:
+  - archives/: the five unchanged source ZIPs.
+  - sources/: AB desktop/Android, AB browser, and original blueprint/fixture.
+  - AnalyseFuture/reference-projects/: full MediaGrabber and ReClip snapshots.
+  - AnalyseFuture/prior-versions/0b2a1ad/: originals of revised documents/helper.
+  - docs/preservation-manifest.json: every baseline file mapped to a retained
+    copy with original path, SHA-256, size, and Git mode.
+  - docs/REPOSITORY_AUDIT.txt: observed state, limits, findings, and validation.
+
+AnalyseFuture is for material kept for future analysis, not proof a file is bad.
+It is not an isolation boundary. Do not execute unreviewed scripts there just
+because they were preserved. Nothing was deleted to create this organization.
+
+Verify from the root with python3 tools/verify_repository.py. The command
+checks all preserved baseline copies and original ZIP/extracted content; it
+does not run unfamiliar installers or certify code as safe. The setup helper
+runs the existing deterministic HTTP/HTTPS fixture tests from the tracked tree.
+
+Keep evidence-based commits directly on main and push reviewable work at least
+every five minutes while actively changing it. Never force-push to conceal
+changes. Save exact next steps and remaining limitations; a new cloud session
+should be able to continue from the repository, not from chat memory alone.
+
+The owner should separately review account security activity, sessions,
+collaborators, apps, keys, and exposed credentials in secure GitHub settings.
+Rearranging folders cannot revoke an intruder's access. This task does not
+transfer account ownership or claim an incident investigation is complete.
+
+Next-session starting point:
+  Read AGENTS.md, README.md, this idea, and docs/REPOSITORY_AUDIT.txt. Verify
+  the current remote main and local state. Continue only the owner's next
+  authorized milestone; preserve prior evidence and source licenses.
+
+==========================================================================
+27. THE PRODUCT WE SHOULD AIM TO EARN
 ==========================================================================
 
 One coherent, dependable product that reuses the substantial work already
