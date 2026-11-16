@@ -1,0 +1,499 @@
+PROJECT IDEA: ONE DOWNLOAD AND MEDIA WORKSPACE
+Detailed product proposal, existing-work inventory, limits, and future roadmap
+Prepared: 17 November 2026
+Working repository: kawakaze430/video-downloader
+Status: planning document for owner review; no new implementation authorized
+
+==========================================================================
+01. THE CENTRAL IDEA
+==========================================================================
+
+Build a trusted desktop application that helps people collect downloadable
+files and permitted videos, recover interrupted transfers, choose available
+media quality, process their own media, and keep everything organized.
+
+The user should experience one product: a desktop app, a small browser
+companion, a local media-processing engine, and later an optional website or
+remote companion. Several programming languages can serve that one product.
+We do not need to force every component into one language to make it unified.
+
+The long-term ambition is broad coverage: YouTube, Facebook, Instagram, other
+social/video sites, direct MP4 links, and permitted streaming formats. The
+honest product promise is:
+
+  "Save, manage, and process the media you are allowed to download, with
+   clear quality choices, reliable recovery, and privacy by default."
+
+That is stronger than advertising "download absolutely everything" and then
+failing silently. Every supported source must have a tested capability record.
+When something cannot be downloaded, explain whether the reason is permission,
+DRM, a missing adapter, an expired link, a network issue, or an actual defect.
+
+The product's value should come from reliability and the complete workflow:
+
+  Find a permitted source -> choose what exists -> download reliably ->
+  verify the result -> process locally if wanted -> organize -> find it later.
+
+AI can improve search, accessibility, organization, and diagnostics. The core
+download manager must still work without an AI subscription or cloud account.
+The name, branding, pricing, and final license remain owner decisions.
+
+==========================================================================
+02. WHAT WE HAVE ALREADY DONE: DO NOT START FROM ZERO
+==========================================================================
+
+There are three different kinds of progress. Keep them separate.
+
+A. Work verified in this repository/session history
+
+  - Five supplied ZIP archives have been extracted under sources/.
+  - All 1,438 extracted files were checked against their ZIP contents.
+  - Original archives, component licenses, and internal source paths remain.
+  - Extraction and organization were committed and pushed directly to main.
+    The latest organization checkpoint before this document is ada84f1.
+  - The deterministic Python fixture's 14 HTTP/HTTPS tests passed from its
+    new sources/downloader-blueprint location.
+  - During environment setup, a running fixture passed health, full-file
+    checksum, and partial-download checks.
+  - These checks validate source preservation and test infrastructure. They
+    do not prove the desktop app, extension, or platforms work together.
+
+B. Earlier research already supplied in the Downloader blueprint
+
+  - A 17-project comparison with pinned source references and reuse decisions.
+  - A large feature inventory with priorities and proposed acceptance tests.
+  - M0-M6 milestones, architecture sketches, and an implementation checklist.
+  - Security findings, license questions, and an architectural decision log.
+  - A continuity archive to preserve context between AI/cloud sessions.
+  - A fixture-only CI workflow. Its presence is not evidence of an observed
+    successful hosted CI run.
+
+  Earlier audit notes dated 13/15 November 2026 report successful Chrome and
+  Firefox bundle builds for a pinned upstream browser extension, but failed
+  standalone TypeScript checks. They also report a desktop build bootstrap
+  blocked by network/toolchain prerequisites and a JDK 25 requirement.
+  Those are historical observations, not fresh build results for these ZIPs.
+
+C. Source code available for evaluation and adaptation
+
+  sources/ab-download-manager/
+    Desktop foundation candidate: Kotlin/Compose/Gradle. Earlier source review
+    identifies queues, part/download persistence, retry/concurrency controls,
+    speed controls, and browser handoff infrastructure worth validating.
+    These are reusable candidates, not certified features of our product.
+
+  sources/ab-browser-integration/
+    Matching browser extension candidate: TypeScript/React/Vite. Useful
+    context-menu, download handoff, and browser integration code is supplied.
+    Build, type, permission, and bridge-security work still needs validation.
+
+  sources/mediagrabber/
+    TypeScript browser extension plus Node.js native companion. Potential
+    reference for media discovery, quality selection, manifests, and native
+    messaging. It is not already connected to the AB desktop foundation.
+
+  sources/reclip/
+    Python/Flask application with a simple link-to-download interface.
+    Useful UX reference. Do not assume its current backend is safe for an
+    unrestricted public download website or production multi-user hosting.
+
+  sources/downloader-blueprint/
+    Product planning, evidence, original fixture, tests, and historical work.
+    This is the planning and validation foundation to preserve, not replace.
+
+Important: extracted source availability is not integrated product readiness.
+Do not reset existing work or rewrite working infrastructure for novelty.
+
+==========================================================================
+03. REUSE PRIORITIES: WHAT TO TAKE FIRST
+==========================================================================
+
+Priority 1: evaluate AB Download Manager plus its matching browser integration.
+They are the primary recommendation in the existing research. Build and test
+them before deciding that we need a new engine or desktop framework.
+
+Priority 2: connect the original test fixture to that foundation. Prove one
+direct-file job, progress, interruption recovery, checksum verification, and
+explicit browser-to-desktop handoff. This turns research into product evidence.
+
+Priority 3: add local media processing through a carefully packaged FFmpeg
+integration. Validate codecs, output integrity, cancellation, and licensing.
+
+Priority 4: selectively evaluate MediaGrabber ideas/components for the media
+features that are actually missing. Avoid shipping two competing job engines,
+two independent histories, or two incompatible browser-to-desktop protocols.
+
+Priority 5: use ReClip as a simplicity benchmark for the interface. Design any
+public hosted backend separately with authentication, quotas, safe network
+access, persistence, cleanup, and an approved operating budget.
+
+Optional later: evaluate yt-dlp for specifically approved source connectors.
+An extractor existing in yt-dlp does not establish permission, stability,
+browser-store acceptance, or support in our product. It is not installed or
+integrated merely because this document mentions it.
+
+Do not automatically combine all five applications or every researched tool.
+Keep one job system and clear interfaces; reuse only what passes the gates.
+
+==========================================================================
+04. WHO THE PRODUCT SERVES
+==========================================================================
+
+Everyday users:
+  Reliable downloads, clear progress, safe pause/resume, an understandable
+  destination folder, and useful explanations when a source stops working.
+
+Creators and editors:
+  Back up their own permitted uploads, organize project assets, select audio
+  tracks, extract audio, convert local footage, and prepare supported formats.
+
+Students and researchers:
+  Save materials that permit offline use, keep source references, import
+  captions, and later search or transcribe media they are entitled to process.
+
+Power users and small teams:
+  Batch intake, queues, scheduling, duplicate detection, predictable naming,
+  automation, and later an authenticated CLI/API or self-hosted workspace.
+
+Accessibility users:
+  Keyboard navigation, screen-reader support, readable errors, captions,
+  optional transcription, and clear differences between original and generated
+  content. Accessibility belongs in the core UI, not only an AI add-on.
+
+First success story:
+  A user starts a permitted large-file download from the browser, loses the
+  connection, restarts the computer, and completes the file without corruption
+  or confusing duplicate jobs. That should work before ambitious AI features.
+
+==========================================================================
+05. "EVERY TYPE OF VIDEO": DEFINE THE SCOPE CORRECTLY
+==========================================================================
+
+A website, a transport protocol, a container, and a codec are different things.
+
+  Website/platform: YouTube, Facebook, Instagram, Vimeo, a creator's website.
+  Transport: HTTPS direct file, HLS playlist, MPEG-DASH manifest.
+  Container: MP4, MKV, WebM, MOV, M4V, TS, AVI, and others.
+  Codec: H.264, HEVC/H.265, VP9, AV1, AAC, Opus, and others.
+
+MP4 is a container, not a website. A video page URL may require an approved
+source resolver; it is not necessarily a downloadable MP4 URL. A browser
+blob: URL is normally a local object reference, not a durable network link.
+
+Our support model should have four layers:
+
+  1. Direct downloadable files.
+  2. Authorized, non-DRM streaming manifests and segments.
+  3. Explicitly supported platform connectors and official export routes.
+  4. Local conversion/organization of files the user already has.
+
+Platform priorities and limitations:
+
+YouTube:
+  Make permitted creator backups, official export/download routes, and
+  rights-reviewed integrations an explicit product research track. The
+  YouTube API is not a general raw-video download API. An offline subscription
+  feature does not automatically authorize exporting ordinary MP4 files.
+  Do not promise unrestricted downloading or Chrome Web Store eligibility.
+  Publish actual supported workflows after policy and technical validation.
+
+Facebook:
+  Explore user-owned media exports and sources that explicitly permit saving.
+  Page videos, Reels, live recordings, private groups, and ephemeral stories
+  need different capability entries. Visibility or account access alone does
+  not mean unrestricted export is permitted or technically available.
+
+Instagram:
+  Explore permitted backups of the user's own media and supported exports.
+  Reels, feed videos, stories, and live recordings are separate source types.
+  A public post is not automatically an authorized downloadable source.
+  Do not promise access to expired stories or private content without access.
+
+Other social/video sites:
+  TikTok, X, Reddit, Vimeo, Dailymotion, Twitch, and similar sites are later
+  candidates, not advertised support merely because they are listed here.
+  Add each only with a specific allowed workflow, tests, and a maintainer.
+
+Creator websites, open media, and direct MP4/WebM/MOV links:
+  Strong early candidates where download permission and valid access exist.
+  Redirects, expiring URLs, missing lengths, and Range behavior still need
+  handling. Support ordinary files as well as videos in the core engine.
+
+HLS and MPEG-DASH:
+  Support permitted non-DRM test streams in later stages. Correctly join
+  segments, choose variants and tracks, and distinguish live from on-demand.
+  Encryption/DRM requirements are not interchangeable. Missing access rights
+  or protected keys cannot be solved just by supporting the manifest format.
+
+Live streams:
+  A future recording feature can save available, permitted content while
+  running, with storage/time limits and gap reporting. It cannot recreate
+  earlier segments that the source no longer provides. DVR is source-specific.
+
+Local files:
+  Accept supported user-owned media for conversion, repair attempts, caption
+  workflows, and organization. Damaged files, missing streams, unsupported
+  codecs, and hardware limits still affect results.
+
+==========================================================================
+06. MEDIA AND QUALITY ROADMAP
+==========================================================================
+
+Phase A: download original files without unnecessary conversion.
+  Direct HTTPS downloads should preserve the original bytes. Use declared
+  checksums when available; a locally computed hash identifies a result but
+  alone does not prove it matches the publisher's intended content.
+
+Phase B: inspect and remux compatible media.
+  Show container, codecs, resolution, frame rate, duration, audio languages,
+  and subtitles where discoverable. Remux MP4/MKV/WebM only where the target
+  container supports the existing streams. Remuxing avoids quality loss.
+
+Phase C: transcode when necessary and requested.
+  Offer tested device/quality presets and honest CPU/GPU, size, and time
+  estimates. H.264/AAC in MP4 may be a compatibility preset; AV1, HEVC, VP9,
+  HDR, and unusual profiles need explicit build/device coverage.
+
+Phase D: audio and subtitle tools.
+  Original audio extraction when compatible; conversion to selected supported
+  formats such as MP3, M4A, Opus, WAV, or FLAC; SRT/VTT import/export; audio-track
+  selection; and later optional transcript generation and subtitle translation.
+
+Quality rules:
+  - Show only resolutions and tracks actually available to that workflow.
+  - Never label upscaled 1080p as original 4K/8K.
+  - Never label a lossy source converted to FLAC as restored lossless audio.
+  - Do not assume highest resolution means best quality or best compatibility.
+  - Explain when audio and video arrive separately and require merging.
+  - Display HDR/SDR and conversion changes when detectable.
+  - Mark AI enhancement as generated processing, with the original preserved.
+
+"All formats" is a direction, not a fixed promise: actual support depends on
+the source, shipped codec build, patents/licensing, OS, hardware, and tests.
+
+==========================================================================
+07. THE EXPERIENCE WE WANT USERS TO HAVE
+==========================================================================
+
+Home: one input area for a permitted URL, local file, or batch of links.
+The browser companion can send an explicit user-selected item to the same job
+system. Avoid forced clipboard monitoring or automatic account inspection.
+
+Preview: show the recognized source, available formats/tracks, size estimate,
+save folder, and any limitations. Unknown size or quality must say "unknown".
+An unsupported source should produce a useful reason, not a fake download.
+
+Choose: original file, best available compatible media, audio only, subtitles,
+or an approved conversion preset. Advanced controls remain available without
+making the normal flow complicated.
+
+Download: real bytes, speed, ETA when meaningful, retry state, pause/cancel,
+and queue position. Separate transfer progress from merging/conversion.
+Unknown-length streams must not show invented completion percentages.
+
+Recover: explain whether the source supports resume. If the remote file
+changed or the signed URL expired, require safe re-resolution or restart;
+do not join unrelated bytes or claim recovery that cannot be verified.
+
+Finish: verify required integrity checks, move completed output atomically
+where supported, and offer open folder, play, convert, or organize. Never
+silently overwrite an existing file or auto-run downloaded executables.
+
+Library: optional searchable local history, folders, tags, source references,
+and duplicate checks. Users can clear history without deleting media, or
+delete media with an explicit action. Retention and private mode are clear.
+
+Example future user request:
+  "Save these permitted links in a queue, keep original video, select English
+   audio where available, and put them in my course folder."
+
+The app can convert that request into a preview. Natural-language AI must not
+silently start paid processing, change destinations, or broaden permissions.
+
+==========================================================================
+08. FIRST RELEASE: SMALL ENOUGH TO PROVE
+==========================================================================
+
+Recommended starting pair: Windows desktop plus Chrome, subject to owner
+approval and actual build compatibility. Linux cloud checks support development
+but do not substitute for Windows installation and browser testing.
+
+P0: the smallest useful beta
+  - Reproducible build of the selected desktop foundation.
+  - Direct HTTPS downloads and safe redirects.
+  - Accurate progress, queueing, concurrency limits, pause/cancel/retry.
+  - Resume where supported and safe restart where not supported.
+  - Persisted jobs and recovery after app/system interruption.
+  - Safe filenames, collision handling, and incomplete-file cleanup.
+  - Expected-hash validation for controlled test downloads.
+  - Explicit, authenticated browser-to-desktop handoff with duplicate control.
+  - A minimal accessible interface, clear errors, and private local storage.
+  - Dependency/license inventory and documented installation/uninstallation.
+
+P0 acceptance demonstration
+  1. Start one synthetic permitted HTTPS download from the browser.
+  2. Show exactly one desktop job and meaningful progress.
+  3. Interrupt it; resume safely if the endpoint supports ranges.
+  4. Repeat with a Range-disabled endpoint and confirm safe restart.
+  5. Restart the app during a recoverable job and finish without corruption.
+  6. Verify output SHA-256 against the known fixture value.
+  7. Reject unauthorized handoff attempts and unsafe output paths.
+  8. Confirm install, update strategy, and uninstall on the supported OS.
+
+Not part of P0: universal platform extraction, cloud accounts, a plugin store,
+mobile apps, AI generation, subscriptions, or multi-OS release promises.
+
+==========================================================================
+09. COMPETITIVE 1.X FEATURES AFTER THE CORE WORKS
+==========================================================================
+
+Reliability and control:
+  Scheduling, bandwidth limits, measured segmented transfers where useful,
+  duplicate handling, job-list import/export, search, categorization, and
+  network settings. More connections do not always mean more speed.
+
+Browser convenience:
+  Right-click actions, user-triggered permitted media detection, paired
+  desktop progress, transparent permissions, and later Edge/Firefox validation.
+  Do not run separate engines just because multiple extension sources exist.
+
+Media studio:
+  Local probing, tested remux/conversion presets, audio extraction, track and
+  subtitle selection, basic trimming, and compatible-file merging. Batch jobs
+  should have independent results so one failure does not lose the whole batch.
+
+Platform connectors:
+  One approved source/workflow at a time, with a capability page, fixture or
+  authorized integration tests, regression monitoring, and a maintenance owner.
+
+Daily usability:
+  Keyboard access, readable errors, localization, storage warnings, sleep/power
+  handling, optional completion notifications, and an explainable retry policy.
+
+Trustworthy distribution:
+  Signed installers and verified updates, release notes, rollback strategy,
+  dependency notices, opt-in redacted diagnostics, and a support process.
+
+Website:
+  Start with product information, supported-source information, installation
+  guides, documentation, and release downloads. A hosted downloader is a
+  separate, later operating and security decision, not a prerequisite.
+
+==========================================================================
+10. ONE PROJECT, MULTIPLE LANGUAGES
+==========================================================================
+
+Recommended proposal, not an approved architecture change:
+
+  Kotlin desktop foundation:
+    Keep the existing queue, transfer state, persistence, and desktop UI
+    where they pass tests. This preserves the largest reusable investment.
+
+  TypeScript browser companion:
+    Handle user intent, source discovery, capability presentation, and
+    authenticated handoff. Browser code ultimately executes as JavaScript.
+
+  FFmpeg media worker:
+    Perform supported media operations through a constrained, versioned
+    interface. FFmpeg is external software, not a reason to rewrite the UI.
+
+  Python:
+    Preserve the original fixture and use tests/tools where useful. Do not
+    add a permanent Flask backend just because ReClip happens to use Flask.
+
+  Shared contract:
+    Define a small versioned job/message schema. Adapt existing AB contracts
+    where sensible rather than introducing another engine or state database.
+    The desktop remains the authority for local jobs and files.
+
+A typical future flow:
+
+  Browser companion -> authenticated native bridge -> desktop job engine
+  Desktop UI --------------------------------------> desktop job engine
+  Desktop job engine -> local job store -> safe temporary/completed files
+  Desktop job engine -> optional isolated media worker -> verified output
+  Optional AI module -> approved local files/metadata -> suggestions or index
+
+Prefer native messaging for the first browser bridge after auditing the
+existing protocol. A loopback HTTP service, if retained, still needs explicit
+authentication, origin controls, validation, and rate/resource limits.
+
+Possible future integrated layout, only after owner approval:
+
+  apps/desktop/       selected desktop application
+  apps/extension/     selected browser companion
+  apps/website/       optional public information site
+  components/media/  media-processing interface and workers
+  components/sources/ approved source adapters
+  contracts/         shared protocol definitions
+  tests/             fixtures and integration checks
+  docs/              decisions, capability records, releases
+
+This is an illustration. The current sources/ snapshot layout is not being
+restructured again by this document.
+
+==========================================================================
+11. SHOULD WE MOVE TO ONE LANGUAGE?
+==========================================================================
+
+Option A: retain Kotlin plus TypeScript and small supporting tools.
+  Best initial option to evaluate because it preserves existing source work.
+  Cost: more than one toolchain and careful cross-process interface testing.
+  Benefit: focus effort on integration and actual missing features.
+
+Option B: TypeScript-centered rewrite, for example a web-based desktop shell.
+  Could share UI types and some business logic across browser/web/desktop.
+  It does not automatically port the Kotlin transfer engine, persistence,
+  installers, OS integration, or recovery behavior. Those still need migration
+  and tests. Some shells also introduce another native language/toolchain.
+  FFmpeg and platform-specific code remain external even in this approach.
+
+Option C: a mostly Kotlin product.
+  Preserves the desktop foundation, but browser extensions still need browser
+  APIs and JavaScript-compatible output. ReClip and MediaGrabber logic would
+  not simply become Kotlin by moving files. Build size and platform behavior
+  need evidence before expanding this direction.
+
+Option D: a mostly Python product.
+  Convenient for tooling and selected media adapters, but does not remove
+  browser JavaScript, desktop packaging, security, or performance work.
+  Rewriting a mature desktop engine into Python is not a free simplification.
+
+Decision rule:
+  First build and benchmark the existing foundation. Compare integration
+  costs, maintenance skills, install size, memory, reliability, and security.
+  Rewrite only if there is evidence that maintaining the current foundation
+  is materially worse. No migration is approved by this proposal.
+
+==========================================================================
+12. MAKE SOURCE SUPPORT A MAINTAINED PRODUCT CAPABILITY
+==========================================================================
+
+Keep a support record for every advertised source/workflow:
+
+  - Platform, content type, and permitted use case.
+  - Access/export method and any supported authentication route.
+  - Direct file, stream, or connector and exact adapter version.
+  - Available formats, quality, audio, subtitle, playlist, and live limits.
+  - Tested OS/browser, date, test result, and maintenance owner.
+  - Distribution/store restrictions and known failure explanations.
+
+Use statuses such as:
+  Planned; under investigation; available for testing; supported within
+  stated limits; temporarily degraded; unsupported; restricted by policy.
+
+Never advertise a large site count by copying another tool's extractor list.
+Do not claim "supported" merely because the adapter imports successfully.
+One platform may support an authorized creator export but not private stories,
+live recording, or general third-party downloads. Show that distinction.
+
+Keep these separate:
+  Can the user access it? Does the workflow permit exporting it? Does our
+  adapter support it? Did the output actually pass its integrity/media checks?
+  A single "I own this" checkbox cannot answer all four questions.
+
+If a platform changes, mark the affected capability degraded, retain useful
+error details locally, and ship a reviewed fix. Do not silently attempt more
+intrusive access methods or broaden browser permissions.
+
+END OF PART ONE. FUTURE, LIMITS, DELIVERY, AND OWNERSHIP FOLLOW BELOW.
