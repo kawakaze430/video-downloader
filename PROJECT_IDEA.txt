@@ -50,7 +50,7 @@ A. Work verified in this repository/session history
   - All 1,438 extracted files were checked against their ZIP contents.
   - Original archives, component licenses, and internal source paths remain.
   - Extraction and organization were committed and pushed directly to main.
-    The latest organization checkpoint before this document is ada84f1.
+    Organization checkpoint reviewed for this proposal: ada84f1.
   - The deterministic Python fixture's 14 HTTP/HTTPS tests passed from its
     new sources/downloader-blueprint location.
   - During environment setup, a running fixture passed health, full-file
@@ -338,7 +338,8 @@ P0 acceptance demonstration
   5. Restart the app during a recoverable job and finish without corruption.
   6. Verify output SHA-256 against the known fixture value.
   7. Reject unauthorized handoff attempts and unsafe output paths.
-  8. Confirm install, update strategy, and uninstall on the supported OS.
+  8. Confirm clean install and uninstall on the supported OS, and document
+     the update strategy.
 
 Not part of P0: universal platform extraction, cloud accounts, a plugin store,
 mobile apps, AI generation, subscriptions, or multi-OS release promises.
