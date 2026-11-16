@@ -17,6 +17,10 @@ combine their features, select a product license, or migrate languages. Each
 component keeps its own build files and documentation. Archive hashes and file
 counts are recorded in [sources/archives.json](sources/archives.json).
 
+Extraction verification: all 1,438 files match the supplied archives byte for
+byte. The 14 fixture tests pass from the new directory. The desktop, browser,
+MediaGrabber, and ReClip application builds have not been run for this change.
+
 ## Verified fixture workflow
 
 ```sh
