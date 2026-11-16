@@ -8,13 +8,15 @@ Status: expanded proposal after repository review; no integrated app release
 01. THE CENTRAL IDEA
 ==========================================================================
 
-Build a trusted desktop application that helps people collect downloadable
+Build a trusted cross-platform product, starting with a desktop application,
+that helps people collect downloadable
 files and permitted videos, recover interrupted transfers, choose available
 media quality, process their own media, and keep everything organized.
 
 The user should experience one product across Android, Windows PC, macOS,
 Linux, a website, and browser extensions: shared concepts, recognizable design,
-and consistent jobs, with platform-specific implementations and release gates. Several programming languages can serve that one product.
+and consistent jobs, with platform-specific implementations and release gates.
+Several programming languages can serve that one product.
 We do not need to force every component into one language to make it unified.
 
 The long-term ambition is broad coverage: YouTube, Facebook, Instagram, other
@@ -1007,7 +1009,8 @@ Original fixture:
   sources/downloader-blueprint/tools/fixtures/http_fixture.py
   sources/downloader-blueprint/tests/test_http_fixture.py
 
-Component READMEs, manifests, lockfiles, and licenses remain under sources/.
+Component READMEs, manifests, lockfiles, and licenses remain under sources/
+and AnalyseFuture/reference-projects/.
 Historic source pins in the blueprint should not automatically be assumed to
 identify the uploaded ZIPs. Record and verify provenance before adopting a
 release foundation. Archive hashes preserve what was supplied, not its origin.

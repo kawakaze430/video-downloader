@@ -40,6 +40,11 @@ PRESERVATION AND STRUCTURE
 
 All 1,449 baseline files have an original-path -> preserved-path mapping with
 SHA-256, byte count, and Git mode in docs/preservation-manifest.json.
+The manifest also records exact baseline Git blob IDs, hashes, and lengths.
+Two existing Windows .bat files have LF Git blobs and CRLF checkout/archive
+bytes under the supplied *.bat eol=crlf attribute. Both representations are
+recorded; neither script was changed. The verifier checks exact baseline path
+coverage, Git objects/modes, tracked preserved destinations, and checkout bytes.
 All 1,438 extracted payload files matched their five source ZIPs before moves.
 The verification command checks the same content after reorganization.
 No source code was deleted or merged into a new application. Reference
@@ -66,7 +71,11 @@ Run from the root:
   python3 tools/verify_repository.py
   bash tools/onboarding/setup.sh
 
-Final observed results and remote-push evidence will be recorded after checks.
+Observed results: all 1,449 baseline files preserved and tracked; all five ZIPs
+and 1,438 extracted payload files match; all 14 fixture tests pass. The setup
+helper also passes when invoked from /tmp rather than the repository root.
+Structure/documentation checkpoints are pushed directly to main. The final
+local HEAD will be compared with a fresh remote main before completing.
 Application builds, device/browser flows, and live site compatibility are
 outside this structure/documentation task and must not be described as passed.
 
