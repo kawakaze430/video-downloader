@@ -75,9 +75,18 @@ Observed results: all 1,449 baseline files preserved and tracked; all five ZIPs
 and 1,438 extracted payload files match; all 14 fixture tests pass. The setup
 helper also passes when invoked from /tmp rather than the repository root.
 Structure/documentation checkpoints are pushed directly to main. The final
-local HEAD will be compared with a fresh remote main before completing.
+local HEAD is checked against a fresh remote main in the delivery verification.
+Independent isolated-copy checks also confirmed that verification rejects
+missing baseline entries, wrong Git hashes, altered source files, untracked
+preservation destinations, and unexpected component files. The real checkout
+was not modified by those failure probes.
 Application builds, device/browser flows, and live site compatibility are
 outside this structure/documentation task and must not be described as passed.
+
+Reusable cloud install_script and start_skill draft fields were saved with
+the new tracked paths. Draft persistence does not publish a new environment
+snapshot; review/save and publish in environment settings to activate it.
+The same tested repository workflow is available in tools/onboarding/setup.sh.
 
 ACCOUNT SECURITY FOLLOW-UP
 

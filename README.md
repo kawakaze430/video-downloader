@@ -40,6 +40,9 @@ it is not a downloader application. See its
 No package installation, private credentials, or live platform access is
 required for these checks. The first command verifies preserved content and
 archive extraction; it does not certify third-party code as safe.
+It requires the baseline Git history at `0b2a1ad`; a shallow checkout may need
+that history fetched first. It verifies stored source snapshots, so future
+intentional source edits require an updated preservation policy.
 
 ## Direction and boundaries
 
