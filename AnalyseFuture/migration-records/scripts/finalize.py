@@ -94,4 +94,3 @@ p=A/'TEST_AND_VALIDATION_REPORT.txt';s=p.read_text().split('\nFinal passive cont
 p=A/'WORK_PROGRESS.txt';s=p.read_text().replace('Current: final static path/content preservation review and direct-main delivery.','Completed: final static path/content preservation review; all baseline originals and ZIP member bytes accounted for; no unresolved active Markdown or TypeScript local import target found.\nCurrent: structure-only work complete; next task awaits owner direction. Final remote SHA is confirmed in delivery and Git history.')
 p.write_text(s)
 print(json.dumps(summary,indent=2))
-

@@ -140,4 +140,3 @@ dest=ROOT/'AnalyseFuture/repository-inventory';dest.mkdir(parents=True,exist_ok=
     'Pending: path mapping, reference repair, required reports, PROJECT_STRUCTURE.md, static preservation review, direct-main push.\n'
     'Limits: no account/security-log access; GitHub protection API was unavailable; server accepted backup-tag push.\n')
 print('Inventoried',len(files),'files:',result['text_count'],'text,',result['binary_count'],'binary; exact duplicate groups:',len(result['duplicates']))
-

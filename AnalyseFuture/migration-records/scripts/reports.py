@@ -337,4 +337,3 @@ for component,group in sorted(bycomponent.items()):
            '  Explicit dependency/import references: '+(', '.join(deps) or 'No explicit code imports; see consumer ownership and manifest.'),'']
 write('repository-inventory/DEPENDENCY_MAP.txt','\n'.join(lines))
 print('Wrote complete reports;',len(features),'feature records;',len(D['duplicates']),'exact duplicate groups.')
-

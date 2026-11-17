@@ -172,4 +172,3 @@ state={'baseline_commit':BASE,'mapping':mapping,'active':active,'changed_origina
  'fixture_files_grouped':6}
 Path('/workspace/recovery-work/migration-state.json').write_text(json.dumps(state,indent=2)+'\n')
 print('Grouped',state['moved_count'],'baseline paths; preserved',len(changed_originals),'pre-edit originals and one orphan stub.')
-
