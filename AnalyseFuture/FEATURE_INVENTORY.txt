@@ -1,0 +1,1402 @@
+FEATURE INVENTORY — 87 DISCOVERY RECORDS
+38 code/tool/fixture capability groups plus 49 earlier product backlog entries.
+These are cross-referenced records, not 87 verified or distinct shipping product features.
+Existing source is not proof of working integration. No tests were run in the structure-only pass.
+
+C01 — HTTP transfer lifecycle
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadItem.kt
+  Dependencies: OkHttp, Okio, Kotlin coroutines
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No post-move runtime or output-integrity result.
+  Related files (3):
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadItem.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadJob.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloader.kt
+
+C02 — Range parts and segmentation
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/HttpPartDownloader.kt
+  Dependencies: downloader/core connection and part layers
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Server behavior and restart/resume need later validation.
+  Related files (3):
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/HttpPartDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/RangedPart.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/SplitToRange.kt
+
+C03 — Queues and schedule state
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/queue/QueueConfigurationComponent.kt
+  Dependencies: download manager, coroutines, queue persistence
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Do not claim scheduling correctness without later execution.
+  Related files (13):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/queue/QueueConfigurationComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/queue/QueuesSheet.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/home/sections/queue/Queues.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/queue/QueueInfoComponent.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/queue/QueueWindow.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/queue/QueuesComponent.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/queue/QueuesPage.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/DownloadQueue.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/ManualDownloadQueue.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/QueueEvent.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/QueueManager.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/ScheduleTimes.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/home/queue/QueueActions.kt
+
+C04 — Download/part persistence
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/core/build.gradle.kts
+  Dependencies: Kotlin serialization, file storage
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Runtime restart recovery not exercised.
+  Related files (99):
+    apps/download-manager/downloader/core/build.gradle.kts
+    apps/download-manager/downloader/core/src/androidMain/kotlin/ir/amirab/downloader/utils/SparseFile.android.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/DownloadManager.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/DownloadManagerMinimalControl.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/DownloadSettings.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/Downloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/DownloaderRegistry.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/NewDownloadItemProps.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/anntation/Markers.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/Connection.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/HttpDownloaderClient.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/IResponseInfo.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/OkHttpHttpDownloaderClient.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/UserAgent.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/UserAgentProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/AutoConfigurableProxyProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/Proxy.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyStrategy.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyStrategyProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyType.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/SystemProxySelectorProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/response/HttpResponseInfo.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/response/headers/RangeHeaderExtractor.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/response/headers/fileNameExtractor.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/DownloadListFileStorage.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/DownloadQueuePersistedDataAccess.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/IDownloadListDb.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/IDownloadPartListDb.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/MemoryDownloadListDB.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/MemoryDownloadPartStatesDB.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/PartListFileStorage.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/QueueFileStorage.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/db/TransactionalFileSaver.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/destination/DestWriter.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/destination/DownloadDestination.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/destination/IncompleteFileUtil.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/destination/SegmentedDownloadDestination.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/destination/SimpleDownloadDestination.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/DownloadItemContext.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/DownloadJob.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/DownloadJobExtraConfig.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/DownloadJobStatus.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/DownloadStatus.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/IDownloadCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/IDownloadItem.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/contexts/DefaultContexts.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadItem.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadJob.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadJobExtraConfig.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSPartDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSResponseInfo.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/IHLSCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadItem.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloadJob.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/HttpDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/http/IHttpBasedDownloadCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/DownloadNotSuccessFullException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/DownloadValidationException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/FileChangedException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/NoSpaceInStorageException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/PartTooManyErrorException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/PrepareDestinationFailedException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/ServerPartIsNotTheSameAsWeExpectException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/ServerResumeSupportChangeException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/exception/TooManyErrorException.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/DownloadPart.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/HttpPartDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/MediaSegment.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/MinPartSizeProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/PartDownloadStatus.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/PartDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/PartSplitSupport.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/Parts.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/RangedPart.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/DownloadQueue.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/ManualDownloadQueue.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/QueueEvent.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/QueueManager.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/queue/ScheduleTimes.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/CallAwait.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/CollectionUtils.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/DuplicateFilter.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/EmptyFileCreator.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/ExceptionUtils.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/FileNameUtil.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/FlowUtils.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/IDistStat.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/LockList.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/NumUtil.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/OnDuplicateStrategy.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/SparseFile.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/SplitToRange.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/TimeUtils.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/speedlimiter/OkioCustomizedThrottler.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/speedlimiter/SpeedLimiter.kt
+    apps/download-manager/downloader/core/src/desktopMain/kotlin/ir/amirab/downloader/utils/SparseFile.desktop.kt
+
+C05 — Bandwidth throttling
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/speedlimiter/OkioCustomizedThrottler.kt
+  Dependencies: Okio throttler
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No throughput benchmark or guaranteed speedup.
+  Related files (3):
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/speedlimiter/OkioCustomizedThrottler.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/utils/speedlimiter/SpeedLimiter.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/SpeedLimiter.kt
+
+C06 — Proxy selection
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/proxy/AutoConfigurableProxyProviderForDesktop.kt
+  Dependencies: platform proxy provider, HTTP client
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Credentials/configuration and platform behavior require review.
+  Related files (9):
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/proxy/AutoConfigurableProxyProviderForDesktop.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/proxy/DesktopSystemProxySelectorProvider.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/proxy/ProxyCachingConfig.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/AutoConfigurableProxyProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/Proxy.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyStrategy.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyStrategyProvider.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/ProxyType.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/connection/proxy/SystemProxySelectorProvider.kt
+
+C07 — HLS jobs and segments
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadCredentials.kt
+  Dependencies: manifest parsing, downloader parts
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Non-DRM fixture and track handling not exercised.
+  Related files (9):
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadItem.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadJob.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloadJobExtraConfig.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSPartDownloader.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/HLSResponseInfo.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/downloaditem/hls/IHLSCredentials.kt
+    apps/download-manager/downloader/core/src/commonMain/kotlin/ir/amirab/downloader/part/MediaSegment.kt
+
+C08 — Progress observation
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/downloader/monitor/build.gradle.kts
+  Dependencies: core job state and flow observers
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Accuracy/ETA not measured.
+  Related files (9):
+    apps/download-manager/downloader/monitor/build.gradle.kts
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/CompletedDownloadItemState.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/DownloadItemStateFactory.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/DownloadMonitor.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/DownloadStateUtil.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/IDownloadItemState.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/IDownloadMonitor.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/ProcessingDownloadItemState.kt
+    apps/download-manager/downloader/monitor/src/commonMain/kotlin/ir/amirab/downloader/monitor/UiPart.kt
+
+C09 — Checksum inspection UI
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/checksum/AndroidFileChecksumComponent.kt
+  Dependencies: platform/shared application and hashing utilities
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: End-to-end expected-hash gating not established.
+  Related files (6):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/checksum/AndroidFileChecksumComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/checksum/FileChecksumPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/checksum/DesktopFileChecksumComponent.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/checksum/FileChecksumPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/checksum/FileChecksumWindow.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/checksum/BaseFileChecksumComponent.kt
+
+C10 — Categories and file organization
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/category/CategorySheet.kt
+  Dependencies: shared application and platform UI
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No runtime persistence/usability result.
+  Related files (21):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/category/CategorySheet.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/category/NewCategory.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/category/DesktopCategoryDialogManager.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/category/NewCategoryPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/category/ShowCategoryDialogs.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/home/sections/category/Categories.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/category/CategoryComponent.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/home/category/DefinedStatusCategories.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/home/category/DownloadStatusCategoryFilter.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/home/category/DownloadStatusCategoryFilterByList.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/Category.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategoryFileStorage.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategoryItem.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategoryManager.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategoryManagerExtensions.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategorySelectionMode.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/CategoryStorage.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/DefaultCategories.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/DownloadManagerCategoryItemProvider.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/ICategoryItemProvider.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/category/InMemoryCategoryStorage.kt
+
+C11 — Per-host settings
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/perhostsettings/AndroidPerHostSettingsComponent.kt
+  Dependencies: shared configuration and platform pages
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Policy/precedence behavior not executed.
+  Related files (12):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/perhostsettings/AndroidPerHostSettingsComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/perhostsettings/PerHostSettingsPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/perhostsettings/DesktopPerHostSettingsComponent.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/perhostsettings/PerHostSettingsPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/perhostsettings/PerHostSettingsWindow.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/ui/configurable/comon/renderer/PerHostSettingsConfigurableRenderer.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pagemanager/PerHostSettingsPageManager.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/perhostsettings/PerHostSettingsComponent.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/storage/PerHostSettingsDatastoreStorage.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/perhostsettings/PerHostSettingsItem.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/perhostsettings/PerHostSettingsManager.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/perhostsettings/PerHostSettingsStorage.kt
+
+C12 — Application settings UI
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/AndroidSettings.kt
+  Dependencies: Compose and shared settings
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Platform-specific settings not exercised.
+  Related files (9):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/AndroidSettings.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/AndroidSettingsComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/SettingsPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/DesktopSettings.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/DesktopSettingsComponent.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/FontManager.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/SettingPageStateToPersist.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/SettingWindow.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/settings/SettingsPage.kt
+
+C13 — Batch link intake
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/batchdownload/AndroidBatchDownloadComponent.kt
+  Dependencies: shared application and platform pages
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No live source permission or deduplication guarantee.
+  Related files (7):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/batchdownload/AndroidBatchDownloadComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/batchdownload/BatchDownloadPage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/batchdownload/BatchDownloadWindow.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/batchdownload/BatchDownnload.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/batchdownload/DesktopBatchDownloadComponent.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pagemanager/BatchDownloadPageManager.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/batchdownload/BaseBatchDownloadComponent.kt
+
+C14 — Android in-app browser
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/.gitignore
+  Dependencies: Android WebView/activity and app services
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Source declarations do not establish Android release readiness.
+  Related files (188):
+    apps/download-manager/android/app/.gitignore
+    apps/download-manager/android/app/build.gradle.kts
+    apps/download-manager/android/app/filetypes.txt
+    apps/download-manager/android/app/src/main/AndroidManifest.xml
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ABDMApp.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/action/Actions.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/di/Di.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/about/AboutPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/AddDownloadActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/multiple/AddMultiDownloadActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/multiple/AddMultiDownloadList.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/multiple/AddMultiItemPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/multiple/AndroidAddMultiDownloadComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/shared/CategorySelect.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/shared/ExtraConfig.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/shared/LocationTextField.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/shared/SelectQueue.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/single/AddSingleDownloadActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/single/AddSingleDownloadPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/add/single/AndroidAddSingleDownloadComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/batchdownload/AndroidBatchDownloadComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/batchdownload/BatchDownloadPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/BrowserActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/BrowserComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/BrowserUi.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/DownloadInterceptor.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/SearchEngines.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/WebView.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/WebViewHolder.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/bookmark/Bookmarks.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/bookmark/EditBookmark.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/category/CategorySheet.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/category/NewCategory.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/checksum/AndroidFileChecksumComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/checksum/FileChecksumPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/crashreport/CrashReportActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/crashreport/ErrorUi.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/crashreport/ThrowableData.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/credits/thirdpartylibraries/ExternalLibsPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/credits/thirdpartylibraries/LibraryDialog.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/credits/translators/TranslatorsPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/ComposeExtension.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/DirectoryPickerActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/DirectoryPickerPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/downloaderror/AddSingleDownloadActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/downloaderror/AddSingleDownloadPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/editdownload/AndroidEditDownloadComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/editdownload/EditDownload.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/enterurl/AndroidEnterNewURLComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/enterurl/EnterURLPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/AndroidDownloadActions.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/BottomNavigation.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/DownloadList.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/FilterStatusIndicator.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/HomeComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/HomePage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/HomePageStateToPersist.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/Prompts.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/RenderAddMenu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/RenderDownloadItem.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/RenderMainMenu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/RenderStatusFilterMenu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/SelectedQueueItemsOption.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/Selection.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/SimplePager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/sections/Categories.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/sections/DownloadQRDialog.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/sections/queues/Queues.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/sections/sort/DownloadSortBy.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/home/sections/sort/RenderSortMenu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/newqueue/NewQueue.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/StartUpPageTemplate.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/initialsetup/InitialSetupComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/initialsetup/InitialSetupPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/ABDMPermissions.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/AppPermission.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/BatteryOptimizationUtil.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/CustomPermissions.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/PermissionComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/PermissionManager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/PermissionsPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/onboarding/permissions/StoragePermissionUtil.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/perhostsettings/AndroidPerHostSettingsComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/perhostsettings/PerHostSettingsPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeScannerActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeScannerComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeTextReader.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/ZxingQRCodeAnalyzer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/queue/QueueConfigurationComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/queue/QueuesSheet.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/AndroidSettings.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/AndroidSettingsComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/settings/SettingsPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/singledownload/AndroidSingleDownloadPageComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/singledownload/CompletedDownloadPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/singledownload/ProgressDownloadPage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/singledownload/ShowDownloadDialogs.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/singledownload/SingleDownloadPageActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/updater/NewUpdatePage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/updater/UpdaterDialog.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/receiver/StartOnBootBroadcastReceiver.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/repository/AppRepository.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/service/DownloadSystemService.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/service/KeepAliveServiceReason.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/AndroidExtraDownloadItemSettings.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/AndroidExtraQueueSettings.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/AndroidOnBoardingStorage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/AppSettingsStorage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/BrowserBookmarksStorage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/HomePageStorage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/ABDownloadManagerApplicationContent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/MainActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/MainComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/MainContent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/SelectionControls.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/SheetUI.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/AndroidConfigurableUtils.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/ConfigurableSheet.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/SheetInput.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/SheetSpinner.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/android/AndroidConfigurableRenderers.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/android/item/PermissionConfigurable.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/android/renderer/PermissionConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/CommonConfigurableRenderersForAndroid.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/ConfigurableRenderersForAndroid.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/BooleanConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/DayOfWeekConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/DnsConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/EnumConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/FileChecksumConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/FloatConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/FolderConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/IntConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/LongConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/NavigatableConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/ProxyConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/SizeConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/SoundConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/StringConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/ThemeConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/TimeConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/ToggleableSpeedLimitConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/menu/Menu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/menu/RenderMenuInSheet.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/menu/RenderMenuInSinglePage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/menu/StackedMenu.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/myCombinedClickable.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/page/PageUI.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/page/PageUtils.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/widget/ComposeWebView.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/ABDMAppManager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/ABDMServiceNotificationManager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidConstants.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidDefinedPaths.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidDownloadItemOpener.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidGlobalExceptionHandler.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidIntentUtils.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AndroidUi.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/AppInfo.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/HeadlessComposeRuntime.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/activity/ABDMActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/activity/ActivityActions.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/activity/RetainedComponentContainer.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/activity/SerializableExtra.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/compose/ObserveUiVisibility.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/compose/useBack.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/pagemanager/AndroidDownloadErrorPageManager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/pagemanager/BrowserPageManager.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/pagemanager/PermissionsPageManager.kt
+    apps/download-manager/android/app/src/main/res/drawable/ic_launcher_foreground.xml
+    apps/download-manager/android/app/src/main/res/drawable/ic_launcher_monochrome.xml
+    apps/download-manager/android/app/src/main/res/drawable/ic_monochrome.xml
+    apps/download-manager/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+    apps/download-manager/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+    apps/download-manager/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp
+    apps/download-manager/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp
+    apps/download-manager/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp
+    apps/download-manager/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp
+    apps/download-manager/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp
+    apps/download-manager/android/app/src/main/res/values/ic_launcher_background.xml
+    apps/download-manager/android/app/src/main/res/values/strings.xml
+    apps/download-manager/android/app/src/main/res/values/theme.xml
+    apps/download-manager/android/app/src/main/res/xml/provider_paths.xml
+
+C15 — Android background download integration
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/AndroidManifest.xml
+  Dependencies: Android service, storage and notification APIs
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Broad permissions and background/storage rules require review.
+  Related files (2):
+    apps/download-manager/android/app/src/main/AndroidManifest.xml
+    apps/download-manager/compositeBuilds/plugins/common-android/src/main/resources/ir/amirab/plugin/common_android/AndroidManifest.xml.hbs
+
+C16 — Android QR intake
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeScannerActivity.kt
+  Dependencies: Android camera/scanner
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Device and permission behavior not executed.
+  Related files (4):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeScannerActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeScannerComponent.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/QRCodeTextReader.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/qrcode/ZxingQRCodeAnalyzer.kt
+
+C17 — Desktop native bridge and integration
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/backend/NativeMessagingApi.ts
+  Dependencies: platform host and integration server
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No paired browser-to-desktop demonstration.
+  Related files (17):
+    apps/browser-extension/src/backend/NativeMessagingApi.ts
+    apps/browser-extension/src/backend/nativemessaging/NativeMessagingProtocol.ts
+    apps/browser-extension/src/backend/nativemessaging/NativeMessagingTransport.ts
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/cli/nativemessaging/NativeMessagingCommand.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/cli/nativemessaging/install/NativeMessagingInstallCommand.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/cli/nativemessaging/run/NativeMessagingRunRunCommand.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/cli/nativemessaging/uninstall/NativeMessagingUninstallCommand.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/NativeMessaging.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/NativeMessagingManifestApplier.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/BrowserMessageRequest.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/DefinedHandlers.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/NativeMessagingHost.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/NativeMessagingRouter.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/stdio/NativeMessagingFinished.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/stdio/StdioProtocol.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/nativemessaging/host/stdio/TypeSafeStdioProtocol.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/IntegrationUtil.kt
+
+C18 — Local HTTP integration
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/integration/server/build.gradle.kts
+  Dependencies: Ktor auth/routing, shared callbacks
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Review default optional authentication and job-creating endpoints.
+  Related files (12):
+    apps/download-manager/integration/server/build.gradle.kts
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/Endpoints.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/Integration.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/IntegrationHandler.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/IntegrationSettings.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/KtorServer.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/MyServer.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/model/ApiQueueModel.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/model/DownloadCredentialsFromIntegration.kt
+    apps/download-manager/integration/server/src/main/kotlin/com/abdownloadmanager/integration/model/NewDownloadTask.kt
+    apps/download-manager/integration/server/src/main/resources/logback.xml
+    apps/download-manager/integration/server/src/main/resources/rules.pro
+
+C19 — Updater and update UI
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/updater/NewUpdatePage.kt
+  Dependencies: platform installer/updater and release metadata
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Do not run original installers; trust/provenance/signing unresolved.
+  Related files (28):
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/updater/NewUpdatePage.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/updater/UpdaterDialog.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/updater/NewUpdatePage.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/updater/UpdaterDialog.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/updater/RenderUpdateNotifications.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/updater/UpdateComponent.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/updater/UpdateDownloaderViaDownloadSystem.kt
+    apps/download-manager/shared/updater/build.gradle.kts
+    apps/download-manager/shared/updater/src/androidMain/kotlin/AndroidDirectLinkUpdateApplier.kt
+    apps/download-manager/shared/updater/src/androidMain/kotlin/ApkInstaller.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/ArtifactUtil.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/UpdateDownloadLocationProvider.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/UpdateManager.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/github/githubapi.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updateapplier/BaseUpdateApplier.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updateapplier/UpdateApplier.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updateapplier/UpdateDownloader.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updateapplier/UpdateInstaller.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updatechecker/DummyUpdateChecker.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updatechecker/GithubUpdateChecker.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updatechecker/UpdateChecker.kt
+    apps/download-manager/shared/updater/src/commonMain/kotlin/com/abdownloadmanager/updatechecker/UpdateInfo.kt
+    apps/download-manager/shared/updater/src/desktopMain/kotlin/com/abdownloadmanager/updateapplier/DesktopDirectLinkUpdateApplier.kt
+    apps/download-manager/shared/updater/src/desktopMain/kotlin/com/abdownloadmanager/updateapplier/UpdateInstallerByWindowsExecutable.kt
+    apps/download-manager/shared/updater/src/desktopMain/kotlin/com/abdownloadmanager/updateapplier/UpdateInstallerFromArchiveFile.kt
+    apps/download-manager/shared/updater/src/desktopMain/resources/com/abdownloadmanager/updater/updater_linux.sh
+    apps/download-manager/shared/updater/src/desktopMain/resources/com/abdownloadmanager/updater/updater_macos.sh
+    apps/download-manager/shared/updater/src/desktopMain/resources/com/abdownloadmanager/updater/updater_windows.bat
+
+C20 — Start with OS
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/shared/auto-start/build.gradle.kts
+  Dependencies: platform startup registration
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No install/uninstall or OS policy tests.
+  Related files (12):
+    apps/download-manager/shared/auto-start/build.gradle.kts
+    apps/download-manager/shared/auto-start/src/androidMain/kotlin/ir/amirab/util/startup/AndroidStartupManager.kt
+    apps/download-manager/shared/auto-start/src/androidMain/kotlin/ir/amirab/util/startup/Startup.android.kt
+    apps/download-manager/shared/auto-start/src/commonMain/kotlin/ir/amirab/util/startup/AbstractStartupManager.kt
+    apps/download-manager/shared/auto-start/src/commonMain/kotlin/ir/amirab/util/startup/Startup.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/AbstractDesktopStartupManager.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/HeadlessStartupDesktop.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/MacOSStartupDesktop.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/Startup.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/UnixXDGStartupDesktop.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/Utils.kt
+    apps/download-manager/shared/auto-start/src/desktopMain/kotlin/ir/amirab/util/startup/WindowsStartupDesktop.kt
+
+C21 — Localized resources
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/public/_locales/en/messages.json
+  Dependencies: generated resource access and UI consumers
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Translations/assets preserved; accessibility not verified.
+  Related files (115):
+    apps/browser-extension/public/_locales/en/messages.json
+    apps/download-manager/shared/resources/build.gradle.kts
+    apps/download-manager/shared/resources/contracts/build.gradle.kts
+    apps/download-manager/shared/resources/contracts/src/commonMain/kotlin/ir/amirab/resources/contracts/MyLanguageResource.kt
+    apps/download-manager/shared/resources/contracts/src/commonMain/kotlin/ir/amirab/resources/contracts/MyStringResource.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/ABDMLanguageResources.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/ABDMIcons.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/AddLink.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Alphabet.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/AppIcon.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Back.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/BrowserGoogleChrome.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/BrowserMicrosoftEdge.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/BrowserMozillaFirefox.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/BrowserOpera.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Check.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Clear.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Clipboard.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Clock.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Colors.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Copy.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Data.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Delete.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Down.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/DownSpeed.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/DragAndDrop.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Earth.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Edit.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Exit.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/ExternalLink.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Fast.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/File.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileApplication.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileDocument.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileMusic.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FilePicture.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileUnknown.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileVideo.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FileZip.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Flag.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Folder.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FolderFinished.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/FolderUnfinished.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Grip.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Group.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Hearth.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Info.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Language.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/List.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Lock.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Menu.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Minus.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Network.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Next.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/OpenSource.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Pause.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Permission.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Plus.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/QuestionMark.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Queue.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/QueueStart.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/QueueStop.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Refresh.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Resume.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Scheduler.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Search.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/SelectAll.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/SelectInside.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/SelectInvert.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Settings.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Share.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Sort123.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Sort321.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Speaker.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/SpeedLimiter.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Stop.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/StopAll.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Telegram.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Theme.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Undo.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Up.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/VerticalDirection.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/WindowClose.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/WindowFloating.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/WindowMaximize.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/WindowMinimize.kt
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/credits/translators.json
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ar_SA.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/bn_BD.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/bqi_IR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ckb_IR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/cs_CZ.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/de_DE.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/en_US.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/es_ES.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/fa_IR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/fi_FI.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/fr_FR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/hu_HU.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/id_ID.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/it_IT.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ja_JP.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ka_GE.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ko_KR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/lt_LT.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/pl_PL.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/pt_BR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/ru_RU.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/sq_AL.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/th_TH.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/tr_TR.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/uk_UA.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/vi_VN.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/zh_CN.properties
+    apps/download-manager/shared/resources/src/commonMain/resources/com/abdownloadmanager/resources/locales/zh_TW.properties
+
+C22 — Platform UI and shared controls
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/download-manager/desktop/mac_utils/build.gradle.kts
+  Dependencies: Compose and platform-specific adapters
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No device/window rendering result.
+  Related files (25):
+    apps/download-manager/desktop/mac_utils/build.gradle.kts
+    apps/download-manager/desktop/mac_utils/src/main/kotlin/ir/amirab/util/desktop/mac/event/MacEventHandler.kt
+    apps/download-manager/desktop/mac_utils/src/main/kotlin/ir/amirab/util/desktop/mac/native/MacOSNativeFilesInResources.kt
+    apps/download-manager/desktop/mac_utils/src/main/native/setsid.c
+    apps/download-manager/shared/compose-utils/build.gradle.kts
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/Helpers.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/IIconResolver.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/IconSource.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/StringSource.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/action/AnAction.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/action/Extensions.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/action/MenuDsl.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/action/MenuItem.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/contants/Constants.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/layout/RelativeAlignment.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/ILanguageNameProvider.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/LanguageManager.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/LanguageSourceProvider.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/LanguageStorage.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/LocalLanguageManager.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/MyLocale.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/localizationmanager/StringVariableReplacer.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/modifiers/AutoMirror.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/modifiers/Clickables.kt
+    apps/download-manager/shared/compose-utils/src/commonMain/kotlin/ir/amirab/util/compose/resources/Resources.kt
+
+C23 — Browser native transport
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/backend/NativeMessagingApi.ts
+  Dependencies: browser nativeMessaging, zod, bridge schema
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Pairing, typecheck and negative-origin validation remain.
+  Related files (3):
+    apps/browser-extension/src/backend/NativeMessagingApi.ts
+    apps/browser-extension/src/backend/nativemessaging/NativeMessagingProtocol.ts
+    apps/browser-extension/src/backend/nativemessaging/NativeMessagingTransport.ts
+
+C24 — Browser HTTP fallback
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/backend/Backend.ts
+  Dependencies: browser config, local HTTP server
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Fallback availability and credentials not executed.
+  Related files (2):
+    apps/browser-extension/src/backend/Backend.ts
+    apps/browser-extension/src/backend/HttpApi.ts
+
+C25 — Browser download interception
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/linkgrabber/DownloadLinkInterceptor.ts
+  Dependencies: webRequest/downloads APIs, backend
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Header/cookie forwarding and fallback cancellation need review.
+  Related files (5):
+    apps/browser-extension/src/linkgrabber/DownloadLinkInterceptor.ts
+    apps/browser-extension/src/linkgrabber/LinkGrabber.ts
+    apps/browser-extension/src/linkgrabber/LinkGrabberResponse.ts
+    apps/browser-extension/src/linkgrabber/Manifest2DownloadLinkInterceptor.ts
+    apps/browser-extension/src/linkgrabber/Manifest3DownloadLinkInterceptor.ts
+
+C26 — Browser context menu and selection
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/contentscripts/AddDownloads.ts
+  Dependencies: browser messaging and backend
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Explicit user intent/host permission behavior untested.
+  Related files (3):
+    apps/browser-extension/src/contentscripts/AddDownloads.ts
+    apps/browser-extension/src/contentscripts/ContentScript.ts
+    apps/browser-extension/src/contextmenus/ContextMenus.ts
+
+C27 — Browser media/quality parsing
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: apps/browser-extension/src/media/HLSUtils.ts
+  Dependencies: HLS parser and React views
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No generalized site or DRM support implied.
+  Related files (6):
+    apps/browser-extension/src/media/HLSUtils.ts
+    apps/browser-extension/src/media/MediaBlackList.tsx
+    apps/browser-extension/src/media/MediaOnTab.ts
+    apps/browser-extension/src/media/MediaRegistry.ts
+    apps/browser-extension/src/media/MultiMediaUtils.tsx
+    apps/browser-extension/src/media/OnMediaInterceptedFromRequestListener.ts
+
+C28 — Browser popup and preferences
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.css
+  Dependencies: React, MobX, browser storage
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Existing type errors and permission concerns remain.
+  Related files (11):
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.css
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.html
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.ts
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.css
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.html
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.ts
+    apps/browser-extension/src/browseractionpopup/BrowserAction.tsx
+    apps/browser-extension/src/optionsui/AutoGrowingTextarea.tsx
+    apps/browser-extension/src/optionsui/OptionUi.tsx
+    apps/browser-extension/src/popup/media/MediaSelectionPopup.ts
+    apps/browser-extension/src/popup/selection/SelectionPopup.ts
+
+C29 — Reference DASH/HLS parsers
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts
+  Dependencies: TypeScript manifest parsers
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Review algorithms before selective adaptation; not compatible by filename alone.
+  Related files (2):
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/m3u8-parser.ts
+
+C30 — Reference MSE capture hook
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/mediagrabber/extension/src/content.ts
+  Dependencies: browser main/isolated world messaging
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Broad host access and segment lifetime; no production inclusion.
+  Related files (2):
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/content.ts
+    AnalyseFuture/reference-projects/mediagrabber/extension/src/mse-inject.ts
+
+C31 — Reference media conversion RPC
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/mediagrabber/coapp/src/converter.ts
+  Dependencies: Node, FFmpeg/ffprobe, length-prefixed weh#rpc
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Protocol differs from AB; TLS bypass/truncation handling requires remediation.
+  Related files (3):
+    AnalyseFuture/reference-projects/mediagrabber/coapp/src/converter.ts
+    AnalyseFuture/reference-projects/mediagrabber/coapp/src/downloads.ts
+    AnalyseFuture/reference-projects/mediagrabber/coapp/src/rpc.ts
+
+C32 — Reference source connector wrapper
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/mediagrabber/coapp/src/ytdlp.ts
+  Dependencies: yt-dlp binary and Node child process
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: No permission/site support guarantee; binary/licensing review needed.
+  Related files (1):
+    AnalyseFuture/reference-projects/mediagrabber/coapp/src/ytdlp.ts
+
+C33 — Reference web jobs and download API
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/reclip/app.py
+  Dependencies: Flask, yt-dlp, FFmpeg, in-memory dictionary/threads
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Unauthenticated/unbounded service and SSRF/argument-validation concerns.
+  Related files (1):
+    AnalyseFuture/reference-projects/reclip/app.py
+
+C34 — Reference simple web intake UI
+  Status: reference implementation; not active product
+  Purpose/location: AnalyseFuture/reference-projects/reclip/templates/index.html
+  Dependencies: HTML/JS fetch calls to Flask
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Do not connect to a public hosted service without a new security design.
+  Related files (1):
+    AnalyseFuture/reference-projects/reclip/templates/index.html
+
+C35 — Synthetic HTTP Range/redirect/drop fixture
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: tools/fixtures/http_fixture.py
+  Dependencies: Python standard library
+  Existing checks: fixture regression source exists; not run in this pass
+  Missing/decision: Not a downloader; client integration still absent.
+  Related files (1):
+    tools/fixtures/http_fixture.py
+
+C36 — Fixture verified-TLS support
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: tests/fixtures/test_http_fixture.py
+  Dependencies: Python ssl and caller-supplied certificate; OpenSSL for regression source
+  Existing checks: fixture regression source exists; not run in this pass
+  Missing/decision: No tests run after move.
+  Related files (2):
+    tests/fixtures/test_http_fixture.py
+    tools/fixtures/http_fixture.py
+
+C37 — Fixture regression source
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: tests/fixtures/test_http_fixture.py
+  Dependencies: Python unittest and OpenSSL
+  Existing checks: fixture regression source exists; not run in this pass
+  Missing/decision: 14 test methods preserved; not executed in current scope.
+  Related files (1):
+    tests/fixtures/test_http_fixture.py
+
+C38 — Preservation and repository setup tooling
+  Status: source implementation present; runtime unverified in this pass
+  Purpose/location: AnalyseFuture/prior-versions/0b2a1ad/tools/onboarding/setup.sh
+  Dependencies: Python/Git/OpenSSL, baseline object history
+  Existing checks: no feature-specific execution evidence collected in this no-test pass
+  Missing/decision: Helpers repaired statically; no helper or test-suite execution in this pass.
+  Related files (3):
+    AnalyseFuture/prior-versions/0b2a1ad/tools/onboarding/setup.sh
+    tools/development/setup.sh
+    tools/repository/verify_preservation.py
+
+D01 — HTTPS direct-file downloads
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Download a permitted test file with matching SHA-256
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D02 — Real progress, ETA and speed
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: UI reflects actual transferred bytes; handles unknown length
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D03 — Pause/resume
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Range-capable source resumes without corrupting output; otherwise safe restart
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D04 — Retry and recovery
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Simulated disconnect/restart preserves recoverable job state
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D05 — Cancel and cleanup
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Job cancels without orphaned worker or unsafe partial files
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D06 — Download queue and concurrency cap
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Configured concurrency and fair scheduling enforced
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D07 — Safe filename/path handling
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager + validation
+  Existing checks: proposed acceptance only: No traversal, unexpected overwrite or reserved-name failure
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D08 — Integrity/checksum validation
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager / own adapter
+  Existing checks: proposed acceptance only: Invalid hash reported; file not marked successful
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D09 — Segmented transfer when supported
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: No duplicated bytes; compare with single connection fairly
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D10 — Scheduling and speed limits
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Jobs start at intended local time; limits measured
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D11 — Download categories, search and history
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: History survives restart and can be searched
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D12 — Proxy and network settings
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Download Manager
+  Existing checks: proposed acceptance only: Explicit configured proxy works, credentials remain protected
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D13 — Bulk link intake, deduplication
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: ReClip / AB
+  Existing checks: proposed acceptance only: Repeated URLs detected; deliberate duplicates still possible
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D14 — Import/export of job lists
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Design needed
+  Existing checks: proposed acceptance only: Versioned format with invalid data handled safely
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+D15 — CLI, local REST API
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Gopeed/Motrix reference
+  Existing checks: proposed acceptance only: Authenticated, versioned and documented API
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B01 — Desktop handoff for direct downloads
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Browser Integration
+  Existing checks: proposed acceptance only: User click creates exactly one authenticated desktop job
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B02 — Popup and right-click controls
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB Browser Integration
+  Existing checks: proposed acceptance only: Works on supported Chrome/Edge version
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B03 — Safe native messaging/pairing
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB integration + security work
+  Existing checks: proposed acceptance only: Arbitrary page cannot command local helper
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B04 — Active job progress
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB integration / adapter
+  Existing checks: proposed acceptance only: Popup reflects state from desktop engine
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B05 — Supported direct media detection
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: MediaGrabber
+  Existing checks: proposed acceptance only: Correct media listed with user-initiated action
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B06 — Authorized non-DRM HLS/DASH
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: HLS Downloader
+  Existing checks: proposed acceptance only: Tested with owned sample stream and correct audio/video
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B07 — Firefox extension support
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB integration
+  Existing checks: proposed acceptance only: Package and smoke-test in supported Firefox
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B08 — Fine-grained host permissions
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Manifest V3
+  Existing checks: proposed acceptance only: Minimum requested permissions justified and reviewed
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+B09 — Optional remote target
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Gopeed reference
+  Existing checks: proposed acceptance only: Secure pairing, explicit consent and no open control port
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M01 — Import user-owned local video/audio
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: New media module
+  Existing checks: proposed acceptance only: File processed offline without uploading by default
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M02 — MP4/MKV/WebM remux where compatible
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: Container conversion plays with synchronized audio
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M03 — MP3/M4A/FLAC/WAV/Opus extraction
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: Metadata/sample duration checked; lossless output not mislabeled
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M04 — Video compression and presets
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: Actual output codec/quality/size displayed
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M05 — Trim/merge permitted media
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: Audio stays synchronized; invalid edits fail safely
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M06 — Subtitle import/export
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg / media metadata
+  Existing checks: proposed acceptance only: Supported SRT/VTT conversions tested
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M07 — Audio-track and language selection
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: Selected track matches requested language when metadata exists
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M08 — Batch conversion queue
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Shared jobs
+  Existing checks: proposed acceptance only: Job failures do not corrupt remaining jobs
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M09 — Available 4K/8K processing
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: FFmpeg
+  Existing checks: proposed acceptance only: No false promise of native 8K when source is lower quality
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M10 — Metadata and media library
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Parabolic/Tube Archivist reference
+  Existing checks: proposed acceptance only: Search, thumbnails, duplicate handling, privacy
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M11 — AI transcription and tagging
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Unselected
+  Existing checks: proposed acceptance only: Opt-in, privacy and cost disclosures; measurable value
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+M12 — Site-specific connector architecture
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: yt-dlp optional
+  Existing checks: proposed acceptance only: Explicit allowlist/rights review and connector regression tests
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+W01 — Public product/installation website
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: New site / existing marketing pattern
+  Existing checks: proposed acceptance only: Accessible and mobile responsive
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+W02 — Uploaded media conversion
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Original hardened service/FFmpeg; ReClip UX reference
+  Existing checks: proposed acceptance only: Size/format limits, authenticated cleanup and valid output
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+W03 — Permitted direct URL job UI
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Original hardened design; ReClip UX reference
+  Existing checks: proposed acceptance only: SSRF-safe URL checks, explicit quotas, progress
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+W04 — Cloud/server-side queue
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Redis/worker candidate
+  Existing checks: proposed acceptance only: Bounded resource use, cancellation and TTL cleanup
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+W05 — User accounts and billing
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Not selected
+  Existing checks: proposed acceptance only: Only after privacy policy and business model approval
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P01 — Reproducible developer builds
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: AB build + extension tooling
+  Existing checks: proposed acceptance only: Fresh environment builds without private dependencies
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P02 — Automated unit/integration tests
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Project-specific
+  Existing checks: proposed acceptance only: Core state machine, security cases, extension bridge covered
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P03 — Signed release and installer
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Existing packager
+  Existing checks: proposed acceptance only: Install/update/uninstall tested on supported OS
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P04 — Auto-updates and rollback strategy
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Existing updater
+  Existing checks: proposed acceptance only: Signature verification and controlled release channels
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P05 — Dependency/license SBOM
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Standard tooling
+  Existing checks: proposed acceptance only: All shipped dependencies and licenses documented
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P06 — Privacy-safe logs and diagnostics
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: New/shared
+  Existing checks: proposed acceptance only: No credentials, cookies or private URLs in logs
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P07 — Localization and accessibility
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: App i18n tooling
+  Existing checks: proposed acceptance only: Keyboard navigation, labels, contrast, locale correctness
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md
+
+P08 — Plugin SDK and marketplace
+  Status: product backlog; not an integrated implementation claim
+  Purpose/location: existing feature owner documented in PROJECT_STRUCTURE.md
+  Dependencies: Motrix/Gopeed reference
+  Existing checks: proposed acceptance only: Signed plugins, sandbox, granular permissions
+  Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
+  Related files (1):
+    docs/project/docs/FEATURE_MATRIX.md

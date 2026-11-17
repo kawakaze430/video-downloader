@@ -1,0 +1,11 @@
+NEXT DEVELOPER INSTRUCTIONS
+
+1. Read AGENTS.md and PROJECT_STRUCTURE.md. The current instruction is organization only, no tests/builds/installs/startup unless a later owner request authorizes them.
+2. Verify repository identity and remote main, preserve user changes and backup tag, and read WORK_PROGRESS.txt. Work directly on main; no feature branch/PR/force-push. Push completed checkpoints at least every5minutes during active changes.
+3. Baseline and complete classification are in repository-inventory/baseline-file-analysis.json. Original/active/exact-retained mapping and Git/hash evidence are in migration-records/preservation-manifest.json. Preservation helpers require baseline history in the local object database.
+4. Kotlin module ownership stays within apps/download-manager; do not split Android/desktop resources or common source sets by extension. Browser package stays under apps/browser-extension with ~ pointing to its src.
+5. Fixture imports resolve from repository root as tools.fixtures.http_fixture. Future authorized regression command: python3 -m unittest discover -s tests/fixtures -v. This command was NOT executed after migration.
+6. A future authorized structural check can run python3 tools/repository/verify_preservation.py. Default bash tools/development/setup.sh reports prerequisites only. Never run unknown archived installers or references as a shortcut.
+7. No production workspace/import/deployment includes AnalyseFuture. Reference bridge/transfer code has known trust/corruption risks. Review SECURITY_AUDIT.txt before adopting code. Do not equate archive placement with sandboxing.
+8. Begin future validation with toolchain/provenance and primary app builds, then fixture-to-engine integration, then paired browser flow. Keep failed/blocked/unrun checks distinct. Do not implement every platform connector or rewrite languages without evidence.
+9. Public source support and optional AI are product roadmap proposals. Use PROJECT_VISION_AND_FUTURE_ROADMAP.txt; preserve prior research rather than replacing it with unsupported claims.

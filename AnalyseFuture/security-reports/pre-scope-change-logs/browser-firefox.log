@@ -1,0 +1,45 @@
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+
+> ab-download-manager-browser-integration@1.5.2 build:firefox
+> cross-env EXTENSION_TARGET=firefox vite build
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+vite v4.3.9 building for production...
+transforming...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+🌼   daisyUI 4.12.24
+├─ ✔︎ 2 themes added		https://daisyui.com/docs/themes
+╰─ ★ Star daisyUI on GitHub	https://github.com/saadeghi/daisyui
+
+[plugin:vite:resolve] Module "process" has been externalized for browser compatibility, imported by "/workspace/video-downloader/sources/ab-browser-integration/src/utils/ExtensionInfo.ts". See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 453 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/firefox/src/entrypoint/ContentScript.js                          0.10 kB
+dist/firefox/background.html                                          0.16 kB │ gzip:  0.15 kB
+dist/firefox/src/entrypoint/OptionUi/index.html                       0.52 kB │ gzip:  0.33 kB
+dist/firefox/src/entrypoint/BrowserAction/index.html                  0.52 kB │ gzip:  0.34 kB
+dist/firefox/manifest.json                                            1.37 kB │ gzip:  0.63 kB
+dist/firefox/assets/client-2ba1d608.css                              52.01 kB │ gzip:  8.71 kB
+dist/firefox/assets/BackgroundEntryProviders-f2fa27ef.js              0.11 kB │ gzip:  0.12 kB
+dist/firefox/assets/InitPlatformFromBackground-50fca02a.js            0.15 kB │ gzip:  0.14 kB
+dist/firefox/assets/StringUtils-918c365f.js                           0.24 kB │ gzip:  0.15 kB
+dist/firefox/assets/Shortcut-b4041cd6.js                              0.66 kB │ gzip:  0.39 kB
+dist/firefox/assets/chunk-E2HJRHOS-609985ad.js                        1.21 kB │ gzip:  0.60 kB
+dist/firefox/assets/src/entrypoint/BrowserAction/index-9af07c28.js    4.10 kB │ gzip:  1.60 kB
+dist/firefox/assets/src/entrypoint/OptionUi/index-3defc110.js        15.92 kB │ gzip:  4.64 kB
+dist/firefox/assets/src/entrypoint/ContentScript-3e544ae9.js         20.04 kB │ gzip:  6.26 kB
+dist/firefox/assets/DefineExtensionEntry-c6a0a9a1.js                110.94 kB │ gzip: 31.77 kB
+dist/firefox/assets/background-bf1cd33c.js                          166.06 kB │ gzip: 56.62 kB
+dist/firefox/assets/client-aa80e50d.js                              212.54 kB │ gzip: 67.19 kB
+✓ built in 3.94s
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

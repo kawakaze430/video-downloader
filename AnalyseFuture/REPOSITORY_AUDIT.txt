@@ -1,0 +1,52 @@
+COMPLETE REPOSITORY AUDIT — STRUCTURE-ONLY PASS
+Repository: https://github.com/kawakaze430/video-downloader
+Starting commit: 7a7e2f6cd52626f26d954ba60e4d7a838d717b56
+Default/delivery branch: main
+Remote backup tag: recovery-baseline-2026-11-17-7a7e2f6
+
+SCOPE AND COVERAGE
+All 1458 starting tracked paths were inventoried; 1418 text files
+were read in full by static content/import/symbol analysis. 40 binary
+files were read as bytes; archives/member metadata and relevant headers were
+classified. Images/video were not decoded and the Gradle JAR was not executed.
+Complete semantic runtime correctness cannot be inferred from this inspection.
+No paths were skipped. Files containing repeated historical source/document
+archives are identified as historical text, not counted as new live services.
+
+The prior account-compromise report remains unconfirmed in the accessible tree.
+Advertised origin heads/tags and accessible history were fetched; main matched
+the known starting checkpoint. Existing local work ref was preserved. No refs
+were deleted, no published commits rewritten, and no force-push was used.
+GitHub REST/protection inspection was unavailable; a server-accepted ordinary
+main push and backup-tag push demonstrate only those specific permissions.
+
+ARCHITECTURE DECISION
+Keep the Kotlin Gradle multi-project together under apps/download-manager and
+the matching npm/Vite extension together under apps/browser-extension. Their
+internal source/resource/module conventions carry actual dependency meaning.
+Collect the original fixture under root tools/fixtures and tests/fixtures.
+Move its project research to docs/project. Keep original ZIPs in archives.
+Retain MediaGrabber/ReClip as non-active reference implementations and preserve
+the orphan imports-only browser backend stub, originals and reports under
+AnalyseFuture. The canonical future vision is a detailed plain-text file there.
+
+IMPLEMENTED CHANGES
+1359 baseline files moved to a different functional location.
+6 fixture/package/test/document files regrouped as one fixture responsibility.
+17 files newly retained as pre-edit originals or the orphan backend stub.
+No source transfer algorithm was rewritten, no external bridge protocols were
+merged, no runtime API/database schema was changed, and no new AI feature was
+invented. Compatible organization and references were consolidated; incompatible
+implementations were retained with reasons rather than forced together.
+
+Reference repairs include Markdown identity-based links, fixture discovery
+instructions, helper repository roots, preservation/index paths and per-member
+source archive overrides. The browser source-pack command now scopes Git archive
+to its own app tree, so source packages do not include AnalyseFuture or ZIPs.
+
+VALIDATION BOUNDARY
+The latest owner request explicitly says do not run tests. No test suites,
+builds, typecheck commands, dependency installs, app startup or CI activation
+were performed after that instruction. Static path/import/content preservation
+review is part of organizing files, not evidence of runtime behavior.
+See TEST_AND_VALIDATION_REPORT.txt for earlier available observations and gaps.

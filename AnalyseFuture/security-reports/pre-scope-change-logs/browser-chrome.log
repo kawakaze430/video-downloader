@@ -1,0 +1,45 @@
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+
+> ab-download-manager-browser-integration@1.5.2 build:chrome
+> cross-env EXTENSION_TARGET=chrome vite build
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+vite v4.3.9 building for production...
+transforming...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+🌼   daisyUI 4.12.24
+├─ ✔︎ 2 themes added		https://daisyui.com/docs/themes
+╰─ ❤︎ Support daisyUI project:	https://opencollective.com/daisyui
+
+[plugin:vite:resolve] Module "process" has been externalized for browser compatibility, imported by "/workspace/video-downloader/sources/ab-browser-integration/src/utils/ExtensionInfo.ts". See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+✓ 452 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/chrome/serviceWorker.js                                         0.06 kB
+dist/chrome/src/entrypoint/ContentScript.js                          0.10 kB
+dist/chrome/src/entrypoint/OptionUi/index.html                       0.52 kB │ gzip:  0.33 kB
+dist/chrome/src/entrypoint/BrowserAction/index.html                  0.52 kB │ gzip:  0.34 kB
+dist/chrome/manifest.json                                            1.38 kB │ gzip:  0.62 kB
+dist/chrome/assets/client-2ba1d608.css                              52.01 kB │ gzip:  8.71 kB
+dist/chrome/assets/BackgroundEntryProviders-420485e9.js              0.11 kB │ gzip:  0.12 kB
+dist/chrome/assets/InitPlatformFromBackground-8f416eb8.js            0.15 kB │ gzip:  0.14 kB
+dist/chrome/assets/StringUtils-918c365f.js                           0.24 kB │ gzip:  0.15 kB
+dist/chrome/assets/Shortcut-4461e19e.js                              0.66 kB │ gzip:  0.39 kB
+dist/chrome/assets/chunk-E2HJRHOS-fb5a0be5.js                        1.21 kB │ gzip:  0.60 kB
+dist/chrome/assets/src/entrypoint/BrowserAction/index-0c002c2b.js    3.89 kB │ gzip:  1.50 kB
+dist/chrome/assets/src/entrypoint/OptionUi/index-fdf704d6.js        15.55 kB │ gzip:  4.53 kB
+dist/chrome/assets/src/entrypoint/ContentScript-0cff1f94.js         19.89 kB │ gzip:  6.21 kB
+dist/chrome/assets/DefineExtensionEntry-d9f2f045.js                107.46 kB │ gzip: 30.79 kB
+dist/chrome/assets/src/entrypoint/Background-260b06d1.js           164.97 kB │ gzip: 56.26 kB
+dist/chrome/assets/client-bf50c3e0.js                              212.10 kB │ gzip: 67.06 kB
+✓ built in 4.08s
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

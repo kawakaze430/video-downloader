@@ -1,0 +1,648 @@
+ARCHIVED/PRESERVED MATERIAL MANIFEST
+No file was classified malicious merely for being unfamiliar.
+
+AnalyseFuture/historical-implementations/7a7e2f6/AGENTS.md
+  Original: AGENTS.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: AGENTS.md
+  SHA256: b161f48429b053abbad31a3d38a92654167c1304488bdc15cb8aff91fbd18c10
+
+AnalyseFuture/historical-implementations/7a7e2f6/AnalyseFuture/README.md
+  Original: AnalyseFuture/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: AnalyseFuture/README.md
+  SHA256: de226e34d1c13698105d89375c4918f5fe2f54016bf37f7174772f6ea3819c8f
+
+AnalyseFuture/prior-versions/0b2a1ad/PROJECT_IDEA.txt
+  Original: AnalyseFuture/prior-versions/0b2a1ad/PROJECT_IDEA.txt
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/prior-versions/0b2a1ad/PROJECT_IDEA.txt
+  SHA256: 94da8fbc9cb03c64dbd72f803910b3131fc82105829db1540620ccc729693221
+
+AnalyseFuture/prior-versions/0b2a1ad/README.md
+  Original: AnalyseFuture/prior-versions/0b2a1ad/README.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/prior-versions/0b2a1ad/README.md
+  SHA256: a47781bfbb2c281547c95c81136819c56a41ec415f3e598ab2b5a185abafe8d6
+
+AnalyseFuture/prior-versions/0b2a1ad/sources/archives.json
+  Original: AnalyseFuture/prior-versions/0b2a1ad/sources/archives.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/prior-versions/0b2a1ad/sources/archives.json
+  SHA256: 926b8e90d6d782e139b5c58225825c4e760873ea405d55340fbf4d732aeb5466
+
+AnalyseFuture/prior-versions/0b2a1ad/tools/onboarding/setup.sh
+  Original: AnalyseFuture/prior-versions/0b2a1ad/tools/onboarding/setup.sh
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/prior-versions/0b2a1ad/tools/onboarding/setup.sh
+  SHA256: 0e1c593d2afffdebb431b11306b602f81b68cbdd3aefcfa0e5fc3737526a3524
+
+AnalyseFuture/reference-projects/mediagrabber/.gitattributes
+  Original: AnalyseFuture/reference-projects/mediagrabber/.gitattributes
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/.gitattributes
+  SHA256: c61478fa3e34a932acc834d6813029a60e6467ea9eb8a124369d4cd24bb5d54c
+
+AnalyseFuture/reference-projects/mediagrabber/.github/workflows/release.yml
+  Original: AnalyseFuture/reference-projects/mediagrabber/.github/workflows/release.yml
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/.github/workflows/release.yml
+  SHA256: ee24301fcce4914d3b80531d46609a7f75052d6a82dc6f530298467ab71cbf44
+
+AnalyseFuture/reference-projects/mediagrabber/.gitignore
+  Original: AnalyseFuture/reference-projects/mediagrabber/.gitignore
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/.gitignore
+  SHA256: a3da780f668dff17752cf8a0dff82a9f90cf004ec61edf6bc69e700ff2c54111
+
+AnalyseFuture/reference-projects/mediagrabber/AGENTS.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/AGENTS.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/AGENTS.md
+  SHA256: 861e2a562ab9a68407577f1f206267ab4260456568e4327534e85d3243e2c360
+
+AnalyseFuture/reference-projects/mediagrabber/LICENSE
+  Original: AnalyseFuture/reference-projects/mediagrabber/LICENSE
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/LICENSE
+  SHA256: d72dfe382e9c756d19dd0ad2093155022e0dac084b855a7d8b8eac287a39abb2
+
+AnalyseFuture/reference-projects/mediagrabber/README.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/README.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/README.md
+  SHA256: d7259a59b5ea8bb04f019fe798c909aea54586f29283a3761b9d5de7f4bec7aa
+
+AnalyseFuture/reference-projects/mediagrabber/THIRD_PARTY_NOTICES.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/THIRD_PARTY_NOTICES.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/THIRD_PARTY_NOTICES.md
+  SHA256: b88b173223e9ebbce76707410c9323bf69be54d1c942e6367c59227287cf8707
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/package.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/package.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/package.json
+  SHA256: aff4b5fc9395f075ae004778a4dc806df53c4121ae406ac0db216cc5231deaed
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/build-sea.mjs
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/build-sea.mjs
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/build-sea.mjs
+  SHA256: 4533ca0dc947db37191c56e97ddbe5956d257fee4a6c9b212a8fe1a9728a5382
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-checksums.mjs
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-checksums.mjs
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-checksums.mjs
+  SHA256: e76b58d2e56aa41dae5aae437949a250ee3dbb6fcf938b32b44e1d3127e64b9d
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-release-config.mjs
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-release-config.mjs
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/create-release-config.mjs
+  SHA256: 0a4479084184914e38973d86d669da634da9738ef7158b336e7859a8c60a2267
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/register-dev-host.ps1
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/register-dev-host.ps1
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/scripts/register-dev-host.ps1
+  SHA256: 953ce7bac96d1c8701682a6eee0aa9aea1ef4982514db1aa836d0a5fc4f5ab5e
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/converter.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/converter.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/converter.ts
+  SHA256: b3f4d9a6ef4659bf8f5e17ee7899120aeeb043cba2b34f357df82a6c4158eaca
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/downloads.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/downloads.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/downloads.ts
+  SHA256: 13781c8a18f2b4e68f66238b4f7224aa431c847c5a6fdd7ef135d0a794836cf3
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/file.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/file.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/file.ts
+  SHA256: d964ea02000127dcedd8ce9ffc8e11aed0b9f917ee1ceea35048fe5ffd576aea
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/installer.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/installer.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/installer.ts
+  SHA256: 1a3db36f93a0dc2af91bf8f714e31a5006ab96ef8a2e442852884e935846e2de
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/main.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/main.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/main.ts
+  SHA256: d445ef601a5a10cbeea67e52a8f84c2ff12b0a0fc841dcf3d73ff0ab6ba61123
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall-cli.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall-cli.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall-cli.ts
+  SHA256: 7e44f3299596bd38990f7242a086e5950c29e6077b8bcfed439857413e30d5d9
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-autoinstall.ts
+  SHA256: a8e198ef4355bdaf6a3cd1fc8505049b5ca9991460a8f1eaff9b7221d484e5b8
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-messaging.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-messaging.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/native-messaging.ts
+  SHA256: d642f76bcef9f6ce955ef2874b6b7ce2ffbc1cc1cadca381a3d788daa28cf413
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/paths.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/paths.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/paths.ts
+  SHA256: 63a413c3d544f237b2f512a05e4df4cdc706ca2db43804d2626bb1236d821be4
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/rpc.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/rpc.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/rpc.ts
+  SHA256: 69c0c22530d8f633830aee9416a757cbe0c1cd98b371f686752e14f28f638558
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/src/ytdlp.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/src/ytdlp.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/src/ytdlp.ts
+  SHA256: 7525d766315ba4d2e03f293081de234e8d86a647adb8b6b6c4167f2959938838
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/tsconfig.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/tsconfig.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/tsconfig.json
+  SHA256: 1d7e796d1f582274fbd284ef44fec4c9155e16f02ddd1e162e15bce666738c21
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/linux/.gitkeep
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/linux/.gitkeep
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/linux/.gitkeep
+  SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/mac/.gitkeep
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/mac/.gitkeep
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/mac/.gitkeep
+  SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/win/.gitkeep
+  Original: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/win/.gitkeep
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/coapp/ytdlp/win/.gitkeep
+  SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+AnalyseFuture/reference-projects/mediagrabber/docs/PRIVACY.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/PRIVACY.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/PRIVACY.md
+  SHA256: ac64441004da079e5a5e42b73b69d8c5c26549bd80ebb9fc2c3e6eea7f59b6e1
+
+AnalyseFuture/historical-implementations/7a7e2f6/AnalyseFuture/reference-projects/mediagrabber/docs/README.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/README.md
+  SHA256: 54e5323428caaa5639b98d316a4853e7bc0aa96a04986ccb4691155fac6e334c
+
+AnalyseFuture/reference-projects/mediagrabber/docs/STORE_LISTING.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/STORE_LISTING.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/STORE_LISTING.md
+  SHA256: 354ab98f5f8ac139ecfbdbe42dbecef822952f64ad82608b6e83eef5a7dda2a4
+
+AnalyseFuture/reference-projects/mediagrabber/docs/architecture.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/architecture.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/architecture.md
+  SHA256: 8555ffda4f8e6304d0c6acb2f67930faae0fe201726acfe8663db441a52cd2af
+
+AnalyseFuture/reference-projects/mediagrabber/docs/changelog.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/changelog.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/changelog.md
+  SHA256: 6c722b146f8e8d451feb647deee69c67e67cb1bb92163ae71c74ca4538e91f6e
+
+AnalyseFuture/reference-projects/mediagrabber/docs/coapp.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/coapp.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/coapp.md
+  SHA256: e5d0724d02dbf7cca43dc83910f2c89be2b7a1994cbcebbdedd48bd387d8052d
+
+AnalyseFuture/reference-projects/mediagrabber/docs/detection.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/detection.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/detection.md
+  SHA256: 7e464a6edceb45aeefb3a84f602c2effebcf0c815b91421aa5f4c321e56c64e0
+
+AnalyseFuture/reference-projects/mediagrabber/docs/ffmpeg.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/ffmpeg.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/ffmpeg.md
+  SHA256: fd65e33fbd31a4ed3c9d8a14ed2fe205fdd7a5630aa397851fa62afe2001a444
+
+AnalyseFuture/reference-projects/mediagrabber/docs/media/mediagrabber-promo.mp4
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/media/mediagrabber-promo.mp4
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/media/mediagrabber-promo.mp4
+  SHA256: ecf14219b8937e7802a0c0251472b62d39b6603083334833c962394baaa962c5
+
+AnalyseFuture/reference-projects/mediagrabber/docs/native-messaging.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/native-messaging.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/native-messaging.md
+  SHA256: 071340f530f74b8e2e876bcddc680cf3f4ea1eba2510a802dd374c1d5886c401
+
+AnalyseFuture/reference-projects/mediagrabber/docs/quick-reference.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/quick-reference.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/quick-reference.md
+  SHA256: a31553c01d0f3ba15757a5f6d873ed2fead4b428d86bbf03d8274530fd53673d
+
+AnalyseFuture/reference-projects/mediagrabber/docs/releasing.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/releasing.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/releasing.md
+  SHA256: bffc0c4ed6afd4c4c487b838d28e9a47fb752bba9d1861632b491a46a393d6b7
+
+AnalyseFuture/reference-projects/mediagrabber/docs/youtube.md
+  Original: AnalyseFuture/reference-projects/mediagrabber/docs/youtube.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/docs/youtube.md
+  SHA256: 1c8b698f6194378dea48a45b14e4808044187301a87d59e40387e1da083d6031
+
+AnalyseFuture/reference-projects/mediagrabber/extension/manifest.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/manifest.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/manifest.json
+  SHA256: 61665bca319048515a2a2e2cd681940156253f782eed5bb9c58e341082db6f6e
+
+AnalyseFuture/reference-projects/mediagrabber/extension/package.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/package.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/package.json
+  SHA256: 431402e3eb8f5e3742396e23d37aae1f7537a895809b32e1ecdf0d4599d66378
+
+AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-128.png
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-128.png
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-128.png
+  SHA256: 80df6f018ecf8cfd0ec819b8647ebe034bef9772f1f87b8ac5522812f521840b
+
+AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-16.png
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-16.png
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-16.png
+  SHA256: 757fb75ef515c0fb161d2654e5378067da492fb56eeaa8f67df8e4c177bbac34
+
+AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-32.png
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-32.png
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-32.png
+  SHA256: 113d7170ab056689f777aad7c26e1ac36a706ac2d08ad89ef8c8b8fa8a4a167e
+
+AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-48.png
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-48.png
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/public/icons/icon-48.png
+  SHA256: 86dc51631aca43aaa25364e8d5e6f246ea4bffcea3c43973778f1a46a716ba2c
+
+AnalyseFuture/reference-projects/mediagrabber/extension/scripts/get-extension-id.mjs
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/scripts/get-extension-id.mjs
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/scripts/get-extension-id.mjs
+  SHA256: cf348c5d236ab2d483e9d2c0dc07f7f8b341519b4bb9bfeec508e269fb1a84ac
+
+AnalyseFuture/reference-projects/mediagrabber/extension/scripts/package-extension.mjs
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/scripts/package-extension.mjs
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/scripts/package-extension.mjs
+  SHA256: dae88de9e9e78a95d42d5faa428d1579a037d0a5b69a2e7fd7f42b517d6d62f8
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/background.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/background.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/background.ts
+  SHA256: 069b4299d66d7202435c4a9af3d4307b63309d62ab2f95492a330394f9a3f4d1
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/content.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/content.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/content.ts
+  SHA256: 107f722864ff6616a2899dd5f53217acff9ddce7c42fbb5032bea98c14f6a7dc
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts
+  SHA256: d852f95f6efb550bfdfa26f8cef832684d4bfcf84a987cbf30328f2a31065db0
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/errors.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/errors.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/errors.ts
+  SHA256: 956d7144c75a590db77d8b734ab608e457d4345a963059a99ca4e42898a74545
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/m3u8-parser.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/m3u8-parser.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/m3u8-parser.ts
+  SHA256: f054a974db43bd64f9f9775fd8666b1eda5152d58338d9b2cd2d33f082fd9df9
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/mpd-parser.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/mpd-parser.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/mpd-parser.ts
+  SHA256: 35ed36c8541cc896d0095d193ccb1d25abf7b3a680747f6bdaff0007024a6ae5
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/native-client.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/native-client.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/native-client.ts
+  SHA256: d40906acad9a50442aaa7592a5cbbb55d585cd4c0e22eda735e298f2318bfa4b
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/quality-utils.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/quality-utils.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/quality-utils.ts
+  SHA256: 77263b3a1d5a3fbd531b4eb3f55e7279ffec45cb51fd2cb09bc77b1ee01b47f0
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/settings.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/settings.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/settings.ts
+  SHA256: 5ee42fe5a1d1217422b4fd236e6efa76bd75de535c9ecc4b9e1210c52fa9e38e
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/theme.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/theme.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/theme.ts
+  SHA256: 248d85e4cba264274bc771fa7ea87967a5817a028c4c859c9c68b120faa1c245
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/types.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/types.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/types.ts
+  SHA256: 4f9c80e88bc19d01a5be0d8f659547d4361ab8ac9788ffebd9c5e5e07a53480c
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/mse-inject.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/mse-inject.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/mse-inject.ts
+  SHA256: 1f575c3b9e48177164753ffe85c01868f8cb84b3410621005920b3916eb840c8
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.css
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.css
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.css
+  SHA256: 10ad16c2695b000c8b2992028a3ca23e94ddb40f153fbe475ba8a0281c27c47c
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.html
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.html
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.html
+  SHA256: e2931aad4b2972338a7e63bf814bc1170a88444811764441ab06646d52e37b9e
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/popup.ts
+  SHA256: cc1e1edb118279f15894da449b7018abe96c597af754fab9712d8a3d3e48dd9c
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.css
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.css
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.css
+  SHA256: bb3b1e3ce8bb884f3c0a29b463b7298fa73636484c0441bb6c4216a499dac6ec
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.html
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.html
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.html
+  SHA256: 0afc3fb4dfa27b9ba84fd1c098a11fbb2899a244b5f42cedab2e8b879ed97729
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/popup/settings.ts
+  SHA256: fde9be193a4694613ef983aaa2121a3e33ad4f9c37095ade699f383a7215dcfa
+
+AnalyseFuture/reference-projects/mediagrabber/extension/src/types/global.d.ts
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/src/types/global.d.ts
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/src/types/global.d.ts
+  SHA256: 1adf3951129831f9bb0851d0e8a92e2f78cf04fea5463f644d0a4cc049f5f467
+
+AnalyseFuture/reference-projects/mediagrabber/extension/tsconfig.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/extension/tsconfig.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/extension/tsconfig.json
+  SHA256: 9963cfd4388dbc0bd4eab360b981c8dcee141caa1022381c0264376b3213ac91
+
+AnalyseFuture/reference-projects/mediagrabber/package-lock.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/package-lock.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/package-lock.json
+  SHA256: 1250a131f5cfc0757ab1f9885da39a3f1a8a4e19974decf4b2b9d3ff32d859e4
+
+AnalyseFuture/reference-projects/mediagrabber/package.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/package.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/package.json
+  SHA256: fcf389522c63c8307f968e98d942397529a4daa1306ddcc65ee57fc01059f55f
+
+AnalyseFuture/reference-projects/mediagrabber/tsconfig.base.json
+  Original: AnalyseFuture/reference-projects/mediagrabber/tsconfig.base.json
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/mediagrabber/tsconfig.base.json
+  SHA256: 4cff217897a73327f5f23a867757f6c347a4637f59a07363f7dcfdc2d2465182
+
+AnalyseFuture/reference-projects/reclip/.dockerignore
+  Original: AnalyseFuture/reference-projects/reclip/.dockerignore
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/.dockerignore
+  SHA256: ff857fdf007563ca860c093f573cdf49eebd59f75b433b3970dac4a159fa0699
+
+AnalyseFuture/reference-projects/reclip/.gitignore
+  Original: AnalyseFuture/reference-projects/reclip/.gitignore
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/.gitignore
+  SHA256: ab9d29b6317837bb8a60c2334fbc2a3d2e0fcea3bab264c32bddc8e189f324e2
+
+AnalyseFuture/reference-projects/reclip/Dockerfile
+  Original: AnalyseFuture/reference-projects/reclip/Dockerfile
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/Dockerfile
+  SHA256: e7bcb4c63b4beef8e14b9ed5457d7a26fbdb7d86ed2ff3b5bcd4d0d828007a16
+
+AnalyseFuture/reference-projects/reclip/LICENSE
+  Original: AnalyseFuture/reference-projects/reclip/LICENSE
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/LICENSE
+  SHA256: 1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685
+
+AnalyseFuture/reference-projects/reclip/README.md
+  Original: AnalyseFuture/reference-projects/reclip/README.md
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/README.md
+  SHA256: 9d6fbe406f7bdb470b8071d9b9f93b21319ab2b35106ea437adc446541fff43d
+
+AnalyseFuture/reference-projects/reclip/app.py
+  Original: AnalyseFuture/reference-projects/reclip/app.py
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/app.py
+  SHA256: c4f6ea8d27cbe657192b8852daee38ca4cd398d6962eee35eeb136745dc91ee8
+
+AnalyseFuture/reference-projects/reclip/assets/preview-mp3.png
+  Original: AnalyseFuture/reference-projects/reclip/assets/preview-mp3.png
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/assets/preview-mp3.png
+  SHA256: 584de35bda510310e8f216028578003d8a9f7d74a3c3f9c0b863d83bb6e345f1
+
+AnalyseFuture/reference-projects/reclip/assets/preview.mp4
+  Original: AnalyseFuture/reference-projects/reclip/assets/preview.mp4
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/assets/preview.mp4
+  SHA256: 428d480ff880338f3dcf7df364eab8c55f8b340fcc8553f082a0f644ce04f2f7
+
+AnalyseFuture/reference-projects/reclip/docker-compose.yml
+  Original: AnalyseFuture/reference-projects/reclip/docker-compose.yml
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/docker-compose.yml
+  SHA256: 862c63a190d207f978462a2a8dfa39835f4cf3084cfb4e76040ebed4c6c76518
+
+AnalyseFuture/reference-projects/reclip/docker-entrypoint.sh
+  Original: AnalyseFuture/reference-projects/reclip/docker-entrypoint.sh
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/docker-entrypoint.sh
+  SHA256: ce9fcc84d119142731227b737b4a9aa14b3c64ffe95fb24d41f01cfa51ed0831
+
+AnalyseFuture/reference-projects/reclip/reclip.sh
+  Original: AnalyseFuture/reference-projects/reclip/reclip.sh
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/reclip.sh
+  SHA256: 6710bc9cd3c1a2914d9fc59131995b7372788735732cfa5f231699d58157ff68
+
+AnalyseFuture/reference-projects/reclip/requirements.txt
+  Original: AnalyseFuture/reference-projects/reclip/requirements.txt
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/requirements.txt
+  SHA256: 6572596091e9d812910a9c6835ff25fe68c71271501edcda67231776dba4aa67
+
+AnalyseFuture/reference-projects/reclip/static/favicon.svg
+  Original: AnalyseFuture/reference-projects/reclip/static/favicon.svg
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/static/favicon.svg
+  SHA256: 0cbd766e9f9ab9846b9643995db11ab95b41096143ff648c2ac1899b288f073f
+
+AnalyseFuture/reference-projects/reclip/templates/index.html
+  Original: AnalyseFuture/reference-projects/reclip/templates/index.html
+  Reason: retained in existing functional collection
+  Replacement/current owner: AnalyseFuture/reference-projects/reclip/templates/index.html
+  SHA256: 25f7835cd2236837677d4c29857fd4afc2ef45d56c6c29ec5218da22bdfbf1fb
+
+AnalyseFuture/historical-implementations/7a7e2f6/PROJECT_IDEA.txt
+  Original: PROJECT_IDEA.txt
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: AnalyseFuture/PROJECT_VISION_AND_FUTURE_ROADMAP.txt
+  SHA256: 7890d56a018484b0b9720db62e2150d237d4475d41da7f78f55a7b110952e25d
+
+AnalyseFuture/historical-implementations/7a7e2f6/README.md
+  Original: README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: README.md
+  SHA256: 34b8c857eaaf5489214ea722d7e45ccdd1a5e45205f0b5359282e2d53275de9d
+
+AnalyseFuture/historical-implementations/7a7e2f6/archives/README.md
+  Original: archives/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: archives/README.md
+  SHA256: 190c24aac0f696b4cd07315d6a7b14a8e8de52b433b8d75ec8dd4beae7d277ef
+
+AnalyseFuture/recovery-notes/previous-audits/REPOSITORY_AUDIT.7a7e2f6.txt
+  Original: docs/REPOSITORY_AUDIT.txt
+  Reason: functional responsibility grouping; framework-internal structure retained
+  Replacement/current owner: AnalyseFuture/recovery-notes/previous-audits/REPOSITORY_AUDIT.7a7e2f6.txt
+  SHA256: bd79a8c217692e5dab9bb32ac4291f16fbd843640ef7f005881babfa9026a62f
+
+AnalyseFuture/migration-records/preservation-0b2a1ad.json
+  Original: docs/preservation-manifest.json
+  Reason: functional responsibility grouping; framework-internal structure retained
+  Replacement/current owner: AnalyseFuture/migration-records/preservation-0b2a1ad.json
+  SHA256: 4c40e76781aa595e7254e17442129431bfa7a06a1aefe6a68a39bcc5aa97ad52
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-browser-integration/package.json
+  Original: sources/ab-browser-integration/package.json
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: apps/browser-extension/package.json
+  SHA256: 96b07db9e353f80c3b560d17123cb370251dd967a7f53971026693009c42b990
+
+AnalyseFuture/incomplete-features/browser-extension/BackendProvider.ts
+  Original: sources/ab-browser-integration/src/backend/BackendProvider.ts
+  Reason: orphan imports-only browser stub; active Backend.ts owns native/HTTP dispatch
+  Replacement/current owner: AnalyseFuture/incomplete-features/browser-extension/BackendProvider.ts
+  SHA256: 748893d744444aa70a5a66cf06f3bc94a83d06f0c030d02801175342eab13ca1
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-download-manager/README.md
+  Original: sources/ab-download-manager/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: apps/download-manager/README.md
+  SHA256: 3064b6585dc49445a8e731b1157b3ee013b903d89e2b8a116e3fba7f20e0e138
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/archives.json
+  Original: sources/archives.json
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: archives/source-index.json
+  SHA256: ccb0dc3f7ca9f9e8d7264ded987656d2b3a994f0d45638021aa03f2d11050a8a
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/README.md
+  Original: sources/downloader-blueprint/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: docs/project/README.md
+  SHA256: a69e4a4922f949cd25b4727904be8da362a985d71ae01d0e2369b3e614d96ee7
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/DEVELOPMENT_SETUP.md
+  Original: sources/downloader-blueprint/docs/DEVELOPMENT_SETUP.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: docs/project/docs/DEVELOPMENT_SETUP.md
+  SHA256: 8df8f1b5f22fb3ed5f14bdfd336dd013c247600e6708b913b391fa61e1088b80
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/IMPLEMENTATION_CHECKLIST.md
+  Original: sources/downloader-blueprint/docs/IMPLEMENTATION_CHECKLIST.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: docs/project/docs/IMPLEMENTATION_CHECKLIST.md
+  SHA256: 36838fd5994badc1f46308d48a5dac402d0850cdfc652c3e17408acf3d320b09
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/M0_AUDIT.md
+  Original: sources/downloader-blueprint/docs/M0_AUDIT.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: docs/project/docs/M0_AUDIT.md
+  SHA256: 499203e15b90fb47b0ab0e3887bd4b4c1d9cf54997933b4a791b4a41e97d1e15
+
+AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/tools/fixtures/README.md
+  Original: sources/downloader-blueprint/tools/fixtures/README.md
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: tools/fixtures/README.md
+  SHA256: 04785029b1a2217a793a05f03a20cb437a65f133360d1788c972b4085898b2e2
+
+AnalyseFuture/historical-implementations/7a7e2f6/tools/onboarding/setup.sh
+  Original: tools/onboarding/setup.sh
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: tools/development/setup.sh
+  SHA256: b94b52d962deb90825abd1a51333de31156e73e0cc285a98c609fa9b47ba2585
+
+AnalyseFuture/historical-implementations/7a7e2f6/tools/verify_repository.py
+  Original: tools/verify_repository.py
+  Reason: original retained before path/reference/configuration update
+  Replacement/current owner: tools/repository/verify_preservation.py
+  SHA256: 68bf039c80a9df50de593bcbb1404b03a82fc8bc82ac19c4a7cde58ecdaaacb0
+
+Existing reference projects remain under reference-projects: MediaGrabber71files, ReClip14files; not part of default app entrypoints.
+Prior version copies, source ZIPs, request text and recovery records remain recoverable through paths and Git history.
+Generated node_modules/dist/__pycache__ files remain ignored local outputs; no dependency cache or user media was published.
