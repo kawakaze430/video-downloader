@@ -1,0 +1,8 @@
+STRUCTURE RECOVERY PROGRESS
+Baseline: 7a7e2f6cd52626f26d954ba60e4d7a838d717b56
+Completed: fetched all advertised branches/tags; clean main; remote baseline tag preserved; local Git bundle created.
+Completed: all 1458 tracked files read and classified by component and content; 1418 text files, 40 binaries inspected as data.
+Current: implement functional app/tool/test/document grouping and preserve every original.
+Latest owner instruction: do not run tests. No more builds, test suites, or application startup will be run.
+Pending: path mapping, reference repair, required reports, PROJECT_STRUCTURE.md, static preservation review, direct-main push.
+Limits: no account/security-log access; GitHub protection API was unavailable; server accepted backup-tag push.
