@@ -14,6 +14,13 @@ Older recovery reports and feature inventories remain historical evidence;
 their earlier “not tested” or “typecheck failing” statements must be read with
 the newer validation results below.
 
+Quick navigation: [verified status](#2-what-currently-works-and-what-does-not-yet-have-evidence),
+[files and folders](#3-where-every-file-and-folder-belongs),
+[feature backlog](#4-remaining-product-features-complete-original-backlog-crosswalk),
+[detailed tasks](#5-task-rules-priorities-and-assignments),
+[commands](#6-commands-and-evidence-another-tool-should-use), and
+[PR review](#7-external-tool-pr-workflow-and-my-review-role).
+
 ## 1. What we are building
 
 One coherent download and media workspace across **Windows PC, macOS, Linux,
@@ -66,8 +73,8 @@ Status meanings:
 | Windows/macOS installers and physical Android | Unrun | Separate supported-machine, signing, update and device tests are needed. |
 | AI/library/cloud/source expansion | Planned | See the future vision; no shipping capability is claimed. |
 
-**81 selected test cases passed:** 14 fixture + 11 Kotlin transport + 13 browser
-+ 19 ReClip + 24 MediaGrabber. Additional CLI, preservation and converter checks
+**81 selected test cases passed:** 14 fixture, 11 Kotlin transport, 13 browser,
+19 ReClip and 24 MediaGrabber. Additional CLI, preservation and converter checks
 are recorded separately. This is not a claim that all product features work.
 
 ### Completed fixes to preserve
@@ -151,7 +158,7 @@ existing planning is not lost. “Source” below is not “complete product fea
 
 | ID | Feature | Current evidence / remaining work | Main task |
 | --- | --- | --- | --- |
-| D01 | Direct HTTPS download | HTTP adapter verified; full app workflow still blocked/unverified | CORE-001 |
+| D01 | Direct HTTPS download | HTTP adapter verified; application HTTPS/certificate behavior and full workflow unverified | CORE-001 |
 | D02 | Progress, ETA and speed | UI/monitor source; accuracy and unknown totals need end-to-end checks | CORE-002 |
 | D03 | Pause/resume | Range transport verified; durable paused job resume unverified | CORE-001 |
 | D04 | Retry/restart recovery | Job/part persistence source; interruption/restart matrix missing | CORE-001 |
@@ -184,7 +191,7 @@ existing planning is not lost. “Source” below is not “complete product fea
 | M07 | Audio/language selection | Models/parsing references; final track selection and output proof needed | MEDIA-002 |
 | M08 | Batch conversion | Planned integration with the single job owner | MEDIA-001 |
 | M09 | Available 4K/8K processing | Conditional on source/hardware/codecs; never guarantee authentic higher quality | MEDIA-001 |
-| M10 | Personal media library | Planned; no semantic/search library shipped | AI-001 |
+| M10 | Personal media library | Planned; persistent metadata, ordinary search and deletion semantics need a non-AI foundation | LIBRARY-001 |
 | M11 | AI transcription/tagging | Planned, opt-in research after reliable core | AI-001 |
 | M12 | Source connector architecture | yt-dlp reference only; approved maintained connectors not active | SOURCE-001 |
 | W01 | Public product website | No active product website established | WEB-001 |
@@ -213,6 +220,8 @@ existing planning is not lost. “Source” below is not “complete product fea
   work; do not bypass access controls or invent permissions/credentials.
 - Reuse existing code first. Each implementation PR must update this task board
   and link evidence; a description in an upstream README is not acceptance.
+- An implementation tool can mark its work ready for review. Mark a task Done
+  only after its agreed evidence is accepted and the owner-authorized PR is merged.
 
 ### Recommended order
 
@@ -286,6 +295,7 @@ existing planning is not lost. “Source” below is not “complete product fea
   destinations, current desktop tests and the synthetic fixture.
 - **Work:** exercise pause, resume, cancellation, retry, app restart, interrupted
   writes, stale ETag/changed content, ignored ranges, corrupt hashes and disk errors.
+  Include a controlled HTTPS application-job flow after transport TLS is verified.
 - **Acceptance:** deterministic tests demonstrate no corrupted completed file,
   unsafe append, lost recoverable state or orphan worker; expected hash failures
   never become successful jobs. Preserve original files during failure simulation.
@@ -359,8 +369,12 @@ existing planning is not lost. “Source” below is not “complete product fea
 - **Files:** core connection/proxy providers and relevant platform configuration.
 - **Work:** exercise direct, system and supported explicit proxy routes with
   controlled endpoints; test authentication, redirects and timeout classification.
+  Add real local HTTPS cases: an explicitly trusted test CA succeeds, an
+  untrusted certificate fails, and a hostname mismatch fails.
 - **Acceptance:** configuration precedence works, credentials remain protected,
   certificate verification remains enabled and unsupported routes fail clearly.
+  The Python fixture's HTTPS tests do not establish the Kotlin application's
+  TLS behavior; do not conflate these scopes or disable verification to pass.
 
 #### BROWSER-002 — Validate supported browsers independently
 
@@ -528,10 +542,23 @@ existing planning is not lost. “Source” below is not “complete product fea
 - **Acceptance:** a small reviewed prototype with named maintainer, costs and
   threat model before a production commitment. An account login is not secure sync.
 
+#### LIBRARY-001 — Establish the non-AI personal media library
+
+- **Owner/state:** application/data engineer; planned after stable local-media intake.
+- **Depends on:** proven job/history persistence, MEDIA-001 and privacy/filesystem boundaries.
+- **Work:** persistent media metadata and source provenance, bounded thumbnail
+  generation, ordinary title/tag search, duplicate suggestions and explicit
+  media-versus-index deletion/export behavior. Reuse suitable existing history
+  infrastructure without creating a second job engine or automatic file deletion.
+- **Acceptance:** restart-safe indexing/search, stale/missing file handling,
+  user-controlled retention, reversible duplicate decisions, and deletion/export
+  tests. Schema/migration choices are justified and backward compatible.
+- **Boundary:** this foundation must work without models, cloud uploads or an AI account.
+
 #### AI-001 — Evaluate useful, optional AI for owned/licensed media
 
 - **Owner/state:** AI/product owner; no AI implementation established.
-- **Depends on:** reliable media/library foundations and owner-approved models/costs.
+- **Depends on:** LIBRARY-001, reliable media processing and owner-approved models/costs.
 - **Work:** opt-in transcription, correction, transcript/semantic search, tags,
   chapter or subtitle translation suggestions. Prefer local processing where practical.
 - **Acceptance:** representative accuracy/latency/resource tests, original retention,
@@ -688,8 +715,10 @@ On each accepted implementation, update the relevant task with its state,
 owner, PR, commit, evidence and remaining work. Update the feature crosswalk
 only to the scope actually verified. Retain older dated reports instead of
 rewriting them as if new tests had always passed. Regenerate file/folder guides
-when paths change. Do not interpret this proposed task board as approval to
-implement all features, select a license or spend money in one operation.
+when paths change (`python3 tools/repository/generate_handoff_guides.py`), and
+review the descriptions when responsibilities change. Do not interpret this
+proposed task board as approval to implement all features, select a license or
+spend money in one operation.
 
 The next developer should be able to answer: what exists, what was checked,
 what remains uncertain, which task is next, and how its success will be proved.
