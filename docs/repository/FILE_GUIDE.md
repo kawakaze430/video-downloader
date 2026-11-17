@@ -3921,4 +3921,3 @@ The dependency evidence is in [the static relationship map](../../AnalyseFuture/
 | --- | --- |
 | [generate_handoff_guides.py](../../tools/repository/generate_handoff_guides.py) | Regenerate tracked file/folder ownership guides; documentation only, with classifications requiring review. |
 | [verify_preservation.py](../../tools/repository/verify_preservation.py) | Check retained Git objects, modes, byte hashes and original ZIP members. |
-

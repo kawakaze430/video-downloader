@@ -383,7 +383,7 @@ for parent,items in sorted(parents.items()):
   if len(description)>122:description=description[:119].rstrip(' ,;:')+'…'
   lines.append('| '+link(p)+' | '+escaped(description)+' |')
  lines.append('')
-file_text='\n'.join(lines)+'\n';(OUT/'FILE_GUIDE.md').write_text(file_text)
+file_text='\n'.join(lines).rstrip()+'\n';(OUT/'FILE_GUIDE.md').write_text(file_text)
 
 folders={'.'}
 for p in paths:
