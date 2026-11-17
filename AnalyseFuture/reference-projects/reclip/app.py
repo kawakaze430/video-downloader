@@ -13,6 +13,22 @@ os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 jobs = {}
 
 
+def parse_url_request():
+    """Validate the JSON shape and URL type before starting any work."""
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return None, (jsonify({"error": "JSON body must be an object"}), 400)
+
+    url = data.get("url", "")
+    if not isinstance(url, str):
+        return None, (jsonify({"error": "URL must be a string"}), 400)
+    url = url.strip()
+    if not url:
+        return None, (jsonify({"error": "No URL provided"}), 400)
+
+    return {**data, "url": url}, None
+
+
 def parse_ytdlp_json(stdout):
     """Parse yt-dlp JSON output.
 
@@ -96,10 +112,10 @@ def index():
 
 @app.route("/api/info", methods=["POST"])
 def get_info():
-    data = request.json
-    url = data.get("url", "").strip()
-    if not url:
-        return jsonify({"error": "No URL provided"}), 400
+    data, error = parse_url_request()
+    if error is not None:
+        return error
+    url = data["url"]
 
     cmd = ["yt-dlp", "--no-playlist", "-j", url]
     try:
@@ -142,10 +158,10 @@ def get_info():
 
 @app.route("/api/playlist", methods=["POST"])
 def get_playlist_info():
-    data = request.json
-    url = data.get("url", "").strip()
-    if not url:
-        return jsonify({"error": "No URL provided"}), 400
+    data, error = parse_url_request()
+    if error is not None:
+        return error
+    url = data["url"]
 
     cmd = ["yt-dlp", "--flat-playlist", "-J", url]
     try:
@@ -165,14 +181,13 @@ def get_playlist_info():
 
 @app.route("/api/download", methods=["POST"])
 def start_download():
-    data = request.json
-    url = data.get("url", "").strip()
+    data, error = parse_url_request()
+    if error is not None:
+        return error
+    url = data["url"]
     format_choice = data.get("format", "video")
     format_id = data.get("format_id")
     title = data.get("title", "")
-
-    if not url:
-        return jsonify({"error": "No URL provided"}), 400
 
     job_id = uuid.uuid4().hex[:10]
     jobs[job_id] = {"status": "downloading", "url": url, "title": title}

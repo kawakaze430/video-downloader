@@ -999,7 +999,7 @@
     },
     {
       "original_path": "AnalyseFuture/reference-projects/reclip/app.py",
-      "preserved_path": "AnalyseFuture/reference-projects/reclip/app.py",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/AnalyseFuture/reference-projects/reclip/app.py",
       "active_path": "AnalyseFuture/reference-projects/reclip/app.py",
       "sha256": "c4f6ea8d27cbe657192b8852daee38ca4cd398d6962eee35eeb136745dc91ee8",
       "bytes": 6835,
@@ -1007,7 +1007,7 @@
       "git_blob_oid": "2b5eaa5b8d19742ad9fab3b5b3b838b4a8f0b3a6",
       "git_blob_sha256": "c4f6ea8d27cbe657192b8852daee38ca4cd398d6962eee35eeb136745dc91ee8",
       "git_blob_bytes": 6835,
-      "reason": "retained in existing functional collection"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "AnalyseFuture/reference-projects/reclip/assets/preview-mp3.png",
@@ -1275,7 +1275,7 @@
     },
     {
       "original_path": "sources/ab-browser-integration/package-lock.json",
-      "preserved_path": "apps/browser-extension/package-lock.json",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/package-lock.json",
       "active_path": "apps/browser-extension/package-lock.json",
       "sha256": "521b77fc48f3f4e7d39be5896f0e01be271a2de2d1c12fa17d3ed33157d14058",
       "bytes": 278861,
@@ -1283,7 +1283,7 @@
       "git_blob_oid": "d811aea3aa1991b728ef9ef787c122e17684e8f8",
       "git_blob_sha256": "521b77fc48f3f4e7d39be5896f0e01be271a2de2d1c12fa17d3ed33157d14058",
       "git_blob_bytes": 278861,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-browser-integration/package.json",
@@ -1779,7 +1779,7 @@
     },
     {
       "original_path": "sources/ab-browser-integration/src/manifest/manifest.chrome.ts",
-      "preserved_path": "apps/browser-extension/src/manifest/manifest.chrome.ts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.chrome.ts",
       "active_path": "apps/browser-extension/src/manifest/manifest.chrome.ts",
       "sha256": "6e8dbf71b57593db7c82e33e4ebd50d520b8155bfcff36979b7eedd6cd142975",
       "bytes": 994,
@@ -1787,11 +1787,11 @@
       "git_blob_oid": "546a0025b15b1a74f7b94cda0c075eef71e0b246",
       "git_blob_sha256": "6e8dbf71b57593db7c82e33e4ebd50d520b8155bfcff36979b7eedd6cd142975",
       "git_blob_bytes": 994,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-browser-integration/src/manifest/manifest.firefox.ts",
-      "preserved_path": "apps/browser-extension/src/manifest/manifest.firefox.ts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.firefox.ts",
       "active_path": "apps/browser-extension/src/manifest/manifest.firefox.ts",
       "sha256": "d39db22d26d9aa8e5df93da385410472d830dd236db6f42f985eb2a3864af597",
       "bytes": 800,
@@ -1799,11 +1799,11 @@
       "git_blob_oid": "c1c9104dc73cb24dbbc9084a0e60faadbd6d3570",
       "git_blob_sha256": "d39db22d26d9aa8e5df93da385410472d830dd236db6f42f985eb2a3864af597",
       "git_blob_bytes": 800,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-browser-integration/src/manifest/manifest.ts",
-      "preserved_path": "apps/browser-extension/src/manifest/manifest.ts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.ts",
       "active_path": "apps/browser-extension/src/manifest/manifest.ts",
       "sha256": "62da207fecdbb9f3427478f313f66ca23a84f9d625f0c3d7b0b7ecb8d445a360",
       "bytes": 438,
@@ -1811,11 +1811,11 @@
       "git_blob_oid": "c2f747130a679f8e3b673e01703f5c1a0b2063ea",
       "git_blob_sha256": "62da207fecdbb9f3427478f313f66ca23a84f9d625f0c3d7b0b7ecb8d445a360",
       "git_blob_bytes": 438,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-browser-integration/src/manifest/shared.ts",
-      "preserved_path": "apps/browser-extension/src/manifest/shared.ts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/shared.ts",
       "active_path": "apps/browser-extension/src/manifest/shared.ts",
       "sha256": "75d95e2a8b00649341d51860f0b70e4eaa0a1f8d43d31e83bc4ac63f0f764f9e",
       "bytes": 1453,
@@ -1823,7 +1823,7 @@
       "git_blob_oid": "402c56901944bc9b9da9cd415d458a4ada5611f2",
       "git_blob_sha256": "75d95e2a8b00649341d51860f0b70e4eaa0a1f8d43d31e83bc4ac63f0f764f9e",
       "git_blob_bytes": 1453,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-browser-integration/src/media/HLSUtils.ts",
@@ -9663,7 +9663,7 @@
     },
     {
       "original_path": "sources/ab-download-manager/gradle/wrapper/gradle-wrapper.jar",
-      "preserved_path": "apps/download-manager/gradle/wrapper/gradle-wrapper.jar",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.jar",
       "active_path": "apps/download-manager/gradle/wrapper/gradle-wrapper.jar",
       "sha256": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172",
       "bytes": 43764,
@@ -9671,11 +9671,11 @@
       "git_blob_oid": "1b33c55baabb587c669f562ae36f953de2481846",
       "git_blob_sha256": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172",
       "git_blob_bytes": 43764,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-download-manager/gradle/wrapper/gradle-wrapper.properties",
-      "preserved_path": "apps/download-manager/gradle/wrapper/gradle-wrapper.properties",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.properties",
       "active_path": "apps/download-manager/gradle/wrapper/gradle-wrapper.properties",
       "sha256": "d5d295a6e43aaeec06ca92c4a7cba3e9f3ea97095ebf720639a961e190319c6d",
       "bytes": 252,
@@ -9683,7 +9683,7 @@
       "git_blob_oid": "299848b169a22558a9fb039672ec6920642b9e0e",
       "git_blob_sha256": "d5d295a6e43aaeec06ca92c4a7cba3e9f3ea97095ebf720639a961e190319c6d",
       "git_blob_bytes": 252,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original preserved before owner-authorized validation fix; active path retained"
     },
     {
       "original_path": "sources/ab-download-manager/gradlew",

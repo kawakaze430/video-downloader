@@ -23,7 +23,9 @@
     "directory": "apps/download-manager",
     "files": 1207,
     "member_paths": {
-      "README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-download-manager/README.md"
+      "README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-download-manager/README.md",
+      "gradle/wrapper/gradle-wrapper.jar": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.jar",
+      "gradle/wrapper/gradle-wrapper.properties": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.properties"
     }
   },
   {
@@ -33,7 +35,12 @@
     "files": 106,
     "member_paths": {
       "package.json": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-browser-integration/package.json",
-      "src/backend/BackendProvider.ts": "AnalyseFuture/incomplete-features/browser-extension/BackendProvider.ts"
+      "src/backend/BackendProvider.ts": "AnalyseFuture/incomplete-features/browser-extension/BackendProvider.ts",
+      "package-lock.json": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/package-lock.json",
+      "src/manifest/manifest.ts": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.ts",
+      "src/manifest/manifest.chrome.ts": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.chrome.ts",
+      "src/manifest/shared.ts": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/shared.ts",
+      "src/manifest/manifest.firefox.ts": "AnalyseFuture/validation-originals/c1c8f0f/apps/browser-extension/src/manifest/manifest.firefox.ts"
     }
   },
   {
@@ -50,6 +57,8 @@
     "sha256": "fe81ceab0ffe4ace895ee241721de9016117afb50db28f30812cbcd8df6d48f0",
     "directory": "AnalyseFuture/reference-projects/reclip",
     "files": 14,
-    "member_paths": {}
+    "member_paths": {
+      "app.py": "AnalyseFuture/validation-originals/c1c8f0f/AnalyseFuture/reference-projects/reclip/app.py"
+    }
   }
 ]

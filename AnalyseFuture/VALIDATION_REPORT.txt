@@ -1,0 +1,13 @@
+OWNER-AUTHORIZED VALIDATION — IN PROGRESS
+Starting commit: c1c8f0f8f80f968bb4e214678e8e91bb50c35630
+The owner explicitly requested working on and testing all components. The earlier no-test restriction applied to the completed restructuring pass.
+
+Observed completed checks:
+- Fixture:14existing tests PASS,8live CLI checks PASS,6isolated preservation cases PASS, default setup from/tmp and invalid-option rejection pass.
+- Browser: Chrome/Firefox bundles build; strict baseline type checking fails in published webext-bridge declarations and manifest typing. Focused repair and type-safety checks in progress.
+- ReClip isolated reference:19mocked route/download checks PASS after request-shape validation fix. Original reference source preserved.
+- MediaGrabber reference: full build passes; parser/package smoke checks in progress.
+- Desktop: existing wrapper JAR differs from official9.8checksum. Preserved original, replaced active JAR from official Gradle source with exact published checksum, and pinned distribution checksum. JDK25installation/Gradle build diagnosis in progress. No checksum or TLS verification bypass used.
+
+Runtime/device limitations: Windows/macOS installers and physical Android devices cannot be declared tested from this Linux validation alone. No live platform videos, account cookies, paid services, installers or native registration scripts were used.
+Final outcomes, commands, logs and remaining blockers will be recorded after current runs finish.
