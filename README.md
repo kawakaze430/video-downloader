@@ -5,6 +5,12 @@ shared desktop/Android source; the TypeScript browser companion handles intake
 and handoff. Optional AI/media/cloud features remain proposals, not verified
 integrated capabilities.
 
+**Start here: [Project handoff, implemented features and complete task board](PROJECT_HANDOFF.md).**
+It explains verified versus source-only features, goals, detailed remaining
+tasks, test evidence, and the PR workflow for other implementation tools.
+The [individual file guide](docs/repository/FILE_GUIDE.md) and
+[individual folder guide](docs/repository/FOLDER_GUIDE.md) explain the full tree.
+
 Start with [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md), the
 [recovery audit](AnalyseFuture/REPOSITORY_AUDIT.txt), and the detailed
 [plain-text future vision](AnalyseFuture/PROJECT_VISION_AND_FUTURE_ROADMAP.txt).
@@ -57,3 +63,11 @@ review dependencies, platform permissions and distributed binaries before releas
 
 This project targets permitted source workflows. A universal claim to save every
 video from every site is not established by source availability or future AI.
+
+## Implementation handoff and PR review
+
+Future implementation tools should take one assigned task from
+[PROJECT_HANDOFF.md](PROJECT_HANDOFF.md), work on a task branch, and open a PR
+against `main`. Send the PR link here for review; no continuous review watcher
+or automatic merge service is currently installed. The handoff documentation
+itself is delivered using the existing direct-main authorization.
