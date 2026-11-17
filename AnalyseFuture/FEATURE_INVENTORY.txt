@@ -1,6 +1,6 @@
-FEATURE INVENTORY — 87 DISCOVERY RECORDS
-38 code/tool/fixture capability groups plus 49 earlier product backlog entries.
-These are cross-referenced records, not 87 verified or distinct shipping product features.
+FEATURE INVENTORY — 95 DISCOVERY RECORDS
+46 code/tool/fixture capability groups plus 49 earlier product backlog entries.
+These are cross-referenced records, not 95 verified or distinct shipping product features.
 Existing source is not proof of working integration. No tests were run in the structure-only pass.
 
 C01 — HTTP transfer lifecycle
@@ -1400,3 +1400,115 @@ P08 — Plugin SDK and marketplace
   Missing/decision: Must link source evidence and authorized runtime results before promotion to working product.
   Related files (1):
     docs/project/docs/FEATURE_MATRIX.md
+
+C39 — Clipboard utilities
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: shared platform clipboard APIs
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/shared/app/src/androidMain/kotlin/com/abdownloadmanager/shared/util/ClipboardUtil.android.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/ClipboardUtil.kt
+    apps/download-manager/shared/app/src/desktopMain/kotlin/com/abdownloadmanager/shared/util/ClipboardUtil.desktop.kt
+
+C40 — Notifications and completion feedback
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: platform notification APIs and shared application state
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/util/ABDMServiceNotificationManager.kt
+    apps/download-manager/shared/app/src/androidMain/kotlin/com/abdownloadmanager/shared/util/notification/BaseNotificationSound.android.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pagemanager/NotificationSender.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/pages/updater/RenderUpdateNotifications.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/widget/Notification.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/notification/BaseNotificationSound.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/notification/INotificationSettingsStorage.kt
+    apps/download-manager/shared/app/src/desktopMain/kotlin/com/abdownloadmanager/shared/util/notification/BaseNotificationSound.desktop.kt
+
+C41 — Desktop power actions
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: OS-specific power adapters and configuration
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/poweractionalert/PowerActionAlertWindow.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/pages/poweractionalert/PowerActionComponent.kt
+    apps/download-manager/desktop/shared/src/main/kotlin/ir/amirab/util/desktop/poweraction/PowerAction.kt
+    apps/download-manager/desktop/shared/src/main/kotlin/ir/amirab/util/desktop/poweraction/PowerActionConfig.kt
+    apps/download-manager/desktop/shared/src/main/kotlin/ir/amirab/util/desktop/poweraction/PowerActionLinux.kt
+    apps/download-manager/desktop/shared/src/main/kotlin/ir/amirab/util/desktop/poweraction/PowerActionMac.kt
+    apps/download-manager/desktop/shared/src/main/kotlin/ir/amirab/util/desktop/poweraction/PowerActionWindows.kt
+
+C42 — Desktop single-instance routing
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: desktop interprocess listener and launcher
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/Comunication.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/EnsureAppIsAwake.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/SingleAppInstanceLocker.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/SingleInstanceInitialized.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/SingleInstanceManager.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/SingleInstanceServer.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/service/DefaultAppIPCServiceImpl.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/service/IDefaultAppIPCService.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/service/SingleInstanceService.kt
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/utils/singleInstance/service/SingleInstanceServiceImpl.kt
+
+C43 — Desktop tray controls
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: desktop Compose/tray integration
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/ui/widget/Tray.kt
+
+C44 — Android browser bookmarks
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: Android browser storage and UI
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/bookmark/Bookmarks.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/browser/bookmark/EditBookmark.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/storage/BrowserBookmarksStorage.kt
+
+C45 — Theme and appearance adaptation
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: shared Compose and platform appearance detection
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/ui/configurable/comon/renderer/ThemeConfigurableRenderer.kt
+    apps/download-manager/android/app/src/main/res/values/theme.xml
+    apps/download-manager/desktop/app/src/main/kotlin/com/abdownloadmanager/desktop/ui/configurable/comon/renderer/ThemeConfigurableRenderer.kt
+    apps/download-manager/shared/app/src/androidMain/kotlin/com/abdownloadmanager/shared/ui/theme/PlatformThemeDefinitions.android.kt
+    apps/download-manager/shared/app/src/androidMain/kotlin/com/abdownloadmanager/shared/util/PlatformThemeDetector.android.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/configurable/item/ThemeConfigurable.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/ABDownloaderTheme.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/DefaultThemes.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/Markdown.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/PlatformThemeDefinitions.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/ThemeManager.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/ui/theme/ThemeSettingsStorage.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/PlatformThemeDetector.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/ui/theme/ISystemThemeDetector.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/ui/theme/MaterialRipple.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/ui/theme/MyShapes.kt
+    apps/download-manager/shared/app/src/commonMain/kotlin/com/abdownloadmanager/shared/util/ui/theme/Sizing.kt
+    apps/download-manager/shared/app/src/desktopMain/kotlin/com/abdownloadmanager/shared/ui/theme/MyContextMenuRepresentation.kt
+    apps/download-manager/shared/app/src/desktopMain/kotlin/com/abdownloadmanager/shared/ui/theme/PlatformThemeDefinitions.desktop.kt
+    apps/download-manager/shared/app/src/desktopMain/kotlin/com/abdownloadmanager/shared/util/PlatformThemeDetector.desktop.kt
+    apps/download-manager/shared/resources/src/commonMain/kotlin/com/abdownloadmanager/resources/icons/Theme.kt
+
+C46 — Android destination picker
+  Status: source implementation present; runtime unverified in this pass
+  Dependencies: Android file/directory access and UI
+  Existing checks: not run by owner instruction
+  Missing: Platform behavior, privacy, permissions and integration need future authorized validation.
+  Evidence:
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/ComposeExtension.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/DirectoryPickerActivity.kt
+    apps/download-manager/android/app/src/main/kotlin/com/abdownloadmanager/android/pages/directorypicker/DirectoryPickerPage.kt

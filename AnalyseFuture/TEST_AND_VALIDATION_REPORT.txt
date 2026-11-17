@@ -3,7 +3,7 @@ TEST AND VALIDATION REPORT
 Current instruction: DO NOT RUN TESTS. This pass focuses on content analysis, collection, categorization, references and Git delivery.
 
 Not run after the latest instruction:
-- Unit/integration/security regression tests, including all14fixture tests.
+- Unit/integration/security regression tests, including all 14fixture tests.
 - Type checks, lint/format runners, Vite/Gradle/Android builds.
 - Dependency installation, startup, browser/device flows or live media downloads.
 - CI/deployment or database migration checks. No new root CI/deployment was activated.
@@ -11,7 +11,7 @@ Not run after the latest instruction:
 
 Structural observations, not runtime tests:
 - Every starting tracked path read/classified; no skipped path.
-- Exact retained bytes and baseline Git objects/modes mapped for all1458files.
+- Exact retained bytes and baseline Git objects/modes mapped for all 1,458files.
 - Per-member ZIP mapping updated for moved fixture source and preserved revised docs/manifests.
 - Markdown targets, import roots and explicit app package boundaries reviewed.
 - Diff reviewed for unintended content loss; no valuable file deleted.
@@ -21,3 +21,5 @@ Earlier evidence, not post-migration verification:
 The previous completed task recorded14passing fixture tests. Before the latest no-test scope change in this task, an agent produced npm install, Chrome/Firefox bundle and standalone typecheck logs. Bundle logs contain successful build completion messages; typecheck log contains errors. No structured exit-status record was completed before the agent stopped, so these logs are retained as observations, not fresh certified checks. They are not rerun or claimed to validate moved apps. See security-reports/pre-scope-change-logs/.
 
 The available historical type errors include manifest author shape and webext-bridge/type-fest constraints. Desktop/Android and live-source behavior remain unverified. Runtime confidence requires a separately authorized validation task.
+
+Final passive content review: all 1,458 starting originals have matching retained byte hashes and Git mode/object metadata; all 1,438 ZIP payload members remain unchanged. Local Markdown target review found zero unresolved active targets. Static import relationship inventory covers 1,198 source files; zero unresolved active TypeScript local imports. These observations do not execute or validate application behavior.

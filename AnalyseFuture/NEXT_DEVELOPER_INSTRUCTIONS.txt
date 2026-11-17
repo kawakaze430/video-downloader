@@ -1,7 +1,7 @@
 NEXT DEVELOPER INSTRUCTIONS
 
 1. Read AGENTS.md and PROJECT_STRUCTURE.md. The current instruction is organization only, no tests/builds/installs/startup unless a later owner request authorizes them.
-2. Verify repository identity and remote main, preserve user changes and backup tag, and read WORK_PROGRESS.txt. Work directly on main; no feature branch/PR/force-push. Push completed checkpoints at least every5minutes during active changes.
+2. Verify repository identity and remote main, preserve user changes and backup tag, and read WORK_PROGRESS.txt. Work directly on main; no feature branch/PR/force-push. Push completed checkpoints at least every five minutes during active changes.
 3. Baseline and complete classification are in repository-inventory/baseline-file-analysis.json. Original/active/exact-retained mapping and Git/hash evidence are in migration-records/preservation-manifest.json. Preservation helpers require baseline history in the local object database.
 4. Kotlin module ownership stays within apps/download-manager; do not split Android/desktop resources or common source sets by extension. Browser package stays under apps/browser-extension with ~ pointing to its src.
 5. Fixture imports resolve from repository root as tools.fixtures.http_fixture. Future authorized regression command: python3 -m unittest discover -s tests/fixtures -v. This command was NOT executed after migration.

@@ -1,10 +1,12 @@
 # Original source archives
 
-The five supplied ZIPs are kept unchanged. Their SHA-256 hashes, extracted
-locations, and file counts are recorded in
-[`sources/archives.json`](source-index.json).
+The five supplied ZIPs are retained unchanged. Their SHA-256 hashes, source
+locations and per-member original-preservation paths are in
+[`source-index.json`](source-index.json).
 
-The archive members are already available in `sources/` or
-`AnalyseFuture/reference-projects/`; do not unpack them over edited files.
-An archive hash records the supplied bytes, not the upstream commit, safety,
-license completeness, or release readiness.
+Current implementations are grouped under `apps/`, `tools/fixtures`, and
+`tests/fixtures`; project research is under `docs/project`. Alternative examples
+remain under `AnalyseFuture/reference-projects`. Members whose active docs or
+configuration needed reference repair point to exact originals in history.
+Do not unpack archives over edited files. A byte hash records the supplied
+content, not upstream provenance, safety, license completeness or readiness.

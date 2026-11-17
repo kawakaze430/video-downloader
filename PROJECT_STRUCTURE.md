@@ -26,7 +26,7 @@ run after the owner's instruction to limit this pass to organization.
 │   │   └── gradle/                    version catalogue and wrapper
 │   └── browser-extension/             one npm/Vite browser companion
 │       ├── src/backend/               native and HTTP app connections
-│       ├── src/interceptors/          user/browser download interception
+│       ├── src/linkgrabber/          user/browser download interception
 │       ├── src/media/                 HLS/quality selection
 │       ├── src/contextmenus/          explicit link intake
 │       ├── src/contentscripts/        page/selection message handling
