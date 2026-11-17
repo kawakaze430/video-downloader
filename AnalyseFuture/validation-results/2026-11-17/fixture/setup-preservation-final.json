@@ -1,0 +1,12 @@
+{
+  "command": [
+    "bash",
+    "/workspace/video-downloader/tools/development/setup.sh",
+    "--verify-preservation"
+  ],
+  "cwd": "/tmp",
+  "exit_code": 0,
+  "seconds": 0.845,
+  "output": "PASS: all 1458 baseline files preserved and tracked from 7a7e2f6\nPASS: 5 original archives and 1438 extracted files match byte-for-byte\n",
+  "check": "final preservation wrapper after parent mapping update"
+}

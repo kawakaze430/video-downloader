@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "tools/development/gradle.py",
+    ":downloader:core:desktopTest",
+    "--configure-on-demand",
+    "--console=plain",
+    "--no-daemon",
+    "--max-workers=4"
+  ],
+  "exit_code": 0,
+  "reports": [
+    {
+      "name": "HttpClientIntegrationTest[desktop]",
+      "tests": "11",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "5.441"
+    }
+  ]
+}

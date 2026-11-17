@@ -1,0 +1,10 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build:extension"
+  ],
+  "cwd": "/workspace/validation-work/references/mediagrabber",
+  "exit_code": 0,
+  "duration_seconds": 2.8353826999664307
+}

@@ -1,0 +1,42 @@
+
+> mediagrabber@1.1.1 build:extension
+> cd extension && npm run build
+
+
+> mediagrabber-extension@1.1.1 build
+> tsc -p tsconfig.json && npm run bundle
+
+
+> mediagrabber-extension@1.1.1 bundle
+> esbuild src/background.ts --bundle --outfile=dist/background.js --platform=browser & esbuild src/content.ts --bundle --outfile=dist/content.js --platform=browser & esbuild src/mse-inject.ts --bundle --outfile=dist/mse-inject.js --platform=browser --format=iife & esbuild src/popup/popup.ts --bundle --outfile=dist/popup.js --platform=browser & esbuild src/popup/settings.ts --bundle --outfile=dist/settings.js --platform=browser
+
+
+  dist/content.js  16.0kb
+
+⚡ Done in 6ms
+
+  dist/background.js  65.8kb
+
+⚡ Done in 7ms
+
+  dist/mse-inject.js  10.9kb
+
+⚡ Done in 4ms
+
+  dist/settings.js  7.9kb
+
+⚡ Done in 2ms
+
+  dist/popup.js  26.2kb
+
+⚡ Done in 4ms
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

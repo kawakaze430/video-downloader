@@ -25,16 +25,24 @@ and AnalyseFuture/ORIGINAL_TO_NEW_PATH_MAPPING.txt. Component internals are
 kept together because imports, source sets, resources and packaging depend on
 those relationships. There is no new universal framework or language rewrite.
 
-## Current pass
+## Validation
 
-The latest owner instruction is **do not run tests**. This restructuring only
-reads/classifies content, groups files, updates references and preserves prior
-versions. No post-move runtime/build/test success is claimed. See the validation
-report for older observations and current limitations.
+The owner subsequently authorized testing and fixes. Read the current
+[validation report](AnalyseFuture/VALIDATION_REPORT.txt) for observed results,
+failed initial checks, fixes and external blockers. Earlier no-test wording in
+recovery reports describes the completed restructuring pass.
 
-`bash tools/development/setup.sh` defaults to prerequisite information without
-running tests/builds. Later, explicit authorized validation can use the opt-in
-flags described in the continuation guide. No root CI or deployment was added.
+- Fixture: `bash tools/development/setup.sh --run-tests`.
+- Download transport: `python3 tools/development/gradle.py :downloader:core:desktopTest --configure-on-demand --no-daemon --max-workers=4`.
+- Browser: from `apps/browser-extension`, run `npm ci --ignore-scripts`,
+  `npm test`, `npm run build`, then the `pack:*` scripts as needed.
+- Archived examples: follow `tests/references/README.md`; tests use isolated
+  copies and synthetic/mocked data, never a production archive import.
+
+81 test cases passed across these scopes. Full desktop/Android builds are
+blocked by proxy denial of `jitpack.io`; installed extension UI is blocked by
+Chromium administrator policy. These are not claims of complete product readiness.
+The report records toolchain requirements and the exact next actions.
 
 ## Preservation and licenses
 

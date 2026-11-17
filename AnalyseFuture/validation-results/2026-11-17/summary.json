@@ -1,0 +1,81 @@
+{
+  "starting_commit": "c1c8f0f8f80f968bb4e214678e8e91bb50c35630",
+  "tests": {
+    "fixture": {
+      "passed": 14,
+      "failed": 0
+    },
+    "download_core_http_integration": {
+      "passed": 11,
+      "failed": 0
+    },
+    "browser": {
+      "passed": 13,
+      "failed": 0
+    },
+    "reclip_isolated": {
+      "passed": 19,
+      "failed": 0
+    },
+    "mediagrabber_isolated": {
+      "passed": 24,
+      "failed": 0
+    }
+  },
+  "total_test_cases_passed": 81,
+  "additional_checks": {
+    "fixture_cli": 8,
+    "preservation_cases": 6,
+    "actual_media_converter_checks": 6
+  },
+  "browser": {
+    "strict_source_and_negative_type_checks": "passed",
+    "fresh_frozen_install": "passed before runtime dependency patch update; current lock installs by npm update with integrity verification",
+    "chrome_bundle_and_package": "passed",
+    "firefox_bundle_and_package": "passed",
+    "source_archive": "passed; nonempty and confined to extension tree",
+    "runtime_dependency_audit": {
+      "total_advisories": 0
+    },
+    "locked_versions": {
+      "lodash": "4.18.1",
+      "zod": "4.6.7",
+      "type-fest": "2.19.0",
+      "typescript": "5.9.3"
+    }
+  },
+  "desktop_android": {
+    "jdk": "25.0.5.0.3",
+    "gradle": "9.8.0",
+    "android_sdk": "platform37.0/build-tools37.0.0",
+    "wrapper_and_distribution_integrity": "official hashes verified and distribution checksum pinned",
+    "core_compile": "passed",
+    "core_tests": 11,
+    "full_desktop_build": "blocked: JitPack403",
+    "android_assemble_and_unit_test_targets": "blocked before execution: JitPack403"
+  },
+  "external_blockers": [
+    {
+      "domain": "jitpack.io",
+      "operation": "resolve com.github.amir1376:SchemaKt:0.2.3",
+      "observed": "proxy tunnel403; required domain absent from current runtime allowlist",
+      "draft": "domain addition saved, not applied/published"
+    },
+    {
+      "operation": "load unpacked Chromium extension",
+      "observed": "administrator policy disables unpacked extension loading",
+      "remediation": "use an administrator-approved testing browser/policy; do not bypass"
+    }
+  ],
+  "not_run": [
+    "full desktop/native-host integration",
+    "actual installed extension UI",
+    "live platform downloads",
+    "Windows/macOS installers",
+    "physical Android device/emulator flows"
+  ],
+  "limits": [
+    "Reference download-worker TLS/header/truncation concerns and ReClip production hosting risks remain outside these focused fixes.",
+    "No claim of universal source support or complete application readiness."
+  ]
+}

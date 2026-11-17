@@ -1,0 +1,14 @@
+{
+  "command": [
+    "./gradlew",
+    ":downloader:core:desktopTest",
+    ":desktop:app:compileKotlin",
+    "--console=plain",
+    "--no-daemon",
+    "--max-workers=4",
+    "--stacktrace"
+  ],
+  "exit_code": 1,
+  "log": "desktop-build.log",
+  "jdk": "jdk-25.0.5.0.3"
+}

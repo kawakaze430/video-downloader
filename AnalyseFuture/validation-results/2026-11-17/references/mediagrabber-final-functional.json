@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/references/mediagrabber.test.cjs"
+  ],
+  "cwd": "/workspace/video-downloader",
+  "exit_code": 0,
+  "duration_seconds": 0.3779630661010742,
+  "tests": 24,
+  "pass": 24,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0
+}

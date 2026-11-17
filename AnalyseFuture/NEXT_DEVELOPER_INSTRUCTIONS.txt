@@ -1,3 +1,6 @@
+CURRENT SCOPE UPDATE — 17 November 2026
+The owner later authorized testing/fixes. Read VALIDATION_REPORT.txt and validation-results/2026-11-17/summary.json first. The no-test instructions below are the prior restructuring handoff, not the current owner restriction.
+
 NEXT DEVELOPER INSTRUCTIONS
 
 1. Read AGENTS.md and PROJECT_STRUCTURE.md. The current instruction is organization only, no tests/builds/installs/startup unless a later owner request authorizes them.

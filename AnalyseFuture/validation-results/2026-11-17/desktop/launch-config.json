@@ -1,0 +1,6 @@
+{
+  "jdk_home": "/workspace/.cache/jdks/jdk-25.0.5.0.3",
+  "gradle_user_home": "/workspace/.cache/gradle",
+  "system_java_truststore": "/etc/ssl/certs/java/cacerts",
+  "proxy_from_environment": true
+}

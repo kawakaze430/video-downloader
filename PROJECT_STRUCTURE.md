@@ -5,8 +5,9 @@ source implementations. AI capabilities are future proposals. The repository
 does not yet provide a verified integrated universal downloader.
 
 Every one of the **1,458 files tracked at `7a7e2f6`** was inventoried by content
-and ownership before these moves. Existing work is preserved. No tests were
-run after the owner's instruction to limit this pass to organization.
+and ownership before these moves. Existing work is preserved. That
+restructuring pass ran no tests; later owner-authorized validation is recorded
+in AnalyseFuture/VALIDATION_REPORT.txt.
 
 ```text
 .
@@ -36,7 +37,7 @@ run after the owner's instruction to limit this pass to organization.
 ├── tools/
 │   ├── fixtures/                     deterministic HTTP/HTTPS target
 │   ├── development/setup.sh           no-test default; later explicit opt-ins
-│   └── repository/verify_preservation.py  preservation utility, not run here
+│   └── repository/verify_preservation.py  preservation utility
 ├── tests/fixtures/                    preserved fixture regression source
 ├── docs/project/                      earlier blueprint, decisions and research
 ├── archives/                          five original ZIPs and source-index.json
@@ -115,6 +116,7 @@ inventories, and `AnalyseFuture/NEXT_DEVELOPER_INSTRUCTIONS.txt`. The detailed
 future vision covers Android, web, extensions, Windows, macOS, Linux, source
 coverage, AI options, limits, and one-/two-/three-to-five-year research horizons.
 
-This pass deliberately runs no tests. Commands documented for a later authorized
-task are not evidence they passed after migration. Preserve the backup tag
+The restructuring pass deliberately ran no tests. The owner later authorized
+validation and fixes; current evidence and external blockers are recorded in
+AnalyseFuture/VALIDATION_REPORT.txt. Preserve the backup tag
 `recovery-baseline-2026-11-17-7a7e2f6`, published history and existing branches.

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "/workspace/validation-work/references/checks/converter-smoke.cjs"
+  ],
+  "exit_code": 0,
+  "duration_seconds": 0.3033480644226074,
+  "checks": 6,
+  "scope": "Actual reviewed CoApp convert/probe handlers via in-process RPC with synthetic local media, no main/native-messaging/installers/network"
+}
