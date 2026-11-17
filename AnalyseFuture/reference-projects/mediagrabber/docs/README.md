@@ -3,12 +3,12 @@
 ## Table of Contents
 
 1. [Overview](./overview.md)
-2. [Architecture](./architecture.md)
-3. [Companion App (CoApp)](./coapp.md)
-4. [Native Messaging Protocol](./native-messaging.md)
-5. [FFmpeg Integration](./ffmpeg.md)
-6. [Video Detection](./detection.md)
-7. [Version History](./changelog.md)
+2. [Architecture](architecture.md)
+3. [Companion App (CoApp)](coapp.md)
+4. [Native Messaging Protocol](native-messaging.md)
+5. [FFmpeg Integration](ffmpeg.md)
+6. [Video Detection](detection.md)
+7. [Version History](changelog.md)
 
 ---
 

@@ -1,69 +1,51 @@
 # video-downloader
 
-One repository for a planned download and media workspace across Android,
-web, browser extensions, Windows, macOS, and Linux. The supplied code is
-organized for evaluation; these applications are not yet integrated.
+One repository for a cross-platform download and media workspace. Kotlin owns
+shared desktop/Android source; the TypeScript browser companion handles intake
+and handoff. Optional AI/media/cloud features remain proposals, not verified
+integrated capabilities.
 
-Start with the detailed [project idea](PROJECT_IDEA.txt),
-[repository audit](docs/REPOSITORY_AUDIT.txt), and [working agreement](AGENTS.md).
+Start with [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md), the
+[recovery audit](AnalyseFuture/REPOSITORY_AUDIT.txt), and the detailed
+[plain-text future vision](AnalyseFuture/PROJECT_VISION_AND_FUTURE_ROADMAP.txt).
 
-## Repository map
+## Functional collections
 
-| Path | Purpose | Current status |
-| --- | --- | --- |
-| `sources/ab-download-manager/` | Kotlin desktop and Android foundation candidate | Supplied source; no integrated release validated |
-| `sources/ab-browser-integration/` | Matching TypeScript browser companion candidate | Supplied source; build/security validation needed |
-| `sources/downloader-blueprint/` | Previous planning, research, and Python fixture | Preserve prior work; 14 fixture tests verified |
-| `AnalyseFuture/reference-projects/` | Intact MediaGrabber and ReClip references | Retained for later evaluation |
-| `AnalyseFuture/prior-versions/` | Originals of documents/helpers revised here | Exact preservation copies |
-| `archives/` | Original five ZIP files | Kept unchanged |
-| `docs/` | Audit, full path inventory, and preservation evidence | Review scope and checks documented |
-| `tools/` | Repository verification and local fixture setup | Standard-library checks; no platform downloads |
+- `apps/download-manager/`: intact Gradle desktop/Android/download-engine project.
+- `apps/browser-extension/`: matching npm/Vite extension with its own assets.
+- `tools/fixtures/` and `tests/fixtures/`: original synthetic fixture and checks.
+- `tools/development/` and `tools/repository/`: local setup and preservation tools.
+- `docs/project/`: original blueprint, decisions, feature backlog and research.
+- `archives/`: unchanged ZIP backups and per-member preservation index.
+- `AnalyseFuture/`: future vision, recovery reports, prior versions, orphan code
+  and non-active reference implementations.
 
-`AnalyseFuture` preserves material for later review. Nothing was classified as
-attacker-added solely because it is a reference or uses another language.
+See the complete ownership rules and per-file mapping in PROJECT_STRUCTURE.md
+and AnalyseFuture/ORIGINAL_TO_NEW_PATH_MAPPING.txt. Component internals are
+kept together because imports, source sets, resources and packaging depend on
+those relationships. There is no new universal framework or language rewrite.
 
-## Verify and use the local fixture
+## Current pass
 
-From the repository root, with Python 3.10+ and OpenSSL installed:
+The latest owner instruction is **do not run tests**. This restructuring only
+reads/classifies content, groups files, updates references and preserves prior
+versions. No post-move runtime/build/test success is claimed. See the validation
+report for older observations and current limitations.
 
-```sh
-python3 tools/verify_repository.py
-bash tools/onboarding/setup.sh
-cd sources/downloader-blueprint
-python3 -m tools.fixtures.http_fixture --port 8765
-```
-
-The fixture binds to loopback and provides a deterministic download target;
-it is not a downloader application. See its
-[guide](sources/downloader-blueprint/tools/fixtures/README.md).
-No package installation, private credentials, or live platform access is
-required for these checks. The first command verifies preserved content and
-archive extraction; it does not certify third-party code as safe.
-It requires the baseline Git history at `0b2a1ad`; a shallow checkout may need
-that history fetched first. It verifies stored source snapshots, so future
-intentional source edits require an updated preservation policy.
-
-## Direction and boundaries
-
-The project idea prioritizes YouTube as the first named source research track
-while retaining a reliable direct-file foundation. Facebook, Instagram, MP4,
-HLS/DASH, and other workflows each need their own supported capability record.
-Universal video access is not guaranteed. Platform permissions, DRM, server
-behavior, browser/mobile restrictions, and formats impose real limits.
-
-One product can retain Kotlin for desktop/Android, TypeScript for extensions,
-and supporting tools without rewriting everything into one language. Foundation
-adoption, integration, language migration, public releases, and hosted services
-require separately authorized work.
+`bash tools/development/setup.sh` defaults to prerequisite information without
+running tests/builds. Later, explicit authorized validation can use the opt-in
+flags described in the continuation guide. No root CI or deployment was added.
 
 ## Preservation and licenses
 
-All 1,449 files tracked at `0b2a1ad` are mapped to preserved copies in
-[`docs/preservation-manifest.json`](docs/preservation-manifest.json).
-All 1,438 archive payload files remain available unchanged. ZIP paths and
-source locations are indexed in [`sources/archives.json`](sources/archives.json).
+The starting point was `7a7e2f6`; a remote recovery tag preserves it. Every one
+of its 1,458 tracked files has an original-to-retained path and hash record in
+AnalyseFuture/migration-records/preservation-manifest.json. Changed documents
+and configurations have exact originals under historical-implementations.
 
 AB desktop/browser supply Apache-2.0 licenses; MediaGrabber/ReClip supply MIT
-licenses. The blueprint supplies no root license. Preserve notices and review
-transitive/binary licensing before distribution. No product license was chosen.
+licenses. The blueprint supplies no root product license. Preserve notices and
+review dependencies, platform permissions and distributed binaries before release.
+
+This project targets permitted source workflows. A universal claim to save every
+video from every site is not established by source availability or future AI.

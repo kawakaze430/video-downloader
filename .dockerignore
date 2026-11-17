@@ -1,0 +1,11 @@
+# A root build context must not ingest preserved/unreviewed implementations.
+.git
+AnalyseFuture
+archives
+**/node_modules
+**/dist
+**/build
+**/.gradle
+**/__pycache__
+.env
+.env.*

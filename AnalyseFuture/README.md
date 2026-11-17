@@ -17,5 +17,5 @@ Future unrelated or questionable files should be preserved here with their
 original path, reason for the move, and content hash. Handle credentials through
 secure removal/rotation rather than copying secret values into this folder.
 
-See [the audit](../docs/REPOSITORY_AUDIT.txt) and
-[preservation manifest](../docs/preservation-manifest.json) for this review.
+See [the audit](recovery-notes/previous-audits/REPOSITORY_AUDIT.7a7e2f6.txt) and
+[preservation manifest](migration-records/preservation-0b2a1ad.json) for this review.

@@ -1,0 +1,55 @@
+[
+  {
+    "archive": "archives/Downloader--main.zip",
+    "sha256": "7e3b7f3213c0151803a7e5a3bc4ddaf81082a6d1925827d325d96e41d99adb6d",
+    "directory": "docs/project",
+    "files": 40,
+    "member_paths": {
+      "README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/README.md",
+      "docs/DEVELOPMENT_SETUP.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/DEVELOPMENT_SETUP.md",
+      "docs/IMPLEMENTATION_CHECKLIST.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/IMPLEMENTATION_CHECKLIST.md",
+      "docs/M0_AUDIT.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/docs/M0_AUDIT.md",
+      "tests/__init__.py": "tests/fixtures/__init__.py",
+      "tests/test_http_fixture.py": "tests/fixtures/test_http_fixture.py",
+      "tools/__init__.py": "tools/__init__.py",
+      "tools/fixtures/README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/downloader-blueprint/tools/fixtures/README.md",
+      "tools/fixtures/__init__.py": "tools/fixtures/__init__.py",
+      "tools/fixtures/http_fixture.py": "tools/fixtures/http_fixture.py"
+    }
+  },
+  {
+    "archive": "archives/ab-download-manager-master.zip",
+    "sha256": "f3688b9c6cc03a864b3b08316466c2d6d3fe47c5effb0dcab02e670722f06f72",
+    "directory": "apps/download-manager",
+    "files": 1207,
+    "member_paths": {
+      "README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-download-manager/README.md"
+    }
+  },
+  {
+    "archive": "archives/ab-download-manager-browser-integration-master.zip",
+    "sha256": "8f76be3d3955745664d0edc6d19a76049f981b391c0723a486ee65b496d5b2d4",
+    "directory": "apps/browser-extension",
+    "files": 106,
+    "member_paths": {
+      "package.json": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-browser-integration/package.json",
+      "src/backend/BackendProvider.ts": "AnalyseFuture/incomplete-features/browser-extension/BackendProvider.ts"
+    }
+  },
+  {
+    "archive": "archives/MediaGrabber-main.zip",
+    "sha256": "c8f7682dc38d0039d6e1d9dbd8dbfe88aafecd9228eec564a01df11496271a15",
+    "directory": "AnalyseFuture/reference-projects/mediagrabber",
+    "files": 71,
+    "member_paths": {
+      "docs/README.md": "AnalyseFuture/historical-implementations/7a7e2f6/AnalyseFuture/reference-projects/mediagrabber/docs/README.md"
+    }
+  },
+  {
+    "archive": "archives/reclip-main.zip",
+    "sha256": "fe81ceab0ffe4ace895ee241721de9016117afb50db28f30812cbcd8df6d48f0",
+    "directory": "AnalyseFuture/reference-projects/reclip",
+    "files": 14,
+    "member_paths": {}
+  }
+]
