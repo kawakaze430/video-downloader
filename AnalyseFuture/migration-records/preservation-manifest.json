@@ -8343,7 +8343,7 @@
     },
     {
       "original_path": "sources/ab-download-manager/downloader/core/build.gradle.kts",
-      "preserved_path": "apps/download-manager/downloader/core/build.gradle.kts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/downloader/core/build.gradle.kts",
       "active_path": "apps/download-manager/downloader/core/build.gradle.kts",
       "sha256": "4633928dfc1a3fc030340adc94b088d8cdc2dfaa23bf2c517a20bae7485bae7d",
       "bytes": 870,
@@ -8351,7 +8351,7 @@
       "git_blob_oid": "8ed125d260ee85c89c3ef0f45d893fa70bb80961",
       "git_blob_sha256": "4633928dfc1a3fc030340adc94b088d8cdc2dfaa23bf2c517a20bae7485bae7d",
       "git_blob_bytes": 870,
-      "reason": "functional responsibility grouping; framework-internal structure retained"
+      "reason": "Exact original retained before owner-authorized validation fix"
     },
     {
       "original_path": "sources/ab-download-manager/downloader/core/src/androidMain/kotlin/ir/amirab/downloader/utils/SparseFile.android.kt",

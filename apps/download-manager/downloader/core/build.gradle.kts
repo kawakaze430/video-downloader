@@ -12,6 +12,11 @@ kotlin {
         minSdk = 26
     }
     sourceSets {
+        val desktopTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)

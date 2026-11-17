@@ -25,7 +25,8 @@
     "member_paths": {
       "README.md": "AnalyseFuture/historical-implementations/7a7e2f6/sources/ab-download-manager/README.md",
       "gradle/wrapper/gradle-wrapper.jar": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.jar",
-      "gradle/wrapper/gradle-wrapper.properties": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.properties"
+      "gradle/wrapper/gradle-wrapper.properties": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/gradle/wrapper/gradle-wrapper.properties",
+      "downloader/core/build.gradle.kts": "AnalyseFuture/validation-originals/c1c8f0f/apps/download-manager/downloader/core/build.gradle.kts"
     }
   },
   {
