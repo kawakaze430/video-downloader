@@ -49,7 +49,8 @@
     "directory": "AnalyseFuture/reference-projects/mediagrabber",
     "files": 71,
     "member_paths": {
-      "docs/README.md": "AnalyseFuture/historical-implementations/7a7e2f6/AnalyseFuture/reference-projects/mediagrabber/docs/README.md"
+      "docs/README.md": "AnalyseFuture/historical-implementations/7a7e2f6/AnalyseFuture/reference-projects/mediagrabber/docs/README.md",
+      "extension/src/lib/dash-parser.ts": "AnalyseFuture/validation-originals/c1c8f0f/AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts"
     }
   },
   {

@@ -125,10 +125,10 @@ export class DashParserWrapper {
 
   private static extractAttrs(tag: string): Record<string, string> {
     const attrs: Record<string, string> = {};
-    const attrRegex = /([a-zA-Z_][a-zA-Z0-9_-]*)\s*=\s*"([^"]*)"/g;
+    const attrRegex = /([a-zA-Z_][a-zA-Z0-9_-]*)\s*=\s*(["'])([\s\S]*?)\2/g;
     let m;
     while ((m = attrRegex.exec(tag)) !== null) {
-      attrs[m[1]] = m[2];
+      attrs[m[1]] = m[3];
     }
     return attrs;
   }
@@ -187,9 +187,9 @@ export class DashParserWrapper {
   }
 
   private static parseMediaDuration(manifest: string): number | undefined {
-    const match = manifest.match(/mediaPresentationDuration\s*=\s*"([^"]+)"/);
+    const match = manifest.match(/mediaPresentationDuration\s*=\s*(["'])([\s\S]*?)\1/);
     if (!match) return undefined;
-    return DashParserWrapper.parseIsoDuration(match[1]);
+    return DashParserWrapper.parseIsoDuration(match[2]);
   }
 
   private static parseIsoDuration(iso: string): number | undefined {

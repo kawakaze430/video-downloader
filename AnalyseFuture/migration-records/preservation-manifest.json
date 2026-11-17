@@ -687,7 +687,7 @@
     },
     {
       "original_path": "AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts",
-      "preserved_path": "AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts",
+      "preserved_path": "AnalyseFuture/validation-originals/c1c8f0f/AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts",
       "active_path": "AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/dash-parser.ts",
       "sha256": "d852f95f6efb550bfdfa26f8cef832684d4bfcf84a987cbf30328f2a31065db0",
       "bytes": 7494,
@@ -695,7 +695,7 @@
       "git_blob_oid": "74d5df7134a8069e65ac4344260cd4c9fb1b358b",
       "git_blob_sha256": "d852f95f6efb550bfdfa26f8cef832684d4bfcf84a987cbf30328f2a31065db0",
       "git_blob_bytes": 7494,
-      "reason": "retained in existing functional collection"
+      "reason": "Exact original retained before owner-authorized validation fix"
     },
     {
       "original_path": "AnalyseFuture/reference-projects/mediagrabber/extension/src/lib/errors.ts",
