@@ -1,1 +1,0 @@
-These logs were produced before the latest no-test instruction. They do not validate the moved tree; no rerun or complete structured exit-status record is claimed. Dependency caches/build outputs remain ignored local files.

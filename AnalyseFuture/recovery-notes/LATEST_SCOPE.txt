@@ -1,1 +1,0 @@
-Latest owner instruction: analyze and organize every file by actual function, preserve all work under AnalyseFuture as needed, repair references, create PROJECT_STRUCTURE.md, push direct main without PR/force-push. DO NOT RUN TESTS FOR THIS PASS. This supersedes test execution requested in the earlier uploaded master request.

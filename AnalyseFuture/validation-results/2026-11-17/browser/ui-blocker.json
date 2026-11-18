@@ -1,5 +1,0 @@
-{
-  "status": "blocked",
-  "reason": "CDPSession.send: Protocol error (Extensions.loadUnpacked): Loading of unpacked extensions is disabled by the administrator.",
-  "scope": "Temporary profile; no policy was changed or bypassed."
-}
